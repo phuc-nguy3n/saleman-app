@@ -39,7 +39,7 @@ export default function RootLayout() {
       <SafeAreaView style={{ flex: 1 }}>
         <PaperProvider theme={paperTheme}>
           <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(screens)" options={{ headerShown: false }} />
           </Stack>
         </PaperProvider>
       </SafeAreaView>
