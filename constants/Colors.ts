@@ -31,7 +31,7 @@ export const Colors = {
       onSurface: "rgb(25, 28, 30)",
       surfaceVariant: "rgb(221, 227, 234)",
       onSurfaceVariant: "rgb(65, 72, 77)",
-      outline: "rgb(113, 120, 126)",
+      outline: "#9AA7AA",
       outlineVariant: "rgb(193, 199, 206)",
       shadow: "rgb(0, 0, 0)",
       scrim: "rgb(0, 0, 0)",
