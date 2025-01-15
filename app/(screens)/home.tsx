@@ -1,8 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList, ListRenderItem } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "expo-image";
 import { FONT_SIZE } from "@/constants/Const";
+import { Colors } from "@/constants/Colors";
+import { Switch } from "react-native-paper";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TypeMission } from "@/types/index";
 
 const gradientColor = {
   start: "#018ABE",
@@ -23,12 +27,12 @@ export default function Home() {
       >
         <View style={styles.userInfo}>
           {/* Họ tên user */}
+
           <Text style={[styles.colorHeader, styles.fontMedium]}>
             <Text style={styles.textBase}>Xin chào {"\n"}</Text>
 
             <Text style={styles.textXl}>Nguyễn Hồng Phúc</Text>
           </Text>
-
           {/* Avatar */}
           <View>
             <Image source={avatar} style={styles.avatar} />
@@ -38,7 +42,21 @@ export default function Home() {
 
       <View style={styles.container}>
         {/* Body */}
-        <View></View>
+        <View style={styles.body}>
+          {/* Mission */}
+          <View style={styles.boxContainer}>
+            <View style={styles.headerBox}>
+              <Text style={[styles.textNomal, styles.fontMedium]}>
+                Việc cần làm
+              </Text>
+              <Switch />
+            </View>
+
+            <View></View>
+          </View>
+          {/* Order / agent registration */}
+          {/* Order management */}
+        </View>
 
         {/* Footer */}
         <View></View>
@@ -48,6 +66,18 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  textNomal: {
+    fontSize: FONT_SIZE.normal,
+  },
+  textBase: {
+    fontSize: FONT_SIZE.textBase,
+  },
+  textXl: {
+    fontSize: FONT_SIZE.textXl,
+  },
+  fontMedium: {
+    fontWeight: "500",
+  },
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
@@ -71,20 +101,29 @@ const styles = StyleSheet.create({
   colorHeader: {
     color: "white",
   },
-  fontMedium: {
-    fontWeight: "500",
-  },
-  textBase: {
-    fontSize: FONT_SIZE.textBase,
-  },
-  textXl: {
-    fontSize: FONT_SIZE.textXl,
-  },
+
   avatar: {
     width: 40,
     height: 40,
     borderWidth: 2,
     borderColor: "white",
     borderRadius: 25,
+  },
+  body: {
+    marginTop: -30,
+    width: "100%",
+  },
+  boxContainer: {
+    borderRadius: 8,
+    backgroundColor: "white",
+  },
+  headerBox: {
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderColor: Colors.light.colors.outline,
   },
 });
