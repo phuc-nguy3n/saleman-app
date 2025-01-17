@@ -35,7 +35,7 @@ const msgError = {
   password: 'Mật khẩu không chính xác, vui lòng kiểm tra lại',
 };
 
-function LoginScreen() {
+function LoginScreen({navigation}) {
   const userList = data.user;
 
   const [code, setCode] = useState('');
@@ -109,7 +109,7 @@ function LoginScreen() {
     if (validation) {
       dispatch(setUser(userForm));
       dispatch(login());
-      Alert.alert('Success', 'Logged in successfully!');
+      navigation.navigate('Home');
     }
   };
 

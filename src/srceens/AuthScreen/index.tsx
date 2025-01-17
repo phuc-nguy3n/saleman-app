@@ -1,10 +1,22 @@
-import React from 'react';
-import {View} from 'react-native';
-// import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 function AuthScreen() {
-  // const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
-  return <View>Auth</View>;
+  const navigation = useNavigation(); // Hook để sử dụng điều hướng
+  const isAuthenticated = useSelector(
+    (state: any) => state.auth.isAuthenticated,
+  );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.replace('Home');
+    } else {
+      navigation.replace('Login');
+    }
+  }, [isAuthenticated, navigation]);
+
+  return null;
 }
 
 export default AuthScreen;
