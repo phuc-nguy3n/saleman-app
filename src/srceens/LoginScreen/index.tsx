@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Text,
@@ -10,44 +10,182 @@ import {
 import styles from './styles';
 import {Colors, FontSizes} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
-import {setUser, setLoginError} from '../../redux/slices/userSlice';
+import {ValidationType} from '../../types';
+import {setUser} from '../../redux/slices/userSlice';
+import {login} from '../../redux/slices/authSlice';
+
 import {useDispatch} from 'react-redux';
-import {UserType} from '../../types';
+
+import data from '../../db/mockData.json';
 
 const Logo = require('../../assets/images/logo.png');
+const eye = require('../../assets/images/eye-enable.png');
+const eyeOff = require('../../assets/images/eye-disable.png');
 
 const themeTextInput = {
   colors: {
     primary: Colors.outline,
+    background: 'white',
   },
 };
 
+const msgError = {
+  code: 'Mã công ty không tồn tại, vui lòng kiểm tra lại',
+  phoneNumber: 'Số điện thoại không chính xác, vui lòng kiểm tra lại',
+  password: 'Mật khẩu không chính xác, vui lòng kiểm tra lại',
+};
+
 function LoginScreen() {
-  const [code, setCode] = useState('admin@example.com');
-  const [phoneNumber, setPhoneNumber] = useState('0909777666');
-  const [password, setPassword] = useState('password');
+  const userList = data.user;
+
+  const [code, setCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [disableLogin, setDisableLogin] = useState(true);
+  const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
+
+  const [errorFileds, setErrorFileds] = useState({
+    code: false,
+    phoneNumber: false,
+    password: false,
+  });
+
+  const [errorMessage, setErrorMessage] = useState({
+    code: '',
+    phoneNumber: '',
+    password: '',
+  });
 
   const dispatch = useDispatch();
-  // const isLoginError = useSelector(state => state.user.loginError);
-  // const userInfo = useSelector(state => state.user.userInfo);
 
-  // Dùng để login
-  const handleLogin = () => {
-    if (
-      code === 'admin@example.com' &&
-      phoneNumber === '0909777666' &&
-      password === 'password'
-    ) {
-      const userForm: UserType = {
-        code: code,
-        phoneNumber: phoneNumber,
-      };
-      dispatch(setUser(userForm));
-      dispatch(setLoginError(false));
-
-      Alert.alert('Success', 'Logged in successfully!');
+  // Nhập đủ 3 fields nút đăng nhập sẽ nhấn được
+  useEffect(() => {
+    if (code && phoneNumber && password) {
+      setDisableLogin(false);
     } else {
-      dispatch(setLoginError(true));
+      setDisableLogin(true);
+    }
+  }, [code, phoneNumber, password]);
+
+  // Nhập văn bản từ bàn phím sẽ ẩn đi trạng thái error của từng fields
+
+  useEffect(() => {
+    if (code) {
+      setErrorFileds(prev => ({...prev, code: false}));
+      setErrorMessage(prev => ({...prev, code: ''}));
+    }
+  }, [code]);
+
+  useEffect(() => {
+    if (phoneNumber) {
+      setErrorFileds(prev => ({...prev, phoneNumber: false}));
+      setErrorMessage(prev => ({...prev, phoneNumber: ''}));
+    }
+  }, [phoneNumber]);
+
+  useEffect(() => {
+    if (password) {
+      setErrorFileds(prev => ({...prev, password: false}));
+      setErrorMessage(prev => ({...prev, password: ''}));
+    }
+  }, [password]);
+
+  // Ẩn hiện mật khẩu
+  const toggleSecureTextEntry = () => {
+    setIsSecureTextEntry(!isSecureTextEntry);
+  };
+
+  // Hàm đăng nhập
+  const handleLogin = () => {
+    const userForm: ValidationType = {
+      code: code,
+      phoneNumber: phoneNumber,
+      password: password,
+    };
+
+    const validation = validate(userForm);
+
+    if (validation) {
+      dispatch(setUser(userForm));
+      dispatch(login());
+      Alert.alert('Success', 'Logged in successfully!');
+    }
+  };
+
+  // Kiểm tra thông tin đăng nhập
+  const validate = (userInput: ValidationType) => {
+    const user = userList.find(
+      (userInfo: ValidationType) => userInfo.code === userInput.code,
+    );
+
+    if (!user) {
+      setErrorFileds(prev => ({
+        ...prev,
+        code: true,
+      }));
+      setErrorMessage(prev => ({
+        ...prev,
+        code: msgError.code,
+      }));
+      return false;
+    } else if (user) {
+      setErrorFileds(prev => ({
+        ...prev,
+        code: false,
+      }));
+      setErrorMessage(prev => ({
+        ...prev,
+        code: '',
+      }));
+      // Phone number
+      if (user.phoneNumber !== userInput.phoneNumber) {
+        setErrorFileds(prev => ({
+          ...prev,
+          phoneNumber: true,
+        }));
+        setErrorMessage(prev => ({
+          ...prev,
+          phoneNumber: msgError.phoneNumber,
+        }));
+        return false;
+      } else if (user.phoneNumber === userInput.phoneNumber) {
+        setErrorFileds(prev => ({
+          ...prev,
+          phoneNumber: false,
+        }));
+        setErrorMessage(prev => ({
+          ...prev,
+          phoneNumber: '',
+        }));
+        // Password
+        if (
+          user.code === userInput.code &&
+          user.phoneNumber === userInput.phoneNumber
+        ) {
+          if (user.password !== userInput.password) {
+            setErrorFileds(prev => ({
+              ...prev,
+              password: true,
+            }));
+            setErrorMessage(prev => ({
+              ...prev,
+              password: msgError.password,
+            }));
+            return false;
+          } else {
+            setErrorFileds(prev => ({
+              ...prev,
+              password: false,
+            }));
+            setErrorMessage(prev => ({
+              ...prev,
+              password: '',
+            }));
+            return true;
+          }
+        }
+      }
     }
   };
 
@@ -75,38 +213,58 @@ function LoginScreen() {
 
           {/* Form */}
           <View style={styles.form}>
-            <TextInput
-              mode="outlined"
-              label="Mã công ty"
-              placeholder="Nhập mã..."
-              right={<TextInput.Affix />}
-              theme={themeTextInput}
-              keyboardType="default"
-              onChangeText={setCode}
-              value={code}
-            />
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Mã công ty"
+                placeholder="Nhập mã..."
+                right={<TextInput.Affix />}
+                theme={themeTextInput}
+                keyboardType="default"
+                onChangeText={setCode}
+                value={code}
+                error={errorFileds.code}
+              />
 
-            <TextInput
-              mode="outlined"
-              label="Số điện thoại"
-              placeholder="Nhập sđt..."
-              right={<TextInput.Affix />}
-              theme={themeTextInput}
-              keyboardType="number-pad"
-              onChangeText={setPhoneNumber}
-              value={phoneNumber}
-            />
+              <ErrorTextView text={errorMessage.code} />
+            </View>
 
-            <TextInput
-              mode="outlined"
-              label="Mật khẩu"
-              placeholder="Nhập mật khẩu..."
-              secureTextEntry={true}
-              right={<TextInput.Affix />}
-              theme={themeTextInput}
-              onChangeText={setPassword}
-              value={password}
-            />
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Số điện thoại"
+                placeholder="Nhập sđt..."
+                right={<TextInput.Affix />}
+                theme={themeTextInput}
+                keyboardType="number-pad"
+                onChangeText={setPhoneNumber}
+                value={phoneNumber}
+                error={errorFileds.phoneNumber}
+              />
+
+              <ErrorTextView text={errorMessage.phoneNumber} />
+            </View>
+
+            <View>
+              <TextInput
+                mode="outlined"
+                label="Mật khẩu"
+                placeholder="Nhập mật khẩu..."
+                secureTextEntry={isSecureTextEntry}
+                right={
+                  <TextInput.Icon
+                    icon={isSecureTextEntry ? eyeOff : eye}
+                    onPress={toggleSecureTextEntry}
+                  />
+                }
+                theme={themeTextInput}
+                onChangeText={setPassword}
+                value={password}
+                error={errorFileds.password}
+              />
+
+              <ErrorTextView text={errorMessage.password} />
+            </View>
           </View>
         </View>
 
@@ -129,11 +287,12 @@ function LoginScreen() {
           <Button
             style={{
               borderRadius: 8,
-              backgroundColor: Colors.primary,
+              backgroundColor: disableLogin ? Colors.disable : Colors.primary,
               marginVertical: 8,
             }}
             mode="contained"
-            onPress={handleLogin}>
+            onPress={handleLogin}
+            disabled={disableLogin}>
             Đăng nhập
           </Button>
 
@@ -150,6 +309,14 @@ function LoginScreen() {
         </View>
       </View>
     </TouchableWithoutFeedback>
+  );
+}
+
+function ErrorTextView({text}: {readonly text: string}) {
+  return (
+    <View>
+      <Text style={styles.error}>{text}</Text>
+    </View>
   );
 }
 

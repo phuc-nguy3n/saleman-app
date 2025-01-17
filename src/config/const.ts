@@ -15,4 +15,6 @@ export const FontSizes = {
 export const Colors = {
   primary: '#018ABE',
   outline: '#9AA7AA',
+  disable: '#E3E3E3',
+  error: '#EA5455',
 };

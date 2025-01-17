@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
   form: {
-    gap: 16,
+    gap: 12,
   },
   footer: {
     marginTop: 8,
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
   },
   underline: {
     textDecorationLine: 'underline',
+  },
+  error: {
+    color: Colors.error,
   },
 });
 
