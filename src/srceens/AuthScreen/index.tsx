@@ -21,7 +21,7 @@ function AuthScreen() {
 
       if (isAuthenticated) {
         dispatch(login());
-        navigation.replace('Home');
+        navigation.replace('AppNavigator');
       } else {
         navigation.replace('Login');
       }

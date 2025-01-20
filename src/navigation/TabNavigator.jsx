@@ -21,9 +21,10 @@ import {Colors} from '../config/const';
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigator() {
+function AppNavigator() {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarIcon: ({focused}) => {
@@ -86,4 +87,4 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
-export default TabNavigator;
+export default AppNavigator;
