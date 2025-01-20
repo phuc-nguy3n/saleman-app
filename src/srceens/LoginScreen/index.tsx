@@ -14,6 +14,7 @@ import {setUser} from '../../redux/slices/userSlice';
 import {login} from '../../redux/slices/authSlice';
 
 import {useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import data from '../../db/mockData.json';
 import {eye, eyeOff, logo} from '../../assets/images';
@@ -21,9 +22,9 @@ import {eye, eyeOff, logo} from '../../assets/images';
 function LoginScreen({navigation}) {
   const userList = data.user;
 
-  const [code, setCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('D1312');
+  const [phoneNumber, setPhoneNumber] = useState('0989878411');
+  const [password, setPassword] = useState('123456');
 
   const [disableLogin, setDisableLogin] = useState(true);
   const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
@@ -93,6 +94,7 @@ function LoginScreen({navigation}) {
       dispatch(setUser(userForm));
       dispatch(login());
       navigation.navigate('Home');
+      AsyncStorage.setItem('isAuthenticated', 'true');
     }
   };
 
