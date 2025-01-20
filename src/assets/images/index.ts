@@ -1,4 +1,10 @@
+// Images
+
 export const logo = require('./logo.png');
+export const ellipse = require('./ellipse.png');
+export const avatar = require('./avatar.png');
+
+// Icons
 export const eye = require('./eye-enable.png');
 export const eyeOff = require('./eye-disable.png');
 export const home = require('./home-icon.png');
