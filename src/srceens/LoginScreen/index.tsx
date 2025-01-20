@@ -5,42 +5,26 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
 } from 'react-native';
 import styles from './styles';
-import {Colors, FontSizes} from '../../config/const';
+import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
 import {ValidationType} from '../../types';
 import {setUser} from '../../redux/slices/userSlice';
 import {login} from '../../redux/slices/authSlice';
 
 import {useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import data from '../../db/mockData.json';
-
-const Logo = require('../../assets/images/logo.png');
-const eye = require('../../assets/images/eye-enable.png');
-const eyeOff = require('../../assets/images/eye-disable.png');
-
-const themeTextInput = {
-  colors: {
-    primary: Colors.outline,
-    background: 'white',
-  },
-};
-
-const msgError = {
-  code: 'Mã công ty không tồn tại, vui lòng kiểm tra lại',
-  phoneNumber: 'Số điện thoại không chính xác, vui lòng kiểm tra lại',
-  password: 'Mật khẩu không chính xác, vui lòng kiểm tra lại',
-};
+import {eye, eyeOff, logo} from '../../assets/images';
 
 function LoginScreen({navigation}) {
   const userList = data.user;
 
-  const [code, setCode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('D1312');
+  const [phoneNumber, setPhoneNumber] = useState('0989878411');
+  const [password, setPassword] = useState('123456');
 
   const [disableLogin, setDisableLogin] = useState(true);
   const [isSecureTextEntry, setIsSecureTextEntry] = useState(true);
@@ -110,6 +94,7 @@ function LoginScreen({navigation}) {
       dispatch(setUser(userForm));
       dispatch(login());
       navigation.navigate('Home');
+      AsyncStorage.setItem('isAuthenticated', 'true');
     }
   };
 
@@ -126,7 +111,7 @@ function LoginScreen({navigation}) {
       }));
       setErrorMessage(prev => ({
         ...prev,
-        code: msgError.code,
+        code: MsgError.code,
       }));
       return false;
     } else if (user) {
@@ -146,7 +131,7 @@ function LoginScreen({navigation}) {
         }));
         setErrorMessage(prev => ({
           ...prev,
-          phoneNumber: msgError.phoneNumber,
+          phoneNumber: MsgError.phoneNumber,
         }));
         return false;
       } else if (user.phoneNumber === userInput.phoneNumber) {
@@ -170,7 +155,7 @@ function LoginScreen({navigation}) {
             }));
             setErrorMessage(prev => ({
               ...prev,
-              password: msgError.password,
+              password: MsgError.password,
             }));
             return false;
           } else {
@@ -194,7 +179,7 @@ function LoginScreen({navigation}) {
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Image source={Logo} style={styles.image} />
+          <Image source={logo} style={styles.image} />
         </View>
 
         {/* Body */}
@@ -219,7 +204,7 @@ function LoginScreen({navigation}) {
                 label="Mã công ty"
                 placeholder="Nhập mã..."
                 right={<TextInput.Affix />}
-                theme={themeTextInput}
+                theme={ThemeTextInput}
                 keyboardType="default"
                 onChangeText={setCode}
                 value={code}
@@ -235,7 +220,7 @@ function LoginScreen({navigation}) {
                 label="Số điện thoại"
                 placeholder="Nhập sđt..."
                 right={<TextInput.Affix />}
-                theme={themeTextInput}
+                theme={ThemeTextInput}
                 keyboardType="number-pad"
                 onChangeText={setPhoneNumber}
                 value={phoneNumber}
@@ -257,7 +242,7 @@ function LoginScreen({navigation}) {
                     onPress={toggleSecureTextEntry}
                   />
                 }
-                theme={themeTextInput}
+                theme={ThemeTextInput}
                 onChangeText={setPassword}
                 value={password}
                 error={errorFileds.password}
