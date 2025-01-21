@@ -4,19 +4,45 @@
             "code": "D1312",
             "phoneNumber": "0989878411",
             "password": "123456",
-            "name": "Nguyễn Trần Văn Hân Hoàng"
+            "name": "Nguyễn Trần Văn Hân Hoàng",
+            "todoList": {
+                "storesToVisit": "5",
+                "salesAmount": "3.000.000",
+                "orderCount": "12",
+                "registeredAgents": "6"
+            }
         },
         {
             "code": "A2456",
             "phoneNumber": "0976543210",
             "password": "abcdef",
-            "name": "Cao Linh Chi"
+            "name": "Cao Linh Chi",
+            "todoList": {
+                "storesToVisit": "6",
+                "salesAmount": "5.000.000",
+                "orderCount": "29",
+                "registeredAgents": "8"
+            }
         },
         {
             "code": "B7890",
             "phoneNumber": "0961234567",
             "password": "pass123",
-            "name": "Trần Bá Hổ"
+            "name": "Trần Bá Hổ",
+            "todoList": {
+                "storesToVisit": "8",
+                "salesAmount": "6.000.000",
+                "orderCount": "14",
+                "registeredAgents": "4"
+            }
         }
-    ]
+    ],
+    "system": {
+        "missions": {
+            "storesToVisit": "10",
+            "salesAmount": "10.000.000",
+            "orderCount": "100",
+            "registeredAgents": "10"
+        }
+    }
 }
