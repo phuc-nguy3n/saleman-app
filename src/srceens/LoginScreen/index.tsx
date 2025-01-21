@@ -9,18 +9,15 @@ import {
 import styles from './styles';
 import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
-import {ValidationType} from '../../types';
-import {setUser} from '../../redux/slices/userSlice';
-import {login} from '../../redux/slices/authSlice';
-
-import {useDispatch} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {OutputValudationType, ValidationType} from '../../types';
 
 import data from '../../db/mockData.json';
 import {eye, eyeOff, logo} from '../../assets/images';
+import {useLogin} from '../../hooks/useLogin';
 
 function LoginScreen({navigation}) {
   const userList = data.user;
+  const {loginCustom} = useLogin();
 
   const [code, setCode] = useState('D1312');
   const [phoneNumber, setPhoneNumber] = useState('0989878411');
@@ -40,8 +37,6 @@ function LoginScreen({navigation}) {
     phoneNumber: '',
     password: '',
   });
-
-  const dispatch = useDispatch();
 
   // Nhập đủ 3 fields nút đăng nhập sẽ nhấn được
   useEffect(() => {
@@ -90,16 +85,18 @@ function LoginScreen({navigation}) {
 
     const validation = validate(userForm);
 
-    if (validation) {
-      dispatch(setUser(userForm));
-      dispatch(login());
+    if (validation?.status) {
+      const userData = validation?.data;
+
+      loginCustom(userData);
       navigation.navigate('Home');
-      AsyncStorage.setItem('isAuthenticated', 'true');
     }
   };
 
   // Kiểm tra thông tin đăng nhập
-  const validate = (userInput: ValidationType) => {
+  const validate = (
+    userInput: ValidationType,
+  ): OutputValudationType | undefined => {
     const user = userList.find(
       (userInfo: ValidationType) => userInfo.code === userInput.code,
     );
@@ -113,7 +110,7 @@ function LoginScreen({navigation}) {
         ...prev,
         code: MsgError.code,
       }));
-      return false;
+      return {status: false, data: {}};
     } else if (user) {
       setErrorFileds(prev => ({
         ...prev,
@@ -133,7 +130,7 @@ function LoginScreen({navigation}) {
           ...prev,
           phoneNumber: MsgError.phoneNumber,
         }));
-        return false;
+        return {status: false, data: {}};
       } else if (user.phoneNumber === userInput.phoneNumber) {
         setErrorFileds(prev => ({
           ...prev,
@@ -157,7 +154,7 @@ function LoginScreen({navigation}) {
               ...prev,
               password: MsgError.password,
             }));
-            return false;
+            return {status: false, data: {}};
           } else {
             setErrorFileds(prev => ({
               ...prev,
@@ -167,7 +164,7 @@ function LoginScreen({navigation}) {
               ...prev,
               password: '',
             }));
-            return true;
+            return {status: true, data: user};
           }
         }
       }

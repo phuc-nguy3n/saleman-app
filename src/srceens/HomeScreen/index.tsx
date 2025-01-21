@@ -1,14 +1,31 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
 
-import {View, Text, Image, ScrollView} from 'react-native';
+import {Button} from 'react-native-paper';
 
-import styles from './styles';
+import {View, Text, Image, ScrollView, Switch} from 'react-native';
 import {avatar, ellipse} from '../../assets/images';
-import {FontSizes} from '../../config/const';
+import {FontSizes, HomeConst, Colors} from '../../config/const';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import data from '../../db/mockData.json';
+import styles from './styles';
+import {UserType} from '../../types';
+import {generateSalesAmount} from '../../utils';
+import {useLogout} from '../../hooks/useLogout';
 
 function HomeScreen() {
+  const {handleLogout} = useLogout();
+
+  const itemsTodo = HomeConst.toDo.items;
+  const noticeText = HomeConst.toDo.notice;
+  const missions = data.system.missions;
+  const user: UserType = useSelector((state: any) => state.user.userInfo);
+
+  const [isProcessWork, setIsProcessWork] = useState(false);
+  const toggleSwitch = () => setIsProcessWork(previousState => !previousState);
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -27,35 +44,178 @@ function HomeScreen() {
               style={{
                 fontSize: FontSizes.large,
                 color: 'white',
-                fontWeight: '500',
+                fontWeight: 500,
               }}>
-              Nguyễn Trần Văn Hân Hoàng
+              {user !== null ? user.name : ''}
             </Text>
           </View>
 
-          <View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image style={styles.avatar} source={avatar} />
+            <Button onPress={handleLogout}>Logout</Button>
           </View>
         </View>
       </View>
 
-      {/* Component 1 */}
       <ScrollView
-        style={{
-          flex: 1,
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          marginTop: 100,
-        }}
+        style={styles.bodyScroll}
         contentContainerStyle={{
           paddingHorizontal: 16,
         }}>
-        {Array.from({length: 50}, (_, index) => (
-          <Text key={index} style={styles.item}>
-            Item {index + 1}
-          </Text>
-        ))}
+        {/* Component 1 */}
+        <View style={styles.toDoBox}>
+          {/* Header */}
+          <View style={styles.toDoHeader}>
+            <View>
+              <Text style={styles.title}>
+                {isProcessWork
+                  ? HomeConst.toDo.title.progress
+                  : HomeConst.toDo.title.needToDo}
+              </Text>
+            </View>
+
+            <View>
+              <Switch
+                trackColor={{false: '#767577', true: Colors.second}}
+                thumbColor={isProcessWork ? Colors.primary : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isProcessWork}
+              />
+            </View>
+          </View>
+
+          {/* Body */}
+          <View style={styles.toDoItemBox}>
+            <View style={{alignItems: 'center', width: '25%'}}>
+              <View>
+                <Image
+                  style={{width: 16, height: 16}}
+                  source={itemsTodo[0].icon}
+                />
+              </View>
+
+              <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                {itemsTodo[0].title}
+              </Text>
+
+              <View style={{alignItems: 'center', marginTop: 4}}>
+                <Text style={{fontSize: 18, fontWeight: 500}}>
+                  {` ${
+                    isProcessWork
+                      ? user.todoList.storesToVisit +
+                        '/' +
+                        missions.storesToVisit
+                      : missions.storesToVisit
+                  } `}
+                </Text>
+                <Text style={{fontSize: 10, fontWeight: 300}}>
+                  {itemsTodo[0].unit}
+                </Text>
+              </View>
+            </View>
+
+            <View style={{alignItems: 'center', width: '25%'}}>
+              <View>
+                <Image
+                  style={{width: 16, height: 16}}
+                  source={itemsTodo[1].icon}
+                />
+              </View>
+
+              <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                {itemsTodo[1].title}
+              </Text>
+
+              <View style={{alignItems: 'center', marginTop: 4}}>
+                <Text style={{fontSize: 18, fontWeight: 500}}>
+                  {` ${
+                    isProcessWork
+                      ? generateSalesAmount(user.todoList.salesAmount) +
+                        '/' +
+                        generateSalesAmount(missions.salesAmount)
+                      : generateSalesAmount(missions.salesAmount)
+                  } `}
+                </Text>
+                <Text style={{fontSize: 10, fontWeight: 300}}>
+                  {itemsTodo[1].unit}
+                </Text>
+              </View>
+            </View>
+
+            <View style={{alignItems: 'center', width: '25%'}}>
+              <View>
+                <Image
+                  style={{width: 16, height: 16}}
+                  source={itemsTodo[2].icon}
+                />
+              </View>
+
+              <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                {itemsTodo[2].title}
+              </Text>
+
+              <View style={{alignItems: 'center', marginTop: 4}}>
+                <Text style={{fontSize: 18, fontWeight: 500}}>
+                  {` ${
+                    isProcessWork
+                      ? user.todoList.orderCount + '/' + missions.orderCount
+                      : missions.orderCount
+                  } `}
+                </Text>
+                <Text style={{fontSize: 10, fontWeight: 300}}>
+                  {itemsTodo[2].unit}
+                </Text>
+              </View>
+            </View>
+
+            <View style={{alignItems: 'center', width: '25%'}}>
+              <View>
+                <Image
+                  style={{width: 16, height: 16}}
+                  source={itemsTodo[3].icon}
+                />
+              </View>
+
+              <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                {itemsTodo[3].title}
+              </Text>
+
+              <View style={{alignItems: 'center', marginTop: 4}}>
+                <Text style={{fontSize: 18, fontWeight: 500}}>
+                  {` ${
+                    isProcessWork
+                      ? user.todoList.registeredAgents +
+                        '/' +
+                        missions.registeredAgents
+                      : missions.registeredAgents
+                  } `}
+                </Text>
+                <Text style={{fontSize: 10, fontWeight: 300}}>
+                  {itemsTodo[3].unit}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Footer */}
+          <View style={{padding: 8}}>
+            <View
+              style={{
+                backgroundColor: Colors.bgError,
+                padding: 8,
+                borderRadius: 4,
+                flexDirection: 'row',
+                gap: 8,
+                alignItems: 'center',
+              }}>
+              <Icon name="alert-circle" size={20} color={Colors.error} />
+              <Text style={{fontSize: FontSizes.small, fontWeight: 400}}>
+                {noticeText}
+              </Text>
+            </View>
+          </View>
+        </View>
         <View style={{paddingTop: 120}}></View>
       </ScrollView>
     </View>
