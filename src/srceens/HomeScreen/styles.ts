@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   },
   toDoBox: {
     width: '100%',
-    height: 200,
     backgroundColor: 'white',
     borderRadius: 8,
   },
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
   },
   toDoItemBox: {
     marginTop: 8,
-    paddingHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

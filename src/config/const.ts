@@ -64,6 +64,7 @@ export const Colors = {
   line: '#F4F4F4',
   disable: '#E3E3E3',
   error: '#EA5455',
+  bgError: '#FDEEEE',
 };
 
 export const ThemeTextInput = {
