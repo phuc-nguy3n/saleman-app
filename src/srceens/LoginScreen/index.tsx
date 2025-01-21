@@ -10,17 +10,14 @@ import styles from './styles';
 import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
 import {OutputValudationType, ValidationType} from '../../types';
-import {setUser} from '../../redux/slices/userSlice';
-import {login} from '../../redux/slices/authSlice';
-
-import {useDispatch} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import data from '../../db/mockData.json';
 import {eye, eyeOff, logo} from '../../assets/images';
+import {useLogin} from '../../hooks/useLogin';
 
 function LoginScreen({navigation}) {
   const userList = data.user;
+  const {loginCustom} = useLogin();
 
   const [code, setCode] = useState('D1312');
   const [phoneNumber, setPhoneNumber] = useState('0989878411');
@@ -40,8 +37,6 @@ function LoginScreen({navigation}) {
     phoneNumber: '',
     password: '',
   });
-
-  const dispatch = useDispatch();
 
   // Nhập đủ 3 fields nút đăng nhập sẽ nhấn được
   useEffect(() => {
@@ -93,11 +88,8 @@ function LoginScreen({navigation}) {
     if (validation?.status) {
       const userData = validation?.data;
 
-      dispatch(setUser(userData));
-      dispatch(login());
+      loginCustom(userData);
       navigation.navigate('Home');
-      AsyncStorage.setItem('isAuthenticated', 'true');
-      AsyncStorage.setItem('user', JSON.stringify(userData));
     }
   };
 

@@ -1,11 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-// import {useDispatch} from 'react-redux';
-// import {clearUser} from '../../redux/slices/userSlice';
-// import {logout} from '../../redux/slices/authSlice';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {useNavigation} from '@react-navigation/native';
-// import {Button} from 'react-native-paper';
+
+import {Button} from 'react-native-paper';
 
 import {View, Text, Image, ScrollView, Switch} from 'react-native';
 import {avatar, ellipse} from '../../assets/images';
@@ -17,18 +13,10 @@ import data from '../../db/mockData.json';
 import styles from './styles';
 import {UserType} from '../../types';
 import {generateSalesAmount} from '../../utils';
+import {useLogout} from '../../hooks/useLogout';
 
 function HomeScreen() {
-  // const navigation: any = useNavigation();
-
-  // const dispatch = useDispatch();
-
-  // const handleLogout = async () => {
-  //   dispatch(clearUser());
-  //   dispatch(logout());
-  //   await AsyncStorage.clear();
-  //   navigation.replace('Login');
-  // };
+  const {handleLogout} = useLogout();
 
   const itemsTodo = HomeConst.toDo.items;
   const noticeText = HomeConst.toDo.notice;
@@ -62,9 +50,9 @@ function HomeScreen() {
             </Text>
           </View>
 
-          <View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image style={styles.avatar} source={avatar} />
-            {/* <Button onPress={handleLogout}>Logout</Button> */}
+            <Button onPress={handleLogout}>Logout</Button>
           </View>
         </View>
       </View>
