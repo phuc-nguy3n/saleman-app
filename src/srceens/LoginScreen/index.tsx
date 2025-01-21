@@ -9,7 +9,7 @@ import {
 import styles from './styles';
 import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
-import {ValidationType} from '../../types';
+import {OutputValudationType, ValidationType} from '../../types';
 import {setUser} from '../../redux/slices/userSlice';
 import {login} from '../../redux/slices/authSlice';
 
@@ -90,16 +90,21 @@ function LoginScreen({navigation}) {
 
     const validation = validate(userForm);
 
-    if (validation) {
-      dispatch(setUser(userForm));
+    if (validation?.status) {
+      const userData = validation?.data;
+
+      dispatch(setUser(userData));
       dispatch(login());
       navigation.navigate('Home');
       AsyncStorage.setItem('isAuthenticated', 'true');
+      AsyncStorage.setItem('user', JSON.stringify(userData));
     }
   };
 
   // Kiểm tra thông tin đăng nhập
-  const validate = (userInput: ValidationType) => {
+  const validate = (
+    userInput: ValidationType,
+  ): OutputValudationType | undefined => {
     const user = userList.find(
       (userInfo: ValidationType) => userInfo.code === userInput.code,
     );
@@ -113,7 +118,7 @@ function LoginScreen({navigation}) {
         ...prev,
         code: MsgError.code,
       }));
-      return false;
+      return {status: false, data: {}};
     } else if (user) {
       setErrorFileds(prev => ({
         ...prev,
@@ -133,7 +138,7 @@ function LoginScreen({navigation}) {
           ...prev,
           phoneNumber: MsgError.phoneNumber,
         }));
-        return false;
+        return {status: false, data: {}};
       } else if (user.phoneNumber === userInput.phoneNumber) {
         setErrorFileds(prev => ({
           ...prev,
@@ -157,7 +162,7 @@ function LoginScreen({navigation}) {
               ...prev,
               password: MsgError.password,
             }));
-            return false;
+            return {status: false, data: {}};
           } else {
             setErrorFileds(prev => ({
               ...prev,
@@ -167,7 +172,7 @@ function LoginScreen({navigation}) {
               ...prev,
               password: '',
             }));
-            return true;
+            return {status: true, data: user};
           }
         }
       }

@@ -3,17 +3,20 @@
         {
             "code": "D1312",
             "phoneNumber": "0989878411",
-            "password": "123456"
+            "password": "123456",
+            "name": "Nguyễn Trần Văn Hân Hoàng"
         },
         {
             "code": "A2456",
             "phoneNumber": "0976543210",
-            "password": "abcdef"
+            "password": "abcdef",
+            "name": "Cao Linh Chi"
         },
         {
             "code": "B7890",
             "phoneNumber": "0961234567",
-            "password": "pass123"
+            "password": "pass123",
+            "name": "Trần Bá Hổ"
         }
     ]
 }
