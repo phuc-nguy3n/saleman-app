@@ -11,8 +11,11 @@ import styles from './styles';
 import {Colors, FontSizes} from '../../config/const';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'react-native-paper';
+import {useLogout} from '../../hooks/useLogout';
 
 function UserInfoScreen() {
+  const {handleLogout} = useLogout();
+
   return (
     <View style={styles.bgScreen}>
       {/* Header */}
@@ -87,7 +90,7 @@ function UserInfoScreen() {
             textColor={Colors.primary}
             mode="outlined"
             icon={logout}
-            onPress={() => console.log('Pressed')}>
+            onPress={handleLogout}>
             <Text style={{fontWeight: 500, fontSize: 14}}>Đăng xuất</Text>
           </Button>
         </View>

@@ -1,8 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 
-import {Button} from 'react-native-paper';
-
 import {
   View,
   Text,
@@ -20,13 +18,10 @@ import data from '../../db/mockData.json';
 import styles from './styles';
 import {UserType} from '../../types';
 import {generateSalesAmount} from '../../utils';
-import {useLogout} from '../../hooks/useLogout';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import OrderItem from '../../components/OrderItem';
 
 function HomeScreen() {
-  const {handleLogout} = useLogout();
-
   const {toDo, store, order} = HomeConst;
 
   const itemsTodo = toDo.items;
@@ -65,7 +60,6 @@ function HomeScreen() {
 
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image style={styles.avatar} source={avatar} />
-            <Button onPress={handleLogout}>Logout</Button>
           </View>
         </View>
       </View>
@@ -270,7 +264,7 @@ function HomeScreen() {
               <View>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
-                  onPress={() => console.log('press')}>
+                  onPress={() => console.log('Chi tiết')}>
                   <Text
                     style={{color: Colors.primary, fontSize: FontSizes.small}}>
                     Chi tiết
