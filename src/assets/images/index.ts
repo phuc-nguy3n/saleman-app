@@ -9,6 +9,7 @@ export const newOrder = require('./new-order.png');
 export const shipping = require('./shipping.png');
 export const shipped = require('./shipped.png');
 export const returnOrder = require('./return-order.png');
+export const headerBg = require('./header-bg.png');
 
 // Icons
 export const eye = require('./eye-enable.png');
