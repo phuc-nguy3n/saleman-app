@@ -103,6 +103,7 @@ export const Colors = {
   disable: '#E3E3E3',
   error: '#EA5455',
   bgError: '#FDEEEE',
+  textSecond: '#555555',
 };
 
 export const ThemeTextInput = {

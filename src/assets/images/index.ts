@@ -25,3 +25,6 @@ export const storeActive = require('./store-active-icon.png');
 export const storeActiveCheck = require('./store-active-check-icon.png');
 export const currencyActive = require('./currency-active-icon.png');
 export const fileActive = require('./file-active-icon.png');
+export const promotion = require('./promotion.png');
+export const passcodeLock = require('./passcode-lock.png');
+export const logout = require('./log-out.png');
