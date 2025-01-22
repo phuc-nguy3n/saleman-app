@@ -14,3 +14,10 @@ export const generateSalesAmount = (amount: number | string): number => {
   }
   return parseFloat((amount / 1_000_000).toFixed(1));
 };
+
+export const generateOrderQuantity = (input: string | number): string => {
+  const quantity: number =
+    typeof input === 'string' ? parseInt(input, 10) : input;
+
+  return quantity >= 1000 ? '999+' : quantity.toString(); // Trả về chuỗi
+};

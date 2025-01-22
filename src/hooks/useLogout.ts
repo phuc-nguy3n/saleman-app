@@ -10,10 +10,10 @@ export const useLogout = () => {
 
   const handleLogout = async (): Promise<void> => {
     try {
+      navigation.replace('Login');
       dispatch(clearUser());
       dispatch(logout());
       await AsyncStorage.clear();
-      navigation.replace('Login');
     } catch (error) {
       console.error('Error during logout:', error);
     }
