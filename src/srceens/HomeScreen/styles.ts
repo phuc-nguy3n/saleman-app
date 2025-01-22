@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 8,
+    overflow: 'hidden',
   },
   toDoHeader: {
     paddingHorizontal: 16,

@@ -1,8 +1,14 @@
 import {
   currencyActive,
   fileActive,
+  newOrder,
+  returnOrder,
+  shipped,
+  shipping,
   storeActive,
   storeActiveCheck,
+  storeAdd,
+  storeLocation,
 } from '../assets/images';
 
 export const MsgError = {
@@ -40,6 +46,38 @@ export const HomeConst = {
       },
     ],
     notice: 'Cuối chính sách cần đạt KPI',
+  },
+  store: {
+    items: [
+      {
+        img: storeLocation,
+        text: 'Ghé thăm - Đặt hàng',
+      },
+      {
+        img: storeAdd,
+        text: 'Đăng ký đại lý mới',
+      },
+    ],
+  },
+  order: {
+    items: [
+      {
+        img: newOrder,
+        text: 'Đơn mới',
+      },
+      {
+        img: shipping,
+        text: 'Đang giao',
+      },
+      {
+        img: shipped,
+        text: 'Đã giao',
+      },
+      {
+        img: returnOrder,
+        text: 'Trả hàng',
+      },
+    ],
   },
 };
 
