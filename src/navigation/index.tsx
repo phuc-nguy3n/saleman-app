@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -14,11 +15,22 @@ function AppNavigation() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Auth"
-        screenOptions={{headerShown: false}}>
+        screenOptions={{
+          headerShown: false,
+          headerTitleStyle: {
+            fontWeight: 500,
+            fontSize: 14,
+          },
+          headerShadowVisible: false,
+        }}>
         <Stack.Screen name="Auth" component={AuthScreen} />
         <Stack.Screen name="Home" component={AppNavigator} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="OrderManagement" component={OrderMgmtScreen} />
+        <Stack.Screen
+          name="OrderManagement"
+          component={OrderMgmtScreen}
+          options={{headerShown: true, title: 'Quản lý đơn hàng'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
