@@ -16,11 +16,11 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import data from '../../db/mockData.json';
 import styles from './styles';
-import {OrderStatusItemProps, UserType} from '../../types';
+import {HomeScreenProps, OrderStatusItemProps, UserType} from '../../types';
 import {generateOrderQuantity, generateSalesAmount} from '../../utils';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-function HomeScreen() {
+const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {toDo, store, order} = HomeConst;
 
   const itemsTodo = toDo.items;
@@ -32,6 +32,10 @@ function HomeScreen() {
 
   const [isProcessWork, setIsProcessWork] = useState(false);
   const toggleSwitch = () => setIsProcessWork(previousState => !previousState);
+
+  const navigateOrderMgmt = () => {
+    navigation.navigate('OrderManagement');
+  };
 
   return (
     <View style={styles.container}>
@@ -263,7 +267,7 @@ function HomeScreen() {
               <View>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
-                  onPress={() => console.log('Chi tiết')}>
+                  onPress={navigateOrderMgmt}>
                   <Text
                     style={{color: Colors.primary, fontSize: FontSizes.small}}>
                     Chi tiết
@@ -346,7 +350,7 @@ function HomeScreen() {
       </ScrollView>
     </View>
   );
-}
+};
 
 const OrderStatusItem = ({img, title, quantity}: OrderStatusItemProps) => {
   return (

@@ -5,16 +5,19 @@ import {ImageSourcePropType} from 'react-native';
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
+  OrderManagement: undefined;
 };
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
+type AppNavigationProp<RouteName extends keyof RootStackParamList> =
+  NativeStackNavigationProp<RootStackParamList, RouteName>;
 
 // Props
 export type LoginScreenProps = {
-  navigation: LoginScreenNavigationProp;
+  navigation: AppNavigationProp<'Login'>;
+};
+
+export type HomeScreenProps = {
+  navigation: AppNavigationProp<'Home'>;
 };
 
 export type OrderStatusItemProps = {
