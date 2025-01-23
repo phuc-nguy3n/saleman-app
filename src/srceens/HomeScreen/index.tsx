@@ -16,10 +16,9 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import data from '../../db/mockData.json';
 import styles from './styles';
-import {UserType} from '../../types';
-import {generateSalesAmount} from '../../utils';
+import {OrderStatusItemProps, UserType} from '../../types';
+import {generateOrderQuantity, generateSalesAmount} from '../../utils';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import OrderItem from '../../components/OrderItem';
 
 function HomeScreen() {
   const {toDo, store, order} = HomeConst;
@@ -292,7 +291,7 @@ function HomeScreen() {
                   alignItems: 'center',
                 }}
                 onPress={() => console.log('Trang', itemsOrder[0].text)}>
-                <OrderItem
+                <OrderStatusItem
                   img={itemsOrder[0].img}
                   title={itemsOrder[0].text}
                   quantity={1200}
@@ -306,7 +305,7 @@ function HomeScreen() {
                   alignItems: 'center',
                 }}
                 onPress={() => console.log('Trang', itemsOrder[1].text)}>
-                <OrderItem
+                <OrderStatusItem
                   img={itemsOrder[1].img}
                   title={itemsOrder[1].text}
                   quantity={45}
@@ -320,7 +319,7 @@ function HomeScreen() {
                   alignItems: 'center',
                 }}
                 onPress={() => console.log('Trang', itemsOrder[2].text)}>
-                <OrderItem
+                <OrderStatusItem
                   img={itemsOrder[2].img}
                   title={itemsOrder[2].text}
                   quantity={4}
@@ -334,7 +333,7 @@ function HomeScreen() {
                   alignItems: 'center',
                 }}
                 onPress={() => console.log('Trang', itemsOrder[3].text)}>
-                <OrderItem
+                <OrderStatusItem
                   img={itemsOrder[3].img}
                   title={itemsOrder[3].text}
                   quantity={4}
@@ -348,5 +347,46 @@ function HomeScreen() {
     </View>
   );
 }
+
+const OrderStatusItem = ({img, title, quantity}: OrderStatusItemProps) => {
+  return (
+    <View
+      style={{
+        width: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 8,
+        position: 'relative',
+      }}>
+      <View
+        style={{
+          minWidth: 20,
+          minHeight: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: Colors.error,
+
+          borderRadius: 50,
+
+          position: 'absolute',
+          zIndex: 1,
+          top: 0,
+          right: 4,
+        }}>
+        <Text
+          style={{
+            padding: 4,
+            color: 'white',
+            fontSize: 10,
+          }}>
+          {generateOrderQuantity(quantity)}
+        </Text>
+      </View>
+
+      <Image style={{width: 40, height: 40}} source={img} />
+      <Text style={{fontWeight: 300, fontSize: FontSizes.small}}>{title}</Text>
+    </View>
+  );
+};
 
 export default HomeScreen;
