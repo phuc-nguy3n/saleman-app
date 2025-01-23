@@ -9,13 +9,17 @@ import {
 import styles from './styles';
 import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
 import {Button, TextInput} from 'react-native-paper';
-import {OutputValudationType, ValidationType} from '../../types';
+import {
+  LoginScreenProps,
+  OutputValudationType,
+  ValidationType,
+} from '../../types';
 
 import data from '../../db/mockData.json';
 import {eye, eyeOff, logo} from '../../assets/images';
 import {useLogin} from '../../hooks/useLogin';
 
-function LoginScreen({navigation}) {
+const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const userList = data.user;
   const {loginCustom} = useLogin();
 
@@ -292,7 +296,7 @@ function LoginScreen({navigation}) {
       </View>
     </TouchableWithoutFeedback>
   );
-}
+};
 
 function ErrorTextView({text}: {readonly text: string}) {
   return (

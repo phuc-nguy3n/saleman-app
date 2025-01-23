@@ -1,3 +1,5 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 export type ValidationType = {
   code: string;
   phoneNumber: string;
@@ -19,4 +21,19 @@ export type UserType = {
 export type OutputValudationType = {
   status: boolean;
   data: UserType | {};
+};
+
+// Navigator
+type RootStackParamList = {
+  Login: undefined;
+  Home: undefined;
+};
+
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Login'
+>;
+
+export type LoginScreenProps = {
+  navigation: LoginScreenNavigationProp;
 };
