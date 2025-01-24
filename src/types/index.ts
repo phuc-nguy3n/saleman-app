@@ -6,7 +6,7 @@ import {RouteProp} from '@react-navigation/native';
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
-  OrderManagement: {cateOrders: string | number};
+  OrderManagement: {cateOrders: string | number; orders: OrderType[]};
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -51,24 +51,25 @@ export type UserType = {
     orderCount: number;
     registeredAgents: number;
   };
-  orders: [
-    {
-      code: string;
-      orderer: string;
-      phoneNumber: string;
-      timestamp: string;
-      address: string;
-      products: [
-        {
-          code: string;
-          name: string;
-          img: string;
-          price: string;
-        },
-      ];
-      status: string;
-    },
-  ];
+  orders: OrderType[];
+};
+
+export type Product = {
+  code: string;
+  name: string;
+  img: string;
+  price: string;
+};
+
+export type OrderType = {
+  code: string;
+  orderer: string;
+  phoneNumber: string;
+  timestamp: string;
+  address: string;
+  products: Product[];
+  status: string;
+  totalPrice: string;
 };
 
 export type OutputValudationType = {
@@ -78,8 +79,8 @@ export type OutputValudationType = {
 
 // Types
 export enum OrderCateType {
-  new = 0,
-  shipping = 1,
-  shipped = 2,
-  return = 3,
+  new = 'new',
+  shipping = 'shipping',
+  shipped = 'shipped',
+  return = 'return',
 }

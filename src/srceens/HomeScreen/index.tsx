@@ -46,8 +46,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const [isProcessWork, setIsProcessWork] = useState(false);
   const toggleSwitch = () => setIsProcessWork(previousState => !previousState);
 
-  const navigateOrderMgmt = (cate: number) => {
-    navigation.navigate('OrderManagement', {cateOrders: cate});
+  const navigateOrderMgmt = (cate: string) => {
+    navigation.navigate('OrderManagement', {
+      cateOrders: cate,
+      orders: orders,
+    });
   };
 
   return (

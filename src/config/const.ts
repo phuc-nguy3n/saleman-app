@@ -35,6 +35,13 @@ export const Colors = {
   error: '#EA5455',
   bgError: '#FDEEEE',
   textSecond: '#555555',
+  link: '#007AFF',
+  status: {
+    new: '#FFD700',
+    shipping: '#1E90FF',
+    shipped: '#32CD32',
+    return: '#FF4500',
+  },
 };
 
 export const ThemeTextInput = {
