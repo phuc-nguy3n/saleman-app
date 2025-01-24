@@ -7,6 +7,7 @@ import LoginScreen from '../srceens/LoginScreen';
 import AuthScreen from '../srceens/AuthScreen';
 import AppNavigator from './AppNavigator';
 import OrderMgmtScreen from '../srceens/OrderMgmtScreen';
+import OrderDetailsScreen from '../srceens/OrderDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ function AppNavigation() {
           name="OrderManagement"
           component={OrderMgmtScreen}
           options={{headerShown: true, title: 'Quản lý đơn hàng'}}
+        />
+        <Stack.Screen
+          name="OrderDetails"
+          component={OrderDetailsScreen}
+          options={{headerShown: true, title: 'Chi tiết đơn hàng'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
