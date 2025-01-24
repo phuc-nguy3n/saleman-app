@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   ScrollView,
@@ -96,9 +96,33 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
     order => order.status === route.params.cateOrders,
   );
 
-  const [value, setValue] = useState('');
+  const [searchvValue, setSearchValue] = useState('');
+
   const [orderCate, setOrderCate] = useState(route.params.cateOrders);
   const [orderList, setOrderList] = useState<OrderType[]>(orderInit);
+  const [ordersTerm, setOrderTerm] = useState<OrderType[]>([]);
+
+  useEffect(() => {
+    const searchOrders = (
+      orders: OrderType[],
+      searchTerm: string,
+    ): OrderType[] => {
+      if (!searchTerm.trim()) return orderList;
+
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+      return orders.filter(order =>
+        order.products.some(
+          product =>
+            product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+            product.code.toLowerCase().includes(lowerCaseSearchTerm),
+        ),
+      );
+    };
+
+    const products = searchOrders(orderList, searchvValue);
+    setOrderTerm(products);
+  }, [searchvValue, orderList]);
 
   const handleOrderCateActive = (cate: string) => {
     if (cate === OrderCateType.new) {
@@ -180,8 +204,8 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
 
           <TextInput
             style={styles.input}
-            value={value}
-            onChangeText={text => setValue(text)}
+            value={searchvValue}
+            onChangeText={text => setSearchValue(text)}
             placeholder="Tìm kiếm tên, mã sản phẩm"
             placeholderTextColor="#aaa"
           />
@@ -195,7 +219,7 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
 
       {/* Orders */}
       <ScrollView>
-        {orderList.map((item, index) => (
+        {ordersTerm.map((item, index) => (
           <View
             key={index}
             style={{
