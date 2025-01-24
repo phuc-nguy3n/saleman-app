@@ -7,6 +7,7 @@ type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   OrderManagement: {cateOrders: string | number; orders: OrderType[]};
+  OrderDetails: {order: OrderType};
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -26,6 +27,13 @@ type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
 export type OrderMgmtScreenProps = {
   navigation: AppNavigationProp<'OrderManagement'>;
   route: OrderMgmtRouteProp;
+};
+
+type OrderDetailsRouteProp = RouteProp<RootStackParamList, 'OrderDetails'>;
+
+export type OrderDetailsScreenProps = {
+  navigation: AppNavigationProp<'OrderDetails'>;
+  route: OrderDetailsRouteProp;
 };
 
 export type OrderStatusItemProps = {

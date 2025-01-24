@@ -88,7 +88,10 @@ const renderProductNames = (products: Product[]) => {
   );
 };
 
-const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
+const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
+  navigation,
+  route,
+}) => {
   const {order} = Category;
 
   const orderTotal = route.params.orders;
@@ -244,10 +247,13 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
               </View>
               <TouchableOpacity
                 style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
-                onPress={() => console.log('test')}>
+                onPress={() =>
+                  navigation.navigate('OrderDetails', {
+                    order: item,
+                  })
+                }>
                 <Text
                   style={{color: Colors.link, fontSize: 12, lineHeight: 12}}>
-                  {' '}
                   Xem đơn hàng
                 </Text>
                 <FontAwesome

@@ -187,7 +187,7 @@
                             "price": "4.900.000"
                         }
                     ],
-                    "totalPrice": "8.900.000",
+                    "totalPrice": "4.900.000",
                     "status": "shipping"
                 },
                 {
@@ -204,7 +204,7 @@
                             "price": "2.900.000"
                         }
                     ],
-                    "totalPrice": "8.900.000",
+                    "totalPrice": "2.900.000",
                     "status": "shipped"
                 },
                 {
@@ -221,7 +221,7 @@
                             "price": "2.900.000"
                         }
                     ],
-                    "totalPrice": "8.900.000",
+                    "totalPrice": "2.900.000",
                     "status": "return"
                 }
             ]
