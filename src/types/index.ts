@@ -1,11 +1,12 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ImageSourcePropType} from 'react-native';
+import {RouteProp} from '@react-navigation/native';
 
 // Navigator
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
-  OrderManagement: undefined;
+  OrderManagement: {cateOrders: string | number};
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -18,6 +19,13 @@ export type LoginScreenProps = {
 
 export type HomeScreenProps = {
   navigation: AppNavigationProp<'Home'>;
+};
+
+type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
+
+export type OrderMgmtScreenProps = {
+  navigation: AppNavigationProp<'OrderManagement'>;
+  route: OrderMgmtRouteProp;
 };
 
 export type OrderStatusItemProps = {
@@ -43,9 +51,35 @@ export type UserType = {
     orderCount: number;
     registeredAgents: number;
   };
+  orders: [
+    {
+      code: string;
+      orderer: string;
+      phoneNumber: string;
+      timestamp: string;
+      address: string;
+      products: [
+        {
+          code: string;
+          name: string;
+          img: string;
+          price: string;
+        },
+      ];
+      status: string;
+    },
+  ];
 };
 
 export type OutputValudationType = {
   status: boolean;
   data: UserType | {};
 };
+
+// Types
+export enum OrderCateType {
+  new = 0,
+  shipping = 1,
+  shipped = 2,
+  return = 3,
+}

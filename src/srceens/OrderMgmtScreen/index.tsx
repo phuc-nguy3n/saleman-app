@@ -7,9 +7,12 @@ import {Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Image} from 'react-native';
 import {productImg} from '../../assets/images';
+import {OrderCateType, OrderMgmtScreenProps} from '../../types';
 
-const OrderMgmtScreen = () => {
+const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({route}) => {
   const {order} = Category;
+
+  const [orderCate, setOrderCate] = useState(route.params.cateOrders);
 
   const [value, setValue] = useState('');
 
@@ -26,21 +29,41 @@ const OrderMgmtScreen = () => {
             width: '100%',
             justifyContent: 'space-between',
           }}>
-          <View style={{width: '23%'}}>
-            <CateItem text={order.newOrder} />
-          </View>
+          <TouchableOpacity
+            onPress={() => setOrderCate(0)}
+            style={{width: '23%'}}>
+            <CateItem
+              text={order.newOrder}
+              active={orderCate === OrderCateType.new}
+            />
+          </TouchableOpacity>
 
-          <View style={{width: '23%'}}>
-            <CateItem text={order.shipping} />
-          </View>
+          <TouchableOpacity
+            onPress={() => setOrderCate(1)}
+            style={{width: '23%'}}>
+            <CateItem
+              text={order.shipping}
+              active={orderCate === OrderCateType.shipping}
+            />
+          </TouchableOpacity>
 
-          <View style={{width: '23%'}}>
-            <CateItem text={order.shipped} />
-          </View>
+          <TouchableOpacity
+            onPress={() => setOrderCate(2)}
+            style={{width: '23%'}}>
+            <CateItem
+              text={order.shipped}
+              active={orderCate === OrderCateType.shipped}
+            />
+          </TouchableOpacity>
 
-          <View style={{width: '23%'}}>
-            <CateItem text={order.returnOrder} />
-          </View>
+          <TouchableOpacity
+            onPress={() => setOrderCate(3)}
+            style={{width: '23%'}}>
+            <CateItem
+              text={order.returnOrder}
+              active={orderCate === OrderCateType.return}
+            />
+          </TouchableOpacity>
         </View>
 
         {/* Search */}
@@ -131,28 +154,29 @@ const OrderMgmtScreen = () => {
   );
 };
 
-const CateItem = ({text}: {text: string}) => {
+const CateItem = ({text, active}: {text: string; active: boolean}) => {
   return (
-    <TouchableOpacity
+    <View
       style={{
         width: '100%',
         paddingHorizontal: 16,
         paddingVertical: 4,
         borderWidth: 1,
-        borderColor: Colors.outline,
+        borderColor: active ? Colors.primary : Colors.outline,
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: active ? Colors.third : 'white',
       }}>
       <Text
         style={{
           fontSize: 10,
           fontWeight: 300,
-          color: Colors.textSecond,
+          color: active ? Colors.primary : Colors.textSecond,
         }}>
         {text}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 };
 

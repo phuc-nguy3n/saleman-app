@@ -16,25 +16,38 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import data from '../../db/mockData.json';
 import styles from './styles';
-import {HomeScreenProps, OrderStatusItemProps, UserType} from '../../types';
+import {
+  HomeScreenProps,
+  OrderCateType,
+  OrderStatusItemProps,
+  UserType,
+} from '../../types';
 import {generateOrderQuantity, generateSalesAmount} from '../../utils';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {toDo, store, order} = HomeConst;
-
   const itemsTodo = toDo.items;
   const noticeText = toDo.notice;
   const itemsStore = store.items;
   const itemsOrder = order.items;
+
   const missions = data.system.missions;
+
   const user: UserType = useSelector((state: any) => state.user.userInfo);
+
+  const {orders} = user;
+
+  const newOrders = orders.filter(order => order.status === 'new');
+  const shippingOrders = orders.filter(order => order.status === 'shipping');
+  const shippedOrders = orders.filter(order => order.status === 'shipped');
+  const returnOrders = orders.filter(order => order.status === 'return');
 
   const [isProcessWork, setIsProcessWork] = useState(false);
   const toggleSwitch = () => setIsProcessWork(previousState => !previousState);
 
-  const navigateOrderMgmt = () => {
-    navigation.navigate('OrderManagement');
+  const navigateOrderMgmt = (cate: number) => {
+    navigation.navigate('OrderManagement', {cateOrders: cate});
   };
 
   return (
@@ -267,7 +280,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               <View>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
-                  onPress={navigateOrderMgmt}>
+                  onPress={() => navigateOrderMgmt(OrderCateType.new)}>
                   <Text
                     style={{color: Colors.primary, fontSize: FontSizes.small}}>
                     Chi tiết
@@ -294,11 +307,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => console.log('Trang', itemsOrder[0].text)}>
+                onPress={() => navigateOrderMgmt(OrderCateType.new)}>
                 <OrderStatusItem
                   img={itemsOrder[0].img}
                   title={itemsOrder[0].text}
-                  quantity={1200}
+                  quantity={newOrders.length}
                 />
               </TouchableOpacity>
 
@@ -308,11 +321,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => console.log('Trang', itemsOrder[1].text)}>
+                onPress={() => navigateOrderMgmt(OrderCateType.shipping)}>
                 <OrderStatusItem
                   img={itemsOrder[1].img}
                   title={itemsOrder[1].text}
-                  quantity={45}
+                  quantity={shippingOrders.length}
                 />
               </TouchableOpacity>
 
@@ -322,11 +335,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => console.log('Trang', itemsOrder[2].text)}>
+                onPress={() => navigateOrderMgmt(OrderCateType.shipped)}>
                 <OrderStatusItem
                   img={itemsOrder[2].img}
                   title={itemsOrder[2].text}
-                  quantity={4}
+                  quantity={shippedOrders.length}
                 />
               </TouchableOpacity>
 
@@ -336,11 +349,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => console.log('Trang', itemsOrder[3].text)}>
+                onPress={() => navigateOrderMgmt(OrderCateType.return)}>
                 <OrderStatusItem
                   img={itemsOrder[3].img}
                   title={itemsOrder[3].text}
-                  quantity={4}
+                  quantity={returnOrders.length}
                 />
               </TouchableOpacity>
             </View>

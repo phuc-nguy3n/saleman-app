@@ -10,7 +10,73 @@
                 "salesAmount": "3.000.000",
                 "orderCount": "12",
                 "registeredAgents": "6"
-            }
+            },
+            "orders": [
+                {
+                    "code": "DHNK3008TP2021",
+                    "orderer": "Trương Văn A",
+                    "phoneNumber": "0909 888 777",
+                    "timestamp": "",
+                    "address": "443/71C Lê văn Sỹ, Phường 12, Quận 3, TP. Hồ Chí Minh",
+                    "products": [
+                        {
+                            "code": "SP1",
+                            "name": "Adizero Boston 12",
+                            "img": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg",
+                            "price": "4.000.000"
+                        }
+                    ],
+                    "status": "new"
+                },
+                {
+                    "code": "DHNK3008TP2022",
+                    "orderer": "Phạm Thị B",
+                    "phoneNumber": "0909 888 777",
+                    "timestamp": "",
+                    "address": "443/71C Lê văn Sỹ, Phường 12, Quận 3, TP. Hồ Chí Minh",
+                    "products": [
+                        {
+                            "code": "SP2",
+                            "name": "Ultraboost Light 2.0",
+                            "img": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/a0d28417ecea494da86c536c47497e08_9366/Giay_Ultraboost_Light_2.0_trang_JP5131_01_00_standard.jpg",
+                            "price": "4.900.000"
+                        }
+                    ],
+                    "status": "shipping"
+                },
+                {
+                    "code": "DHNK3008TP2023",
+                    "orderer": "Lê Mẫn C",
+                    "phoneNumber": "0909 888 777",
+                    "timestamp": "",
+                    "address": "443/71C Lê văn Sỹ, Phường 12, Quận 3, TP. Hồ Chí Minh",
+                    "products": [
+                        {
+                            "code": "SP3",
+                            "name": "Supernova Comfortglide",
+                            "img": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg",
+                            "price": "2.900.000"
+                        }
+                    ],
+                    "status": "shipped"
+                },
+                {
+                    "code": "DHNK3008TP2023",
+                    "orderer": "Trương Thế D",
+                    "phoneNumber": "0909 888 777",
+                    "timestamp": "",
+                    "address": "443/71C Lê văn Sỹ, Phường 12, Quận 3, TP. Hồ Chí Minh",
+                    "products": [
+                        {
+                            "code": "SP3",
+                            "name": "Supernova Comfortglide",
+                            "img": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg",
+                            "price": "2.900.000"
+                        }
+                    ],
+                    "status": "return"
+                }
+            ]
         },
         {
             "code": "A2456",
