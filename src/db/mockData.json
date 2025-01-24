@@ -36,7 +36,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2022",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -59,7 +59,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2023",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -82,7 +82,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2024",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -105,7 +105,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2025",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -128,7 +128,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2026",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -151,7 +151,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2021",
+                    "code": "DHNK3008TP2027",
                     "orderer": "Trương Văn A",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -174,7 +174,7 @@
                     "status": "new"
                 },
                 {
-                    "code": "DHNK3008TP2022",
+                    "code": "DHNK3008TP2028",
                     "orderer": "Phạm Thị B",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -187,10 +187,11 @@
                             "price": "4.900.000"
                         }
                     ],
+                    "totalPrice": "8.900.000",
                     "status": "shipping"
                 },
                 {
-                    "code": "DHNK3008TP2023",
+                    "code": "DHNK3008TP2029",
                     "orderer": "Lê Mẫn C",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -203,10 +204,11 @@
                             "price": "2.900.000"
                         }
                     ],
+                    "totalPrice": "8.900.000",
                     "status": "shipped"
                 },
                 {
-                    "code": "DHNK3008TP2023",
+                    "code": "DHNK3008TP2030",
                     "orderer": "Trương Thế D",
                     "phoneNumber": "0909 888 777",
                     "timestamp": "2025-01-24T03:07:10.667601",
@@ -219,6 +221,7 @@
                             "price": "2.900.000"
                         }
                     ],
+                    "totalPrice": "8.900.000",
                     "status": "return"
                 }
             ]
