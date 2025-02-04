@@ -54,6 +54,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     });
   };
 
+  const navigateWorkSchedule = () => {
+    navigation.navigate('WorkSchedule');
+  };
+
   const generateProcessWork = (todo: string): string | undefined => {
     switch (todo) {
       case TodoType.visit:
@@ -255,7 +259,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           {/* Component 2 */}
           <View style={styles.actionWrapped}>
             {itemsStore.map((item, index) => (
-              <View key={index} style={styles.actionBox}>
+              <TouchableOpacity
+                onPress={navigateWorkSchedule}
+                key={index}
+                style={styles.actionBox}>
                 <Image style={styles.actionImg} source={item.img} />
                 <Text
                   style={[
@@ -265,7 +272,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                   ]}>
                   {item.text}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
 
@@ -274,7 +281,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             <View style={styles.toDoHeader}>
               <Text style={styles.title}>Quản lý đơn hàng</Text>
 
-              <View>
+              <TouchableOpacity>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
                   onPress={() => navigateOrderMgmt(OrderCateType.new)}>
@@ -288,7 +295,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                     name={'chevron-right'}
                   />
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
 
             <View style={styles.orderStatusWrapped}>

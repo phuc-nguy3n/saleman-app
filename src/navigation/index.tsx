@@ -8,6 +8,7 @@ import AuthScreen from '../srceens/AuthScreen';
 import AppNavigator from './AppNavigator';
 import OrderMgmtScreen from '../srceens/OrderMgmtScreen';
 import OrderDetailsScreen from '../srceens/OrderDetailsScreen';
+import WorkScheduleScreen from '../srceens/WorkScheduleScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ function AppNavigation() {
           name="OrderDetails"
           component={OrderDetailsScreen}
           options={{headerShown: true, title: 'Chi tiết đơn hàng'}}
+        />
+        <Stack.Screen
+          name="WorkSchedule"
+          component={WorkScheduleScreen}
+          options={{headerShown: true, title: 'Lịch làm việc'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
