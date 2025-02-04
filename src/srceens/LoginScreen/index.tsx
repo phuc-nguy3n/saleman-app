@@ -1,5 +1,5 @@
 import styles from './styles';
-import {Colors, FontSizes, MsgError, ThemeTextInput} from '../../config/const';
+import {Colors, MsgError, ThemeTextInput} from '../../config/const';
 import {eye, eyeOff, logo} from '../../assets/images';
 import React, {useEffect, useState} from 'react';
 import {
@@ -8,6 +8,7 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {
@@ -17,6 +18,7 @@ import {
 } from '../../types';
 import data from '../../db/mockData.json';
 import {useLogin} from '../../hooks/useLogin';
+import globalStyles from '../../styles/globalStyles';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const userList = data.user;
@@ -174,24 +176,25 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
     }
   };
 
+  const buttonStatus = (): string => {
+    return disableLogin ? Colors.disable : Colors.primary;
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Image source={logo} style={styles.image} />
+          <Image source={logo} style={styles.logo} />
         </View>
 
         {/* Body */}
         <View style={styles.body}>
           <Text
             style={[
-              {
-                fontSize: 18,
-                marginBottom: 24,
-              },
-              styles.color,
-              styles.medium,
+              styles.titleBody,
+              globalStyles.primaryColor,
+              globalStyles.fontWeightMedium,
             ]}>
             Đăng nhập
           </Text>
@@ -255,26 +258,25 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <View style={styles.box}>
+          <View style={styles.footerBox}>
             <Text
               style={[
-                {
-                  textAlign: 'right',
-                  fontSize: FontSizes.medium,
-                },
-                styles.medium,
-                styles.color,
+                styles.footerContent,
+                globalStyles.primaryColor,
+                globalStyles.fontMedium,
+                globalStyles.fontWeightMedium,
               ]}>
               Quên mật khẩu
             </Text>
           </View>
 
           <Button
-            style={{
-              borderRadius: 8,
-              backgroundColor: disableLogin ? Colors.disable : Colors.primary,
-              marginVertical: 8,
-            }}
+            style={[
+              styles.button,
+              {
+                backgroundColor: buttonStatus(),
+              },
+            ]}
             mode="contained"
             onPress={handleLogin}
             disabled={disableLogin}>
@@ -284,11 +286,25 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
           <View style={{marginTop: 12}}>
             <Text
               style={[
-                styles.color,
-                {fontWeight: '400', fontSize: FontSizes.medium},
+                globalStyles.primaryColor,
+                globalStyles.fontWeightRegular,
+                globalStyles.fontMedium,
               ]}>
               Đăng ký trở thành nhân viên bán hàng với Megasop ?{' '}
-              <Text style={styles.underline}>Đăng kí ngay</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Trang đăng ký');
+                }}>
+                <Text
+                  style={[
+                    globalStyles.underline,
+                    globalStyles.primaryColor,
+                    globalStyles.fontWeightRegular,
+                    globalStyles.fontMedium,
+                  ]}>
+                  Đăng kí ngay
+                </Text>
+              </TouchableOpacity>
             </Text>
           </View>
         </View>
@@ -300,7 +316,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
 function ErrorTextView({text}: {readonly text: string}) {
   return (
     <View>
-      <Text style={styles.error}>{text}</Text>
+      <Text style={globalStyles.errorColor}>{text}</Text>
     </View>
   );
 }

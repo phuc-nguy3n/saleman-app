@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
   },
-  image: {
+  logo: {
     width: 114,
     height: 67,
   },
@@ -20,8 +19,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-  color: {
-    color: Colors.primary,
+  titleBody: {
+    fontSize: 18,
+    marginBottom: 24,
   },
   form: {
     gap: 12,
@@ -30,18 +30,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
     width: '100%',
   },
-  box: {
+  footerBox: {
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
-  medium: {
-    fontWeight: '500',
+  footerContent: {
+    textAlign: 'right',
   },
-  underline: {
-    textDecorationLine: 'underline',
-  },
-  error: {
-    color: Colors.error,
+  button: {
+    borderRadius: 8,
+    marginVertical: 8,
   },
 });
 
