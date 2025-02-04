@@ -86,6 +86,13 @@ export type OutputValudationType = {
 };
 
 // Types
+export enum TodoType {
+  visit = 'visit',
+  sale = 'sale',
+  orderCount = 'orderCount',
+  register = 'register',
+}
+
 export enum OrderCateType {
   new = 'new',
   shipping = 'shipping',

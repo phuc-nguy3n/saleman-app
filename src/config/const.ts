@@ -42,6 +42,8 @@ export const Colors = {
     shipped: '#32CD32',
     return: '#FF4500',
   },
+  gray: '#f4f3f4',
+  darkGray: '#767577',
 };
 
 export const ThemeTextInput = {

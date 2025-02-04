@@ -1,5 +1,5 @@
 /* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
+// /* eslint-disable react-native/no-inline-styles */
 
 import {
   View,
@@ -20,10 +20,12 @@ import {
   HomeScreenProps,
   OrderCateType,
   OrderStatusItemProps,
+  TodoType,
   UserType,
 } from '../../types';
 import {generateOrderQuantity, generateSalesAmount} from '../../utils';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import globalStyles from '../../styles/globalStyles';
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {toDo, store, order} = HomeConst;
@@ -53,6 +55,35 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     });
   };
 
+  const generateProcessWork = (todo: string): string | undefined => {
+    switch (todo) {
+      case TodoType.visit:
+        return isProcessWork
+          ? user.todoList.storesToVisit + '/' + missions.storesToVisit
+          : missions.storesToVisit;
+
+      case TodoType.sale:
+        return isProcessWork
+          ? generateSalesAmount(user.todoList.salesAmount) +
+              '/' +
+              generateSalesAmount(missions.salesAmount)
+          : generateSalesAmount(missions.salesAmount).toString();
+
+      case TodoType.orderCount:
+        return isProcessWork
+          ? user.todoList.orderCount + '/' + missions.orderCount
+          : missions.orderCount;
+
+      case TodoType.register:
+        return isProcessWork
+          ? user.todoList.registeredAgents + '/' + missions.registeredAgents
+          : missions.registeredAgents;
+
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -60,24 +91,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         <Image style={styles.headerBackground} source={ellipse} />
         <View style={styles.headerContentBox}>
           <View>
-            <Text
-              style={{
-                fontSize: FontSizes.medium,
-                color: 'white',
-              }}>
+            <Text style={[globalStyles.fontMedium, globalStyles.whiteColor]}>
               Xin chào,
             </Text>
             <Text
-              style={{
-                fontSize: FontSizes.large,
-                color: 'white',
-                fontWeight: 500,
-              }}>
-              {user !== null ? user.name : ''}
+              style={[
+                globalStyles.fontLarge,
+                globalStyles.whiteColor,
+                globalStyles.fontWeightMedium,
+              ]}>
+              {user !== null ? user.name : 'Username'}
             </Text>
           </View>
 
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={styles.avatarBox}>
             <Image style={styles.avatar} source={avatar} />
           </View>
         </View>
@@ -90,7 +117,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         }}>
         <View style={{gap: 16}}>
           {/* Component 1 */}
-          <View style={styles.toDoBox}>
+          <View style={styles.wrapped}>
             {/* Header */}
             <View style={styles.toDoHeader}>
               <View>
@@ -103,8 +130,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
               <View>
                 <Switch
-                  trackColor={{false: '#767577', true: Colors.second}}
-                  thumbColor={isProcessWork ? Colors.primary : '#f4f3f4'}
+                  trackColor={{false: Colors.darkGray, true: Colors.second}}
+                  thumbColor={isProcessWork ? Colors.primary : Colors.gray}
                   ios_backgroundColor="#3e3e3e"
                   onValueChange={toggleSwitch}
                   value={isProcessWork}
@@ -113,131 +140,113 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             </View>
 
             {/* Body */}
-            <View style={styles.toDoItemBox}>
-              <View style={{alignItems: 'center', width: '25%'}}>
+            <View style={styles.toDoItemWrapped}>
+              <View style={styles.toDoItemBox}>
                 <View>
                   <Image
-                    style={{width: 16, height: 16}}
+                    style={styles.toDoItemIcon}
                     source={itemsTodo[0].icon}
                   />
                 </View>
 
-                <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                <Text
+                  style={[
+                    globalStyles.fontSmall,
+                    globalStyles.fontWeightMedium,
+                  ]}>
                   {itemsTodo[0].title}
                 </Text>
 
-                <View style={{alignItems: 'center', marginTop: 4}}>
-                  <Text style={{fontSize: 18, fontWeight: 500}}>
-                    {` ${
-                      isProcessWork
-                        ? user.todoList.storesToVisit +
-                          '/' +
-                          missions.storesToVisit
-                        : missions.storesToVisit
-                    } `}
+                <View style={styles.toDoItemContentBox}>
+                  <Text style={styles.toDoItemText}>
+                    {generateProcessWork(TodoType.visit)}
                   </Text>
-                  <Text style={{fontSize: 10, fontWeight: 300}}>
-                    {itemsTodo[0].unit}
-                  </Text>
+                  <Text style={styles.toDoItemUnit}>{itemsTodo[0].unit}</Text>
                 </View>
               </View>
 
-              <View style={{alignItems: 'center', width: '25%'}}>
+              <View style={styles.toDoItemBox}>
                 <View>
                   <Image
-                    style={{width: 16, height: 16}}
+                    style={styles.toDoItemIcon}
                     source={itemsTodo[1].icon}
                   />
                 </View>
 
-                <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                <Text
+                  style={[
+                    globalStyles.fontSmall,
+                    globalStyles.fontWeightMedium,
+                  ]}>
                   {itemsTodo[1].title}
                 </Text>
 
-                <View style={{alignItems: 'center', marginTop: 4}}>
-                  <Text style={{fontSize: 18, fontWeight: 500}}>
-                    {` ${
-                      isProcessWork
-                        ? generateSalesAmount(user.todoList.salesAmount) +
-                          '/' +
-                          generateSalesAmount(missions.salesAmount)
-                        : generateSalesAmount(missions.salesAmount)
-                    } `}
+                <View style={styles.toDoItemContentBox}>
+                  <Text style={styles.toDoItemText}>
+                    {generateProcessWork(TodoType.sale)}
                   </Text>
-                  <Text style={{fontSize: 10, fontWeight: 300}}>
-                    {itemsTodo[1].unit}
-                  </Text>
+                  <Text style={styles.toDoItemUnit}>{itemsTodo[1].unit}</Text>
                 </View>
               </View>
 
-              <View style={{alignItems: 'center', width: '25%'}}>
+              <View style={styles.toDoItemBox}>
                 <View>
                   <Image
-                    style={{width: 16, height: 16}}
+                    style={styles.toDoItemIcon}
                     source={itemsTodo[2].icon}
                   />
                 </View>
 
-                <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                <Text
+                  style={[
+                    globalStyles.fontSmall,
+                    globalStyles.fontWeightMedium,
+                  ]}>
                   {itemsTodo[2].title}
                 </Text>
 
-                <View style={{alignItems: 'center', marginTop: 4}}>
-                  <Text style={{fontSize: 18, fontWeight: 500}}>
-                    {` ${
-                      isProcessWork
-                        ? user.todoList.orderCount + '/' + missions.orderCount
-                        : missions.orderCount
-                    } `}
+                <View style={styles.toDoItemContentBox}>
+                  <Text style={styles.toDoItemText}>
+                    {generateProcessWork(TodoType.orderCount)}
                   </Text>
-                  <Text style={{fontSize: 10, fontWeight: 300}}>
-                    {itemsTodo[2].unit}
-                  </Text>
+                  <Text style={styles.toDoItemUnit}>{itemsTodo[2].unit}</Text>
                 </View>
               </View>
 
-              <View style={{alignItems: 'center', width: '25%'}}>
+              <View style={styles.toDoItemBox}>
                 <View>
                   <Image
-                    style={{width: 16, height: 16}}
+                    style={styles.toDoItemIcon}
                     source={itemsTodo[3].icon}
                   />
                 </View>
 
-                <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
+                <Text
+                  style={[
+                    globalStyles.fontSmall,
+                    globalStyles.fontWeightMedium,
+                  ]}>
                   {itemsTodo[3].title}
                 </Text>
 
-                <View style={{alignItems: 'center', marginTop: 4}}>
-                  <Text style={{fontSize: 18, fontWeight: 500}}>
-                    {` ${
-                      isProcessWork
-                        ? user.todoList.registeredAgents +
-                          '/' +
-                          missions.registeredAgents
-                        : missions.registeredAgents
-                    } `}
+                <View style={styles.toDoItemContentBox}>
+                  <Text style={styles.toDoItemText}>
+                    {generateProcessWork(TodoType.register)}
                   </Text>
-                  <Text style={{fontSize: 10, fontWeight: 300}}>
-                    {itemsTodo[3].unit}
-                  </Text>
+                  <Text style={styles.toDoItemUnit}>{itemsTodo[3].unit}</Text>
                 </View>
               </View>
             </View>
 
             {/* Footer */}
             <View style={{padding: 8}}>
-              <View
-                style={{
-                  backgroundColor: Colors.bgError,
-                  padding: 8,
-                  borderRadius: 4,
-                  flexDirection: 'row',
-                  gap: 8,
-                  alignItems: 'center',
-                }}>
+              <View style={[globalStyles.bgError, styles.toDoItemFooterBox]}>
                 <Icon name="alert-circle" size={20} color={Colors.error} />
-                <Text style={{fontSize: FontSizes.small, fontWeight: 400}}>
+                <Text
+                  style={[
+                    globalStyles.fontSmall,
+                    globalStyles.fontWeightRegular,
+                  ]}>
                   {noticeText}
                 </Text>
               </View>
@@ -276,7 +285,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           </View>
 
           {/* Component 3 */}
-          <View style={styles.toDoBox}>
+          <View style={styles.wrapped}>
             <View style={styles.toDoHeader}>
               <Text style={styles.title}>Quản lý đơn hàng</Text>
 

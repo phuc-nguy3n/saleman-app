@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  avatarBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   avatar: {
     width: 50,
     height: 50,
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: 100,
   },
-  toDoBox: {
+  wrapped: {
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 8,
@@ -55,10 +59,37 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.line,
   },
-  toDoItemBox: {
+  toDoItemWrapped: {
     marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  toDoItemBox: {
+    alignItems: 'center',
+    width: '25%',
+  },
+  toDoItemIcon: {
+    width: 16,
+    height: 16,
+  },
+  toDoItemContentBox: {
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  toDoItemText: {
+    fontSize: 18,
+    fontWeight: 500,
+  },
+  toDoItemUnit: {
+    fontSize: 10,
+    fontWeight: 300,
+  },
+  toDoItemFooterBox: {
+    padding: 8,
+    borderRadius: 4,
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
   },
 });
 

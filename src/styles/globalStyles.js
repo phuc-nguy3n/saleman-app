@@ -8,7 +8,15 @@ TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 
 const globalStyles = StyleSheet.create({
+  // Background color
+  bgError: {
+    backgroundColor: Colors.bgError,
+  },
+
   // Color
+  whiteColor: {
+    color: 'white',
+  },
   primaryColor: {
     color: Colors.primary,
   },
