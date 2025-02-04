@@ -8,6 +8,7 @@ type RootStackParamList = {
   Home: undefined;
   OrderManagement: {cateOrders: string | number; orders: OrderType[]};
   OrderDetails: {order: OrderType};
+  WorkSchedule: undefined;
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -20,6 +21,10 @@ export type LoginScreenProps = {
 
 export type HomeScreenProps = {
   navigation: AppNavigationProp<'Home'>;
+};
+
+export type WorkScheduleProps = {
+  navigation: AppNavigationProp<'WorkSchedule'>;
 };
 
 type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
@@ -86,6 +91,13 @@ export type OutputValudationType = {
 };
 
 // Types
+export enum TodoType {
+  visit = 'visit',
+  sale = 'sale',
+  orderCount = 'orderCount',
+  register = 'register',
+}
+
 export enum OrderCateType {
   new = 'new',
   shipping = 'shipping',
