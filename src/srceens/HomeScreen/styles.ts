@@ -111,6 +111,45 @@ const styles = StyleSheet.create({
   actionText: {
     marginTop: 8,
   },
+  orderStatusWrapped: {
+    paddingVertical: 14,
+    paddingHorizontal: 8,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
+  orderStatusBox: {
+    width: '25%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  orderStatusItem: {
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    position: 'relative',
+  },
+  orderQuantityDot: {
+    minWidth: 20,
+    minHeight: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.error,
+    borderRadius: 50,
+    position: 'absolute',
+    zIndex: 1,
+    top: 0,
+    right: 4,
+  },
+  orderQuantityText: {
+    padding: 4,
+    color: 'white',
+    fontSize: 10,
+  },
+  orderStatusImg: {
+    width: 40,
+    height: 40,
+  },
 });
 
 export default styles;

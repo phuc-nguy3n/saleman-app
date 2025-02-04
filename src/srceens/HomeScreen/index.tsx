@@ -1,5 +1,4 @@
 /* eslint-disable react/self-closing-comp */
-// /* eslint-disable react-native/no-inline-styles */
 
 import {
   View,
@@ -292,19 +291,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               </View>
             </View>
 
-            <View
-              style={{
-                paddingVertical: 14,
-                paddingHorizontal: 8,
-                backgroundColor: 'white',
-                flexDirection: 'row',
-              }}>
+            <View style={styles.orderStatusWrapped}>
               <TouchableOpacity
-                style={{
-                  width: '25%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                style={styles.orderStatusBox}
                 onPress={() => navigateOrderMgmt(OrderCateType.new)}>
                 <OrderStatusItem
                   img={itemsOrder[0].img}
@@ -314,11 +303,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{
-                  width: '25%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                style={styles.orderStatusBox}
                 onPress={() => navigateOrderMgmt(OrderCateType.shipping)}>
                 <OrderStatusItem
                   img={itemsOrder[1].img}
@@ -328,11 +313,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{
-                  width: '25%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                style={styles.orderStatusBox}
                 onPress={() => navigateOrderMgmt(OrderCateType.shipped)}>
                 <OrderStatusItem
                   img={itemsOrder[2].img}
@@ -342,11 +323,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{
-                  width: '25%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                style={styles.orderStatusBox}
                 onPress={() => navigateOrderMgmt(OrderCateType.return)}>
                 <OrderStatusItem
                   img={itemsOrder[3].img}
@@ -365,41 +342,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
 const OrderStatusItem = ({img, title, quantity}: OrderStatusItemProps) => {
   return (
-    <View
-      style={{
-        width: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 8,
-        position: 'relative',
-      }}>
-      <View
-        style={{
-          minWidth: 20,
-          minHeight: 20,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: Colors.error,
-
-          borderRadius: 50,
-
-          position: 'absolute',
-          zIndex: 1,
-          top: 0,
-          right: 4,
-        }}>
-        <Text
-          style={{
-            padding: 4,
-            color: 'white',
-            fontSize: 10,
-          }}>
+    <View style={styles.orderStatusItem}>
+      <View style={styles.orderQuantityDot}>
+        <Text style={styles.orderQuantityText}>
           {generateOrderQuantity(quantity)}
         </Text>
       </View>
 
-      <Image style={{width: 40, height: 40}} source={img} />
-      <Text style={{fontWeight: 300, fontSize: FontSizes.small}}>{title}</Text>
+      <Image style={styles.orderStatusImg} source={img} />
+      <Text style={[globalStyles.fontWeightLight, globalStyles.fontSmall]}>
+        {title}
+      </Text>
     </View>
   );
 };
