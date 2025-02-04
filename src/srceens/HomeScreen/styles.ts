@@ -91,6 +91,26 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
+  actionWrapped: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  actionBox: {
+    width: '50%',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    height: 110,
+  },
+  actionImg: {
+    width: 50,
+    height: 50,
+  },
+  actionText: {
+    marginTop: 8,
+  },
 });
 
 export default styles;

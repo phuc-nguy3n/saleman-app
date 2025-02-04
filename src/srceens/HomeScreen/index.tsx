@@ -254,30 +254,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           </View>
 
           {/* Component 2 */}
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              gap: 8,
-            }}>
+          <View style={styles.actionWrapped}>
             {itemsStore.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  width: '50%',
-                  borderRadius: 8,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  height: 110,
-                }}>
-                <Image style={{width: 50, height: 50}} source={item.img} />
+              <View key={index} style={styles.actionBox}>
+                <Image style={styles.actionImg} source={item.img} />
                 <Text
-                  style={{
-                    marginTop: 8,
-                    fontWeight: 400,
-                    fontSize: FontSizes.small,
-                  }}>
+                  style={[
+                    globalStyles.fontWeightRegular,
+                    globalStyles.fontSmall,
+                    styles.actionText,
+                  ]}>
                   {item.text}
                 </Text>
               </View>
