@@ -91,6 +91,20 @@ export type OutputValudationType = {
   data: UserType | {};
 };
 
+export type OwnerType = {
+  id: string;
+  name: string;
+  address: string;
+  phoneNumber: string;
+};
+
+export type AgencyType = {
+  id: string;
+  name: string;
+  quantityOrders: string | number;
+  owner: OwnerType;
+};
+
 // Types
 export enum TodoType {
   visit = 'visit',

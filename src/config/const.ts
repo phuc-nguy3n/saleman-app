@@ -44,6 +44,9 @@ export const Colors = {
   },
   gray: '#f4f3f4',
   darkGray: '#767577',
+  green: '#00BC3C',
+  greenLight: '#E5F8EB',
+  yellowLight: '#F6EE94',
 };
 
 export const ThemeTextInput = {

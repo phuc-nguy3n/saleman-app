@@ -258,5 +258,51 @@
             "orderCount": "100",
             "registeredAgents": "10"
         }
-    }
+    },
+    "agency": [
+        {
+            "id": "agency01",
+            "name": "Phạm Nghĩa",
+            "quantityOrders": "2",
+            "owner": {
+                "id": "owner01",
+                "name": "Lê Hữu Phước",
+                "address": "893/23/323 Lê Văn Sỹ, Phường 14, Quận Tân Bình, TP.HCM",
+                "phoneNumber": "0772080909"
+            }
+        },
+        {
+            "id": "agency02",
+            "name": "Phạm Nghĩa",
+            "quantityOrders": "2",
+            "owner": {
+                "id": "owner02",
+                "name": "Lê Hữu Phước",
+                "address": "893/23/323 Lê Văn Sỹ, Phường 14, Quận Tân Bình, TP.HCM",
+                "phoneNumber": "0772080909"
+            }
+        },
+        {
+            "id": "agency03",
+            "name": "Phạm Nghĩa",
+            "quantityOrders": "2",
+            "owner": {
+                "id": "owner03",
+                "name": "Lê Hữu Phước",
+                "address": "893/23/323 Lê Văn Sỹ, Phường 14, Quận Tân Bình, TP.HCM",
+                "phoneNumber": "0772080909"
+            }
+        },
+        {
+            "id": "agency04",
+            "name": "Phạm Nghĩa",
+            "quantityOrders": "2",
+            "owner": {
+                "id": "owner04",
+                "name": "Lê Hữu Phước",
+                "address": "893/23/323 Lê Văn Sỹ, Phường 14, Quận Tân Bình, TP.HCM",
+                "phoneNumber": "0772080909"
+            }
+        }
+    ]
 }
