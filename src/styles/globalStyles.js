@@ -20,10 +20,22 @@ const globalStyles = StyleSheet.create({
   primaryColor: {
     color: Colors.primary,
   },
-
+  thirdColor: {
+    color: Colors.third,
+  },
+  lineColor: {
+    borderColor: Colors.line,
+  },
+  outlineColor: {
+    color: Colors.outline,
+  },
+  linkColor: {
+    color: Colors.link,
+  },
   errorColor: {
     color: Colors.error,
   },
+  textSecondColor: {color: Colors.textSecond},
 
   //   Font size
   fontSmall: {
