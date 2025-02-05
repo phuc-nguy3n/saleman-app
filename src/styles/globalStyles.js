@@ -9,8 +9,23 @@ TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 
 const globalStyles = StyleSheet.create({
   // Background color
+  bgPrimary: {
+    backgroundColor: Colors.primary,
+  },
   bgError: {
     backgroundColor: Colors.bgError,
+  },
+  bgThird: {
+    backgroundColor: Colors.third,
+  },
+  bgYellowLight: {
+    backgroundColor: Colors.yellowLight,
+  },
+  bgGreenLight: {
+    backgroundColor: Colors.greenLight,
+  },
+  bgWhite: {
+    backgroundColor: 'white',
   },
 
   // Color
@@ -20,10 +35,23 @@ const globalStyles = StyleSheet.create({
   primaryColor: {
     color: Colors.primary,
   },
-
+  thirdColor: {
+    color: Colors.third,
+  },
+  lineColor: {
+    borderColor: Colors.line,
+  },
+  outlineColor: {
+    color: Colors.outline,
+  },
+  linkColor: {
+    color: Colors.link,
+  },
   errorColor: {
     color: Colors.error,
   },
+  textSecondColor: {color: Colors.textSecond},
+  greenColor: {color: Colors.green},
 
   //   Font size
   fontSmall: {

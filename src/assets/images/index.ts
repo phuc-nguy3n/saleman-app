@@ -11,6 +11,7 @@ export const shipped = require('./shipped.png');
 export const returnOrder = require('./return-order.png');
 export const headerBg = require('./header-bg.png');
 export const productImg = require('./product.png');
+export const agencyImg = require('./agency.png');
 
 // Icons
 export const eye = require('./eye-enable.png');
@@ -29,3 +30,5 @@ export const fileActive = require('./file-active-icon.png');
 export const promotion = require('./promotion.png');
 export const passcodeLock = require('./passcode-lock.png');
 export const logout = require('./log-out.png');
+export const markerPin = require('./marker-pin-icon.png');
+export const shoppingBag = require('./shopping-bag-icon.png');

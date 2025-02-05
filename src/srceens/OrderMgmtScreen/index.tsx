@@ -1,13 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
-import {
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, TextInput, TouchableOpacity, View} from 'react-native';
 import {Category, Colors} from '../../config/const';
 import {Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -25,30 +18,72 @@ import {
   formatPrice,
 } from '../../utils/index';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import styles from './styles';
+import globalStyles from '../../styles/globalStyles';
 
 const CateItem = ({text, active}: {text: string; active: boolean}) => {
+  const cateActiveStyle = {
+    button: {
+      borderColor: active ? Colors.primary : Colors.outline,
+      backgroundColor: active ? Colors.third : 'white',
+    },
+    color: {
+      color: active ? Colors.primary : Colors.textSecond,
+    },
+  };
+
   return (
-    <View
-      style={{
-        width: '100%',
-        paddingHorizontal: 16,
-        paddingVertical: 4,
-        borderWidth: 1,
-        borderColor: active ? Colors.primary : Colors.outline,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: active ? Colors.third : 'white',
-      }}>
+    <View style={[cateActiveStyle.button, styles.categoryItem]}>
       <Text
-        style={{
-          fontSize: 10,
-          fontWeight: 300,
-          color: active ? Colors.primary : Colors.textSecond,
-        }}>
+        style={[
+          cateActiveStyle.color,
+          globalStyles.fontWeightLight,
+          styles.categoryItemText,
+        ]}>
         {text}
       </Text>
     </View>
+  );
+};
+
+const OrderCates = ({
+  orderCate,
+  setOrderCate,
+  setOrderList,
+  orderTotal,
+}: {
+  orderCate: string | number;
+  setOrderCate: Dispatch<SetStateAction<string | number>>;
+  setOrderList: Dispatch<SetStateAction<OrderType[]>>;
+  orderTotal: OrderType[];
+}) => {
+  const {order} = Category;
+
+  const orderCateConst = [
+    {type: OrderCateType.new, text: order.newOrder},
+    {type: OrderCateType.shipping, text: order.shipping},
+    {type: OrderCateType.shipped, text: order.shipped},
+    {type: OrderCateType.return, text: order.returnOrder},
+  ];
+
+  const handleOrderCateActive = (cate: string) => {
+    setOrderCate(cate);
+    setOrderList(orderTotal.filter(order => order.status === cate));
+  };
+
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{marginRight: -8}}>
+      {orderCateConst.map(({type, text}) => (
+        <TouchableOpacity
+          key={type}
+          onPress={() => handleOrderCateActive(type)}>
+          <CateItem text={text} active={orderCate === type} />
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -64,7 +99,7 @@ const renderOrderStatus = (status: string) => {
 const renderOrderDate = (timestamp: string) => {
   return (
     <View>
-      <Text style={{color: Colors.textSecond}}>
+      <Text style={globalStyles.textSecondColor}>
         {formatTimestamp(timestamp, 'date')} -{' '}
         {formatTimestamp(timestamp, 'time')}
       </Text>
@@ -77,11 +112,9 @@ const renderProductNames = (products: Product[]) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <Text
-        style={{
-          flex: 1,
-          flexWrap: 'wrap',
-          color: Colors.textSecond,
-        }}>
+        style={[globalStyles.textSecondColor, styles.orderItemProductName]}
+        numberOfLines={1}
+        ellipsizeMode="tail">
         {productNames}
       </Text>
     </View>
@@ -92,8 +125,6 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
   navigation,
   route,
 }) => {
-  const {order} = Category;
-
   const orderTotal = route.params.orders;
   const orderInit = orderTotal.filter(
     order => order.status === route.params.cateOrders,
@@ -127,133 +158,61 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
     setOrderTerm(products);
   }, [searchvValue, orderList]);
 
-  const handleOrderCateActive = (cate: string) => {
-    if (cate === OrderCateType.new) {
-      setOrderCate(OrderCateType.new);
-      setOrderList(
-        orderTotal.filter(order => order.status === OrderCateType.new),
-      );
-    } else if (cate === OrderCateType.shipping) {
-      setOrderCate(OrderCateType.shipping);
-      setOrderList(
-        orderTotal.filter(order => order.status === OrderCateType.shipping),
-      );
-    } else if (cate === OrderCateType.shipped) {
-      setOrderCate(OrderCateType.shipped);
-      setOrderList(
-        orderTotal.filter(order => order.status === OrderCateType.shipped),
-      );
-    } else if (cate === OrderCateType.return) {
-      setOrderCate(OrderCateType.return);
-      setOrderList(
-        orderTotal.filter(order => order.status === OrderCateType.return),
-      );
-    }
-  };
-
   return (
     <View style={{flex: 1}}>
       {/* Header */}
       <View style={{backgroundColor: 'white'}}>
         {/* Categories */}
-        <View
-          style={{
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-            flexDirection: 'row',
-            width: '100%',
-            justifyContent: 'space-between',
-          }}>
-          <TouchableOpacity
-            onPress={() => handleOrderCateActive(OrderCateType.new)}
-            style={{width: '23%'}}>
-            <CateItem
-              text={order.newOrder}
-              active={orderCate === OrderCateType.new}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => handleOrderCateActive(OrderCateType.shipping)}
-            style={{width: '23%'}}>
-            <CateItem
-              text={order.shipping}
-              active={orderCate === OrderCateType.shipping}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => handleOrderCateActive(OrderCateType.shipped)}
-            style={{width: '23%'}}>
-            <CateItem
-              text={order.shipped}
-              active={orderCate === OrderCateType.shipped}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => handleOrderCateActive(OrderCateType.return)}
-            style={{width: '23%'}}>
-            <CateItem
-              text={order.returnOrder}
-              active={orderCate === OrderCateType.return}
-            />
-          </TouchableOpacity>
+        <View style={styles.categories}>
+          <OrderCates
+            orderCate={orderCate}
+            setOrderCate={setOrderCate}
+            setOrderList={setOrderList}
+            orderTotal={orderTotal}
+          />
         </View>
 
         {/* Search */}
-        <View style={styles.container}>
-          {/* TextInput */}
-
+        <View style={styles.searchBox}>
           <TextInput
-            style={styles.input}
+            style={styles.searchInput}
             value={searchvValue}
             onChangeText={text => setSearchValue(text)}
             placeholder="Tìm kiếm tên, mã sản phẩm"
             placeholderTextColor="#aaa"
           />
 
-          {/* Nút filter */}
-          <TouchableOpacity onPress={() => console.log('filter')}>
+          <View>
             <Ionicons name="search-outline" size={20} color="#555" />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
 
       {/* Orders */}
       <ScrollView>
         {ordersTerm.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              backgroundColor: 'white',
-              paddingVertical: 8,
-              paddingHorizontal: 16,
-              marginTop: 4,
-            }}>
+          <View key={index} style={styles.orderItemWrapped}>
             {/* Header   */}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingBottom: 8,
-                borderBottomWidth: 1,
-                borderColor: Colors.line,
-              }}>
+            <View style={[globalStyles.lineColor, styles.orderItemHeader]}>
               <View style={{flexDirection: 'row'}}>
                 {renderOrderStatus(item.status)}
                 <Text> | </Text>
                 {renderOrderDate(item.timestamp)}
               </View>
+
               <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
+                style={styles.orderNavigationBox}
                 onPress={() =>
                   navigation.navigate('OrderDetails', {
                     order: item,
                   })
                 }>
                 <Text
-                  style={{color: Colors.link, fontSize: 12, lineHeight: 12}}>
+                  style={[
+                    globalStyles.linkColor,
+                    globalStyles.fontSmall,
+                    {lineHeight: 12},
+                  ]}>
                   Xem đơn hàng
                 </Text>
                 <FontAwesome
@@ -265,33 +224,32 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
             </View>
 
             {/* Body */}
-            <View style={{paddingTop: 8, flexDirection: 'row', gap: 8}}>
+            <View style={styles.orderItemBody}>
               <View>
                 <Image
-                  style={{
-                    width: 86,
-                    height: 86,
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: Colors.line,
-                  }}
+                  style={[styles.orderItemImg]}
+                  resizeMode="cover"
                   source={{uri: item.products[0].img}}
                 />
               </View>
 
-              <View style={{gap: 4, width: '70%'}}>
-                <Text style={{color: Colors.textSecond}}>{item.code}</Text>
-                <Text style={{fontWeight: 500}}>
+              <View style={styles.orderItemTextArea}>
+                <Text style={globalStyles.textSecondColor}>{item.code}</Text>
+                <Text style={globalStyles.fontWeightMedium}>
                   {item.orderer} - {item.phoneNumber}
                 </Text>
                 {renderProductNames(item.products)}
 
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{color: Colors.textSecond}}>
+                  <Text style={globalStyles.textSecondColor}>
                     {item.products.length} sản phẩm
                   </Text>
                   <Text> | </Text>
-                  <Text style={{color: Colors.primary, fontWeight: 500}}>
+                  <Text
+                    style={[
+                      globalStyles.primaryColor,
+                      globalStyles.fontWeightMedium,
+                    ]}>
                     {formatPrice(item.totalPrice)}
                   </Text>
                 </View>
@@ -303,39 +261,5 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    height: 40,
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-  input: {
-    flex: 1,
-    fontSize: 14,
-    color: '#000',
-    paddingVertical: 0,
-    paddingLeft: 10,
-    paddingRight: 30,
-  },
-  searchIcon: {
-    position: 'absolute',
-    right: 40,
-  },
-  //   filterButton: {
-  //     height: 30,
-  //     width: 30,
-  //     marginLeft: 10,
-  //     backgroundColor: '#eaeaea',
-  //     borderRadius: 8,
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   },
-});
 
 export default OrderMgmtScreen;

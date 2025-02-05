@@ -9,8 +9,11 @@ import AppNavigator from './AppNavigator';
 import OrderMgmtScreen from '../srceens/OrderMgmtScreen';
 import OrderDetailsScreen from '../srceens/OrderDetailsScreen';
 import WorkScheduleScreen from '../srceens/WorkScheduleScreen';
+import {RootStackParamList} from '../types';
+import {TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppNavigation() {
   return (
@@ -41,7 +44,16 @@ function AppNavigation() {
         <Stack.Screen
           name="WorkSchedule"
           component={WorkScheduleScreen}
-          options={{headerShown: true, title: 'Lịch làm việc'}}
+          options={{
+            headerShown: true,
+            title: 'Lịch làm việc',
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => console.log('Search icon pressed')}>
+                <Ionicons name="search-outline" size={20} color="black" />
+              </TouchableOpacity>
+            ),
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -3,7 +3,8 @@ import {ImageSourcePropType} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 
 // Navigator
-type RootStackParamList = {
+export type RootStackParamList = {
+  Auth: undefined;
   Login: undefined;
   Home: undefined;
   OrderManagement: {cateOrders: string | number; orders: OrderType[]};
@@ -88,6 +89,20 @@ export type OrderType = {
 export type OutputValudationType = {
   status: boolean;
   data: UserType | {};
+};
+
+export type OwnerType = {
+  id: string;
+  name: string;
+  address: string;
+  phoneNumber: string;
+};
+
+export type AgencyType = {
+  id: string;
+  name: string;
+  quantityOrders: string | number;
+  owner: OwnerType;
 };
 
 // Types
