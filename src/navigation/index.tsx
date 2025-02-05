@@ -9,8 +9,9 @@ import AppNavigator from './AppNavigator';
 import OrderMgmtScreen from '../srceens/OrderMgmtScreen';
 import OrderDetailsScreen from '../srceens/OrderDetailsScreen';
 import WorkScheduleScreen from '../srceens/WorkScheduleScreen';
+import {RootStackParamList} from '../types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppNavigation() {
   return (

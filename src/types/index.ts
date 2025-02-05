@@ -3,7 +3,8 @@ import {ImageSourcePropType} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 
 // Navigator
-type RootStackParamList = {
+export type RootStackParamList = {
+  Auth: undefined;
   Login: undefined;
   Home: undefined;
   OrderManagement: {cateOrders: string | number; orders: OrderType[]};
