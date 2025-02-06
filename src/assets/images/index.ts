@@ -32,3 +32,5 @@ export const passcodeLock = require('./passcode-lock.png');
 export const logout = require('./log-out.png');
 export const markerPin = require('./marker-pin-icon.png');
 export const shoppingBag = require('./shopping-bag-icon.png');
+export const shoppingBagFill = require('./shopping-bag-fill-icon.png');
+export const photoInput = require('./photo-input.png');
