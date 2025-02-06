@@ -31,6 +31,7 @@ export const Colors = {
   third: '#E6F3F8',
   outline: '#9AA7AA',
   line: '#F4F4F4',
+  lineSecond: '#E5E5E5',
   disable: '#E3E3E3',
   error: '#EA5455',
   bgError: '#FDEEEE',
