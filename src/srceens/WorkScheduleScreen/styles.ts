@@ -67,6 +67,12 @@ const styles = StyleSheet.create({
   lineHeightText: {
     lineHeight: 16,
   },
+  fixedButtonContainer: {
+    position: 'absolute',
+    bottom: 60,
+    right: 20,
+    zIndex: 1,
+  },
 });
 
 export default styles;

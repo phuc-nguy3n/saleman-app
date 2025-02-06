@@ -12,6 +12,7 @@ import WorkScheduleScreen from '../srceens/WorkScheduleScreen';
 import {RootStackParamList} from '../types';
 import {TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AgencyInfoScreen from '../srceens/AgencyInfoScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -54,6 +55,11 @@ function AppNavigation() {
               </TouchableOpacity>
             ),
           }}
+        />
+        <Stack.Screen
+          name="AgencyInfo"
+          component={AgencyInfoScreen}
+          options={{headerShown: true, title: 'Danh sách Đại lý'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

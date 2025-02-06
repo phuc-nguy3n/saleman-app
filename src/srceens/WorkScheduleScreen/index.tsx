@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
 import {
@@ -19,9 +13,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../../config/const';
 import styles from './styles';
 import data from '../../db/mockData.json';
-import {AgencyType} from '../../types';
+import {AgencyType, WorkScheduleProps} from '../../types';
 
-const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
+const AgencyItem = ({
+  agencyData,
+  navigateAgencyInfo,
+}: {
+  agencyData: AgencyType;
+  navigateAgencyInfo: () => void;
+}) => {
   return (
     <View style={styles.agencyItem}>
       {/* Header */}
@@ -114,6 +114,7 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
               width: '35%',
             }}>
             <TouchableOpacity
+              onPress={navigateAgencyInfo}
               style={[
                 styles.agencyActionBtn,
                 {borderColor: Colors.primary, borderWidth: 1},
@@ -127,20 +128,38 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
   );
 };
 
-const WorkScheduleScreen = () => {
+const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
   const agencyData = data.agency;
+
+  const navigateAgencyInfo = () => {
+    navigation.navigate('AgencyInfo');
+  };
 
   return (
     <View style={{flex: 1}}>
-      <ScrollView>
-        <View style={styles.agencyWrapped}>
-          <FlatList
-            data={agencyData}
-            renderItem={({item}) => <AgencyItem agencyData={item} />}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.agencyWrapped}>
+        <FlatList
+          data={agencyData}
+          renderItem={({item}) => (
+            <AgencyItem
+              agencyData={item}
+              navigateAgencyInfo={navigateAgencyInfo}
+            />
+          )}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      <View style={styles.fixedButtonContainer}>
+        <TouchableOpacity
+          style={[
+            styles.agencyActionBtn,
+            globalStyles.bgPrimary,
+            {padding: 12, borderRadius: 50, width: 64, height: 64},
+          ]}>
+          <Ionicons size={28} name={'map-outline'} color={'white'} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
