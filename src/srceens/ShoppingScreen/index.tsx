@@ -1,11 +1,10 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {View} from 'react-native';
-import {ShoppingProps} from '../../types';
 
-const ShoppingScreen: React.FC<ShoppingProps> = () => {
+const ShoppingScreen = () => {
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Text>Shopping Screen</Text>
     </View>
   );

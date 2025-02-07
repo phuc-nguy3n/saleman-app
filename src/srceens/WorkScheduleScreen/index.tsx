@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo, useRef} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
@@ -14,13 +14,17 @@ import {Colors} from '../../config/const';
 import styles from './styles';
 import data from '../../db/mockData.json';
 import {AgencyType, WorkScheduleProps} from '../../types';
+import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
+import ShoppingScreen from '../ShoppingScreen';
 
 const AgencyItem = ({
   agencyData,
   navigateAgencyInfo,
-}: {
+}: // openShopping,
+{
   agencyData: AgencyType;
   navigateAgencyInfo: () => void;
+  // openShopping: () => void;
 }) => {
   return (
     <View style={styles.agencyItem}>
@@ -100,6 +104,7 @@ const AgencyItem = ({
               width: '65%',
             }}>
             <TouchableOpacity
+              // onPress={openShopping}
               style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
               <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 
@@ -130,9 +135,16 @@ const AgencyItem = ({
 
 const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
   const agencyData = data.agency;
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const snapPoints = useMemo(() => ['80%'], []);
 
   const navigateAgencyInfo = () => {
     navigation.navigate('AgencyInfo');
+  };
+
+  const openShopping = () => {
+    bottomSheetModalRef.current?.present();
   };
 
   return (
@@ -144,6 +156,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
             <AgencyItem
               agencyData={item}
               navigateAgencyInfo={navigateAgencyInfo}
+              // openShopping={openShopping}
             />
           )}
           keyExtractor={item => item.id}
@@ -152,6 +165,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
       </View>
       <View style={styles.fixedButtonContainer}>
         <TouchableOpacity
+          onPress={openShopping}
           style={[
             styles.agencyActionBtn,
             globalStyles.bgPrimary,
@@ -160,6 +174,22 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           <Ionicons size={28} name={'map-outline'} color={'white'} />
         </TouchableOpacity>
       </View>
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        snapPoints={snapPoints}
+        backdropComponent={({style}) => (
+          <View
+            style={[
+              style,
+              {backgroundColor: 'rgba(0, 0, 0, 0.2)'}, // Lớp mờ phía sau modal
+            ]}
+          />
+        )}>
+        <BottomSheetView style={{flex: 1, backgroundColor: 'grey'}}>
+          <ShoppingScreen />
+        </BottomSheetView>
+      </BottomSheetModal>
     </View>
   );
 };

@@ -35,7 +35,7 @@ export type AgencyInfoProps = {
 };
 
 export type ShoppingProps = {
-  navigation: AppNavigationProp<'Shopping'> | undefined;
+  navigation: AppNavigationProp<'Shopping'>;
 };
 
 type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
