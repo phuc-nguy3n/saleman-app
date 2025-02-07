@@ -13,6 +13,7 @@ import {RootStackParamList} from '../types';
 import {TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgencyCheckinScreen from '../srceens/AgencyCheckinScreen';
+import ShoppingScreen from '../srceens/ShoppingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,8 @@ function AppNavigation() {
           component={AgencyCheckinScreen}
           options={{headerShown: true, title: 'Danh sách Đại lý'}}
         />
+
+        <Stack.Screen name="Shopping" component={ShoppingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -11,6 +11,8 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import AppNavigation from './src/navigation';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,10 +23,14 @@ const styles = StyleSheet.create({
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor={'black'} />
-        <AppNavigation />
-      </SafeAreaView>
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor={'black'} />
+            <AppNavigation />
+          </SafeAreaView>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </Provider>
   );
 }

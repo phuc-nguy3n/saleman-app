@@ -11,6 +11,7 @@ export type RootStackParamList = {
   OrderDetails: {order: OrderType};
   WorkSchedule: undefined;
   AgencyInfo: undefined;
+  Shopping: undefined;
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -31,6 +32,10 @@ export type WorkScheduleProps = {
 
 export type AgencyInfoProps = {
   navigation: AppNavigationProp<'AgencyInfo'>;
+};
+
+export type ShoppingProps = {
+  navigation: AppNavigationProp<'Shopping'>;
 };
 
 type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
