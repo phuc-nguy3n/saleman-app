@@ -154,8 +154,9 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
               openShopping={openShopping}
             />
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}
+          removeClippedSubviews={false}
         />
       </View>
       <View style={styles.fixedButtonContainer}>

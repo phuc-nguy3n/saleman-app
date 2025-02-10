@@ -12,6 +12,11 @@ export const returnOrder = require('./return-order.png');
 export const headerBg = require('./header-bg.png');
 export const productImg = require('./product.png');
 export const agencyImg = require('./agency.png');
+export const bannerOne = require('./banner-1.png');
+export const saleCate = require('./sale-cate.png');
+export const womenCate = require('./women-cate.png');
+export const menCate = require('./men-cate.png');
+export const kidsCate = require('./kids-cate.png');
 
 // Icons
 export const eye = require('./eye-enable.png');
