@@ -63,7 +63,11 @@ function AppNavigation() {
           options={{headerShown: true, title: 'Danh sách Đại lý'}}
         />
 
-        <Stack.Screen name="Shopping" component={ShoppingScreen} />
+        <Stack.Screen
+          name="Shopping"
+          component={ShoppingScreen}
+          options={{headerShown: true, title: 'Mua hàng'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
