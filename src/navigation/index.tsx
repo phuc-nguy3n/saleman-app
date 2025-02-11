@@ -14,6 +14,7 @@ import {TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgencyCheckinScreen from '../srceens/AgencyCheckinScreen';
 import ShoppingScreen from '../srceens/ShoppingScreen';
+import ProductScreen from '../srceens/ProductScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -66,6 +67,11 @@ function AppNavigation() {
         <Stack.Screen
           name="Shopping"
           component={ShoppingScreen}
+          options={{headerShown: true, title: 'Mua hàng'}}
+        />
+        <Stack.Screen
+          name="Product"
+          component={ProductScreen}
           options={{headerShown: true, title: 'Mua hàng'}}
         />
       </Stack.Navigator>

@@ -16,6 +16,8 @@ import globalStyles from '../../styles/globalStyles';
 import {Colors, ShoppingConst} from '../../config/const';
 import {Product} from '../../types';
 import styles from './styles';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {RootStackParamList} from '../../types'; // Adjust the import path as necessary
 
 const ProductItem = ({product}: {product: Product}) => {
   return (
@@ -54,8 +56,9 @@ const ProductItem = ({product}: {product: Product}) => {
     </View>
   );
 };
-
 const ShoppingScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const {cate} = ShoppingConst;
 
   const products: Product[] = [
@@ -132,7 +135,9 @@ const ShoppingScreen = () => {
           <View style={styles.cateBox}>
             {cate.map((item, index) => (
               <View key={index} style={styles.cateItem}>
-                <TouchableOpacity style={styles.cateItemIconBox}>
+                <TouchableOpacity
+                  onPress={navigateProductScreen}
+                  style={styles.cateItemIconBox}>
                   {item.img !== '' ? (
                     <Image source={item.img} resizeMode="cover" />
                   ) : (
@@ -180,22 +185,24 @@ const ShoppingScreen = () => {
     </>
   );
 
+  const navigateProductScreen = () => {
+    navigation.navigate('Product');
+  };
+
   return (
     <View style={globalStyles.bgWhite}>
-      <View>
-        <FlatList
-          ListHeaderComponent={renderHeader}
-          data={products}
-          renderItem={({item}) => <ProductItem product={item} />}
-          keyExtractor={item => item.code.toString()}
-          numColumns={2}
-          removeClippedSubviews={false}
-          columnWrapperStyle={{
-            flex: 1,
-            marginHorizontal: 8,
-          }}
-        />
-      </View>
+      <FlatList
+        ListHeaderComponent={renderHeader}
+        data={products}
+        renderItem={({item}) => <ProductItem product={item} />}
+        keyExtractor={item => item.code.toString()}
+        numColumns={2}
+        removeClippedSubviews={false}
+        columnWrapperStyle={{
+          flex: 1,
+          marginHorizontal: 8,
+        }}
+      />
     </View>
   );
 };
