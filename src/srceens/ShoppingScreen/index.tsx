@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -14,24 +15,15 @@ import {shoppingBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
 import {Colors, ShoppingPropsConst} from '../../config/const';
 import {Product} from '../../types';
+import styles from './styles';
 
 const ProductItem = ({product}: {product: Product}) => {
   return (
-    <View
-      style={{
-        width: '50%',
-        paddingHorizontal: 8,
-        marginBottom: 16,
-      }}>
+    <View style={styles.productsItem}>
       <Image
         resizeMode="cover"
         source={{uri: product.img}}
-        style={{
-          width: '100%',
-          height: 165,
-          marginBottom: 10,
-          borderRadius: 8,
-        }}
+        style={styles.productItemImage}
       />
       <Text
         style={[
@@ -41,25 +33,13 @@ const ProductItem = ({product}: {product: Product}) => {
         ]}>
         {product.name}
       </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+      <View style={styles.productContentArea}>
         <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
           {product.price}đ
         </Text>
 
         <TouchableOpacity
-          style={{
-            backgroundColor: Colors.primary,
-            borderRadius: 50,
-            width: 32,
-            height: 32,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          style={styles.addIconBox}
           onPress={() => {
             console.log('Add to cart');
           }}>
@@ -109,63 +89,32 @@ const ShoppingScreen = () => {
   const renderHeader = () => (
     <>
       {/* Carousel */}
-      <ImageBackground
-        source={bannerOne}
-        style={{width: '100%', height: 232, marginBottom: 12}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginHorizontal: 12,
-            marginTop: 12,
-          }}>
-          {/* Search bar */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                position: 'relative',
-                backgroundColor: 'white',
-                width: '90%',
-                height: 40,
-                borderWidth: 1,
-                borderRadius: 5,
-                borderColor: '#9AA7AA',
-              }}>
+      <ImageBackground source={bannerOne} style={styles.carouselBg}>
+        {/* Header */}
+        <View style={styles.header}>
+          {/* Search */}
+          <View style={styles.searhBar}>
+            <View style={styles.searchBox}>
               <Ionicons
                 name="search-outline"
                 size={24}
                 color="#8F8F8F"
-                style={{position: 'absolute', left: 10}}
+                style={styles.searchIcon}
               />
-              <TextInput
-                style={{
-                  paddingHorizontal: 10,
-                  flex: 1,
-                  paddingLeft: 40,
-                }}
-                placeholder="Search"
-              />
+              <TextInput style={styles.searchInput} placeholder="Search" />
             </View>
           </View>
 
           {/* Cart */}
           <TouchableOpacity>
-            <Image source={shoppingBag} style={{width: 30, height: 30}} />
+            <Image source={shoppingBag} style={styles.cartIcon} />
           </TouchableOpacity>
         </View>
       </ImageBackground>
 
-      {/* Categories */}
-      <View style={{marginBottom: 26}}>
-        <View style={{marginHorizontal: 16, marginBottom: 8}}>
+      {/* Product categories */}
+      <View style={styles.cateContainer}>
+        <View style={styles.cateTitleBox}>
           <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
             Danh mục sản phẩm
           </Text>
@@ -175,26 +124,9 @@ const ShoppingScreen = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={{paddingHorizontal: 16}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginRight: 20,
-              gap: 12,
-            }}>
-            <View style={{alignItems: 'center', gap: 4}}>
-              <TouchableOpacity
-                style={{
-                  boxShadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px',
-                  backgroundColor: 'white',
-                  borderColor: '#E6F3F8',
-                  borderWidth: 1,
-                  width: 56,
-                  height: 56,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 16,
-                  marginHorizontal: 4,
-                }}>
+          <View style={styles.cateBox}>
+            <View style={styles.cateItem}>
+              <TouchableOpacity style={styles.cateItemIconBox}>
                 <Ionicons
                   name="grid-outline"
                   size={24}
@@ -213,20 +145,8 @@ const ShoppingScreen = () => {
             </View>
 
             {cate.map((item, index) => (
-              <View key={index} style={{alignItems: 'center', gap: 4}}>
-                <TouchableOpacity
-                  style={{
-                    boxShadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px',
-                    backgroundColor: 'white',
-                    borderColor: '#E6F3F8',
-                    borderWidth: 1,
-                    width: 56,
-                    height: 56,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 16,
-                    marginHorizontal: 4,
-                  }}>
+              <View key={index} style={styles.cateItem}>
+                <TouchableOpacity style={styles.cateItemIconBox}>
                   <Image source={item.img} resizeMode="cover" />
                 </TouchableOpacity>
 
@@ -244,15 +164,9 @@ const ShoppingScreen = () => {
         </ScrollView>
       </View>
 
+      {/* Best selling products */}
       <View style={{paddingHorizontal: 16}}>
-        {/* Title */}
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 8,
-          }}>
+        <View style={[styles.productTitleBox, {marginBottom: 12}]}>
           <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
             Sản phẩm bán chạy
           </Text>
@@ -273,7 +187,7 @@ const ShoppingScreen = () => {
   );
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={globalStyles.bgWhite}>
       <View>
         <FlatList
           ListHeaderComponent={renderHeader}
