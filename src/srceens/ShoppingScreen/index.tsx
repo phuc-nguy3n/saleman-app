@@ -13,7 +13,7 @@ import {bannerOne} from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {shoppingBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
-import {Colors, ShoppingPropsConst} from '../../config/const';
+import {Colors, ShoppingConst} from '../../config/const';
 import {Product} from '../../types';
 import styles from './styles';
 
@@ -56,7 +56,7 @@ const ProductItem = ({product}: {product: Product}) => {
 };
 
 const ShoppingScreen = () => {
-  const {cate} = ShoppingPropsConst;
+  const {cate} = ShoppingConst;
 
   const products: Product[] = [
     {
@@ -130,29 +130,18 @@ const ShoppingScreen = () => {
           showsHorizontalScrollIndicator={false}
           style={{paddingHorizontal: 16}}>
           <View style={styles.cateBox}>
-            <View style={styles.cateItem}>
-              <TouchableOpacity style={styles.cateItemIconBox}>
-                <Ionicons
-                  name="grid-outline"
-                  size={24}
-                  color={Colors.textSecond}
-                />
-              </TouchableOpacity>
-
-              <Text
-                style={[
-                  globalStyles.textSecondColor,
-                  globalStyles.fontSmall,
-                  globalStyles.fontWeightRegular,
-                ]}>
-                Tất cả
-              </Text>
-            </View>
-
             {cate.map((item, index) => (
               <View key={index} style={styles.cateItem}>
                 <TouchableOpacity style={styles.cateItemIconBox}>
-                  <Image source={item.img} resizeMode="cover" />
+                  {item.img !== '' ? (
+                    <Image source={item.img} resizeMode="cover" />
+                  ) : (
+                    <Ionicons
+                      name="grid-outline"
+                      size={24}
+                      color={Colors.textSecond}
+                    />
+                  )}
                 </TouchableOpacity>
 
                 <Text

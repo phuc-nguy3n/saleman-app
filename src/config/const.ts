@@ -140,8 +140,12 @@ export const HomeConst = {
   },
 };
 
-export const ShoppingPropsConst = {
+export const ShoppingConst = {
   cate: [
+    {
+      img: '',
+      text: 'Tất cả',
+    },
     {
       img: saleCate,
       text: 'Sale',
