@@ -1,14 +1,18 @@
 import {
   currencyActive,
   fileActive,
+  kidsCate,
+  menCate,
   newOrder,
   returnOrder,
+  saleCate,
   shipped,
   shipping,
   storeActive,
   storeActiveCheck,
   storeAdd,
   storeLocation,
+  womenCate,
 } from '../assets/images';
 
 export const Fonts = {
@@ -134,4 +138,29 @@ export const HomeConst = {
       },
     ],
   },
+};
+
+export const ShoppingConst = {
+  cate: [
+    {
+      img: '',
+      text: 'Tất cả',
+    },
+    {
+      img: saleCate,
+      text: 'Sale',
+    },
+    {
+      img: womenCate,
+      text: 'Women',
+    },
+    {
+      img: menCate,
+      text: 'Men',
+    },
+    {
+      img: kidsCate,
+      text: 'Kids',
+    },
+  ],
 };

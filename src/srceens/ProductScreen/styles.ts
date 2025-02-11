@@ -2,13 +2,11 @@ import {StyleSheet} from 'react-native';
 import {Colors} from '../../config/const';
 
 const styles = StyleSheet.create({
-  carouselBg: {width: '100%', height: 232, marginBottom: 12},
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 12,
-    marginTop: 12,
+    margin: 16,
   },
   searhBar: {
     flexDirection: 'row',
@@ -36,30 +34,23 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  cateContainer: {marginBottom: 26},
-  cateTitleBox: {marginHorizontal: 16, marginBottom: 8},
+  cateContainer: {marginBottom: 16},
   cateBox: {
     flexDirection: 'row',
     marginRight: 20,
     gap: 12,
   },
-  cateItem: {alignItems: 'center', gap: 4},
+  cateItem: {flexDirection: 'row', alignItems: 'center', gap: 4},
   cateItemIconBox: {
+    flexDirection: 'row',
     boxShadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px',
     backgroundColor: 'white',
     borderColor: '#E6F3F8',
     borderWidth: 1,
-    width: 56,
-    height: 56,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
     marginHorizontal: 4,
-  },
-  productTitleBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   productsItem: {
     width: '50%',

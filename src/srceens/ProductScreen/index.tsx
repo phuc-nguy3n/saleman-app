@@ -1,23 +1,19 @@
 import React from 'react';
 import {
   FlatList,
-  Image,
-  ImageBackground,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {View} from 'react-native';
-import {bannerOne} from '../../assets/images';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {shoppingBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
-import {Colors, ShoppingConst} from '../../config/const';
 import {Product} from '../../types';
+import {Image} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {RootStackParamList} from '../../types'; // Adjust the import path as necessary
+import {Colors, ShoppingConst} from '../../config/const';
+import {shoppingBlackBag} from '../../assets/images';
 
 const ProductItem = ({product}: {product: Product}) => {
   return (
@@ -56,11 +52,8 @@ const ProductItem = ({product}: {product: Product}) => {
     </View>
   );
 };
-const ShoppingScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const {cate} = ShoppingConst;
-
+const ProductScreen = () => {
   const products: Product[] = [
     {
       code: '0',
@@ -93,41 +86,33 @@ const ShoppingScreen = () => {
       price: '100.000',
     },
   ];
+  const {cate} = ShoppingConst;
 
   const renderHeader = () => (
     <>
-      {/* Carousel */}
-      <ImageBackground source={bannerOne} style={styles.carouselBg}>
-        {/* Header */}
-        <View style={styles.header}>
-          {/* Search */}
-          <View style={styles.searhBar}>
-            <View style={styles.searchBox}>
-              <Ionicons
-                name="search-outline"
-                size={24}
-                color="#8F8F8F"
-                style={styles.searchIcon}
-              />
-              <TextInput style={styles.searchInput} placeholder="Search" />
-            </View>
+      {/* Header */}
+      <View style={styles.header}>
+        {/* Search */}
+        <View style={styles.searhBar}>
+          <View style={styles.searchBox}>
+            <Ionicons
+              name="search-outline"
+              size={24}
+              color="#8F8F8F"
+              style={styles.searchIcon}
+            />
+            <TextInput style={styles.searchInput} placeholder="Search" />
           </View>
-
-          {/* Cart */}
-          <TouchableOpacity>
-            <Image source={shoppingBag} style={styles.cartIcon} />
-          </TouchableOpacity>
         </View>
-      </ImageBackground>
+
+        {/* Cart */}
+        <TouchableOpacity>
+          <Image source={shoppingBlackBag} style={styles.cartIcon} />
+        </TouchableOpacity>
+      </View>
 
       {/* Product categories */}
       <View style={styles.cateContainer}>
-        <View style={styles.cateTitleBox}>
-          <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-            Danh mục sản phẩm
-          </Text>
-        </View>
-
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -135,62 +120,55 @@ const ShoppingScreen = () => {
           <View style={styles.cateBox}>
             {cate.map((item, index) => (
               <View key={index} style={styles.cateItem}>
-                <TouchableOpacity
-                  onPress={navigateProductScreen}
-                  style={styles.cateItemIconBox}>
+                <TouchableOpacity style={styles.cateItemIconBox}>
                   {item.img !== '' ? (
-                    <Image source={item.img} resizeMode="cover" />
+                    <>
+                      <Image
+                        style={{
+                          width: 56,
+                          height: 56,
+                        }}
+                        source={item.img}
+                        resizeMode="cover"
+                      />
+                      <View style={{padding: 8, paddingRight: 12}}>
+                        <Text
+                          style={[
+                            globalStyles.textSecondColor,
+                            globalStyles.fontSmall,
+                            globalStyles.fontWeightRegular,
+                          ]}>
+                          {item.text}
+                        </Text>
+                      </View>
+                    </>
                   ) : (
-                    <Ionicons
-                      name="grid-outline"
-                      size={24}
-                      color={Colors.textSecond}
-                    />
+                    <View
+                      style={{
+                        width: 56,
+                        height: 56,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Ionicons
+                        name="grid-outline"
+                        size={24}
+                        color={Colors.textSecond}
+                      />
+                    </View>
                   )}
                 </TouchableOpacity>
-
-                <Text
-                  style={[
-                    globalStyles.textSecondColor,
-                    globalStyles.fontSmall,
-                    globalStyles.fontWeightRegular,
-                  ]}>
-                  {item.text}
-                </Text>
               </View>
             ))}
           </View>
         </ScrollView>
       </View>
-
-      {/* Best selling products */}
-      <View style={{paddingHorizontal: 16}}>
-        <View style={[styles.productTitleBox, {marginBottom: 12}]}>
-          <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-            Sản phẩm bán chạy
-          </Text>
-
-          <TouchableOpacity>
-            <Text
-              style={[
-                globalStyles.primaryColor,
-                globalStyles.fontSmall,
-                globalStyles.fontWeightRegular,
-              ]}>
-              Xem thêm
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
     </>
   );
 
-  const navigateProductScreen = () => {
-    navigation.navigate('Product');
-  };
-
   return (
-    <View style={globalStyles.bgWhite}>
+    <View style={[globalStyles.bgWhite]}>
       <FlatList
         ListHeaderComponent={renderHeader}
         data={products}
@@ -207,4 +185,4 @@ const ShoppingScreen = () => {
   );
 };
 
-export default ShoppingScreen;
+export default ProductScreen;
