@@ -20,11 +20,16 @@ import styles from './styles';
 const ProductItem = ({product}: {product: Product}) => {
   return (
     <View style={styles.productsItem}>
-      <Image
-        resizeMode="cover"
-        source={{uri: product.img}}
-        style={styles.productItemImage}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          console.log('Product detail');
+        }}>
+        <Image
+          resizeMode="cover"
+          source={{uri: product.img}}
+          style={styles.productItemImage}
+        />
+      </TouchableOpacity>
       <Text
         style={[
           globalStyles.fontWeightRegular,
