@@ -66,6 +66,9 @@ const ProducDetailsScreen = () => {
       case ScreenType.productDetails:
         navigation.navigate(ScreenType.productDetails);
         break;
+      case ScreenType.cart:
+        navigation.navigate(ScreenType.cart);
+        break;
       default:
         navigation.navigate(ScreenType.shopping);
     }
@@ -138,7 +141,7 @@ const ProducDetailsScreen = () => {
             <Breadcrumbs items={itemsbreadcrumbs} />
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigateToScreen(ScreenType.cart)}>
             <Image source={shoppingBlackBag} style={styles.cartIcon} />
           </TouchableOpacity>
         </View>
