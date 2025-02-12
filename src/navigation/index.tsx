@@ -15,6 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AgencyCheckinScreen from '../srceens/AgencyCheckinScreen';
 import ShoppingScreen from '../srceens/ShoppingScreen';
 import ProductScreen from '../srceens/ProductScreen';
+import ProducDetailsScreen from '../srceens/ProductDetailsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -72,6 +73,11 @@ function AppNavigation() {
         <Stack.Screen
           name="Product"
           component={ProductScreen}
+          options={{headerShown: true, title: 'Mua hàng'}}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProducDetailsScreen}
           options={{headerShown: true, title: 'Mua hàng'}}
         />
       </Stack.Navigator>

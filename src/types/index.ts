@@ -13,6 +13,7 @@ export type RootStackParamList = {
   AgencyInfo: undefined;
   Shopping: undefined;
   Product: undefined;
+  ProductDetails: undefined;
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -41,6 +42,10 @@ export type ShoppingProps = {
 
 export type ProductProps = {
   navigation: AppNavigationProp<'Product'>;
+};
+
+export type ProductDetailsProps = {
+  navigation: AppNavigationProp<'ProductDetails'>;
 };
 
 type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
@@ -134,4 +139,17 @@ export enum OrderCateType {
   shipping = 'shipping',
   shipped = 'shipped',
   return = 'return',
+}
+
+export enum ScreenType {
+  auth = 'Auth',
+  login = 'Login',
+  home = 'Home',
+  orderManagement = 'OrderManagement',
+  orderDetails = 'OrderDetails',
+  workSchedule = 'WorkSchedule',
+  agencyInfo = 'AgencyInfo',
+  shopping = 'Shopping',
+  product = 'Product',
+  productDetails = 'ProductDetails',
 }

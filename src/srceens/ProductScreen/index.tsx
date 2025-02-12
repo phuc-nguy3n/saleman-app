@@ -8,20 +8,24 @@ import {
   View,
 } from 'react-native';
 import globalStyles from '../../styles/globalStyles';
-import {Product} from '../../types';
+import {Product, RootStackParamList} from '../../types';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import {Colors, ShoppingConst} from '../../config/const';
 import {shoppingBlackBag} from '../../assets/images';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const ProductItem = ({product}: {product: Product}) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const navigateToProductDetail = () => {
+    navigation.navigate('ProductDetails');
+  };
+
   return (
     <View style={styles.productsItem}>
-      <TouchableOpacity
-        onPress={() => {
-          console.log('Product detail');
-        }}>
+      <TouchableOpacity onPress={navigateToProductDetail}>
         <Image
           resizeMode="cover"
           source={{uri: product.img}}
