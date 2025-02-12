@@ -16,6 +16,7 @@ import AgencyCheckinScreen from '../srceens/AgencyCheckinScreen';
 import ShoppingScreen from '../srceens/ShoppingScreen';
 import ProductScreen from '../srceens/ProductScreen';
 import ProducDetailsScreen from '../srceens/ProductDetailsScreen';
+import CartScreen from '../srceens/CartScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -79,6 +80,11 @@ function AppNavigation() {
           name="ProductDetails"
           component={ProducDetailsScreen}
           options={{headerShown: true, title: 'Mua hàng'}}
+        />
+        <Stack.Screen
+          name="Cart"
+          component={CartScreen}
+          options={{headerShown: true, title: 'Giỏ hàng của bạn'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

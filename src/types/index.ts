@@ -14,6 +14,7 @@ export type RootStackParamList = {
   Shopping: undefined;
   Product: undefined;
   ProductDetails: undefined;
+  Cart: undefined;
 };
 
 type AppNavigationProp<RouteName extends keyof RootStackParamList> =
@@ -46,6 +47,10 @@ export type ProductProps = {
 
 export type ProductDetailsProps = {
   navigation: AppNavigationProp<'ProductDetails'>;
+};
+
+export type CartProps = {
+  navigation: AppNavigationProp<'Cart'>;
 };
 
 type OrderMgmtRouteProp = RouteProp<RootStackParamList, 'OrderManagement'>;
@@ -152,4 +157,5 @@ export enum ScreenType {
   shopping = 'Shopping',
   product = 'Product',
   productDetails = 'ProductDetails',
+  cart = 'Cart',
 }
