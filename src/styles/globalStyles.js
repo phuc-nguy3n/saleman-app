@@ -8,6 +8,26 @@ TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 
 const globalStyles = StyleSheet.create({
+  // Spacing
+  pv4: {
+    paddingVertical: 4,
+  },
+  pv8: {
+    paddingVertical: 8,
+  },
+  pv16: {
+    paddingVertical: 16,
+  },
+  ph4: {
+    paddingHorizontal: 4,
+  },
+  ph8: {
+    paddingHorizontal: 8,
+  },
+  ph16: {
+    paddingHorizontal: 16,
+  },
+
   // Background color
   bgPrimary: {
     backgroundColor: Colors.primary,
