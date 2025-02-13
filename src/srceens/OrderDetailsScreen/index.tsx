@@ -1,15 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {OrderDetailsScreenProps} from '../../types';
 import {formatPrice, formatTimestamp, generateOrderStatus} from '../../utils';
-import {Colors, FontSizes} from '../../config/const';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styles from './styles';
+import globalStyles from '../../styles/globalStyles';
+import {Text} from 'react-native-paper';
 
 const renderOrderDate = (timestamp: string) => {
   return (
     <View>
-      <Text style={{color: Colors.textSecond}}>
+      <Text style={[globalStyles.fontWeightLight, styles.orderInfoContent]}>
         {formatTimestamp(timestamp, 'date')} -{' '}
         {formatTimestamp(timestamp, 'time')}
       </Text>
@@ -20,14 +22,15 @@ const renderOrderDate = (timestamp: string) => {
 const renderOrderStatus = (status: string) => {
   const order = generateOrderStatus(status);
   return (
-    <View
-      style={{
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 10,
-        backgroundColor: '#e9e9e9',
-      }}>
-      <Text style={{color: order.color}}>{order.label}</Text>
+    <View style={[styles.orderStatusBox, globalStyles.ph8, globalStyles.pv4]}>
+      <Text
+        style={[
+          globalStyles.fontWeightLight,
+          styles.orderStatusText,
+          {color: order.color},
+        ]}>
+        {order.label}
+      </Text>
     </View>
   );
 };
@@ -47,84 +50,72 @@ const OrderDetailsScreen: React.FC<OrderDetailsScreenProps> = ({route}) => {
 
   return (
     <View style={{flex: 1, gap: 8}}>
-      {/* Header */}
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 8,
-          backgroundColor: 'white',
-        }}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={{fontSize: 14, fontWeight: 500}}>
-            Thông tin đơn hàng
-          </Text>
+      {/* Order info */}
+      <View style={[globalStyles.ph16, globalStyles.pv8, globalStyles.bgWhite]}>
+        <View style={[styles.container, {marginBottom: 4}]}>
+          <Text variant="titleSmall">Thông tin đơn hàng</Text>
 
           {renderOrderStatus(status)}
         </View>
 
-        <View style={{marginTop: 4, gap: 4}}>
-          <View style={{flexDirection: 'row', gap: 8, alignItems: 'center'}}>
+        <View style={styles.orderInfoContentArea}>
+          <View style={styles.orderInfoContentBox}>
             <Ionicons size={16} name={'reader-outline'} />
-            <Text style={{color: Colors.textSecond}}>{code}</Text>
+            <Text
+              style={[globalStyles.fontWeightLight, styles.orderInfoContent]}>
+              {code}
+            </Text>
           </View>
 
-          <View style={{flexDirection: 'row', gap: 8}}>
+          <View style={styles.orderInfoContentBox}>
             <Ionicons size={16} name={'time-outline'} />
             {renderOrderDate(timestamp)}
           </View>
 
-          <View style={{flexDirection: 'row', gap: 8}}>
+          <View style={styles.orderInfoContentBox}>
             <Ionicons size={16} name={'person-outline'} />
-            <Text style={{color: Colors.textSecond}}>{orderer}</Text>
+            <Text
+              style={[globalStyles.fontWeightLight, styles.orderInfoContent]}>
+              {orderer}
+            </Text>
           </View>
 
-          <View style={{flexDirection: 'row', gap: 8}}>
+          <View style={styles.orderInfoContentBox}>
             <Ionicons size={16} name={'call-outline'} />
-            <Text style={{color: Colors.textSecond}}>{phoneNumber}</Text>
+            <Text
+              style={[globalStyles.fontWeightLight, styles.orderInfoContent]}>
+              {phoneNumber}
+            </Text>
           </View>
 
-          <View style={{flexDirection: 'row', gap: 8}}>
+          <View style={styles.orderInfoContentBox}>
             <Ionicons size={16} name={'location-outline'} />
-            <View style={{width: '70%'}}>
-              <Text style={{color: Colors.textSecond}}>{address}</Text>
+            <View style={{flexShrink: 1}}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                style={[globalStyles.fontWeightLight, styles.orderInfoContent]}>
+                {address}
+              </Text>
             </View>
           </View>
         </View>
       </View>
 
-      {/* Body */}
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 8,
-          backgroundColor: 'white',
-        }}>
-        <Text style={{fontSize: 14, fontWeight: 500}}>Chi tiết đơn hàng</Text>
+      {/* Order details */}
+      <View style={[globalStyles.bgWhite, globalStyles.ph16, {paddingTop: 8}]}>
+        <Text variant="titleSmall">Chi tiết đơn hàng</Text>
 
         <View>
           {products.map((item, index) => (
-            <View key={index} style={{padding: 10}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', gap: 16}}>
-                <View
-                  style={{
-                    overflow: 'hidden',
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: Colors.line,
-                  }}>
-                  <Image
-                    style={{width: 70, height: 70, objectFit: 'cover'}}
-                    source={{uri: item.img}}
-                  />
+            <View key={index} style={{paddingVertical: 10}}>
+              <View style={styles.orderDetailsBox}>
+                <View style={styles.productImgBox}>
+                  <Image style={styles.productImg} source={{uri: item.img}} />
                 </View>
                 <View style={{gap: 4}}>
-                  <Text style={{fontSize: FontSizes.small, fontWeight: 500}}>
-                    {item.name}
-                  </Text>
-                  <Text style={{fontSize: 14, fontWeight: 400}}>
-                    {item.price}
-                  </Text>
+                  <Text variant="labelMedium">{item.name}</Text>
+                  <Text variant="bodyMedium">{item.price}</Text>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <View
                       style={{
@@ -132,23 +123,21 @@ const OrderDetailsScreen: React.FC<OrderDetailsScreenProps> = ({route}) => {
                         gap: 4,
                       }}>
                       <Text
-                        style={{fontSize: FontSizes.small, fontWeight: 300}}>
-                        Số lượng
+                        style={[
+                          globalStyles.fontWeightLight,
+                          globalStyles.fontSmall,
+                          {lineHeight: 16},
+                        ]}>
+                        Số lượng:
                       </Text>
-                      <Text
-                        style={{fontSize: FontSizes.small, fontWeight: 500}}>
-                        01
-                      </Text>
+                      <Text variant="bodySmall">01</Text>
                     </View>
                     <View style={{marginHorizontal: 4}}>
                       <Text> | </Text>
                     </View>
                     <Text
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 500,
-                        color: Colors.primary,
-                      }}>
+                      variant="labelLarge"
+                      style={globalStyles.primaryColor}>
                       {formatPrice(item.price)}
                     </Text>
                   </View>
@@ -159,118 +148,52 @@ const OrderDetailsScreen: React.FC<OrderDetailsScreenProps> = ({route}) => {
         </View>
       </View>
 
-      {/* Footer */}
+      {/* Totals */}
       <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 8,
-          backgroundColor: 'white',
-          flex: 1,
-          gap: 8,
-        }}>
-        <View
-          style={{
-            gap: 4,
-          }}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: Colors.textSecond,
-              }}>
+        style={[
+          globalStyles.ph16,
+          globalStyles.pv8,
+          globalStyles.bgWhite,
+          {
+            flex: 1,
+            gap: 8,
+          },
+        ]}>
+        <View style={styles.provisional}>
+          <View style={styles.container}>
+            <Text variant="bodySmall" style={globalStyles.textSecondColor}>
               Tạm tính
             </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-              }}>
-              {formatPrice(totalPrice)}
-            </Text>
+            <Text variant="bodySmall">{formatPrice(totalPrice)}</Text>
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: Colors.textSecond,
-              }}>
+          <View style={styles.container}>
+            <Text variant="bodySmall" style={globalStyles.textSecondColor}>
               Khuyến mãi
             </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-              }}>
-              - 0đ
-            </Text>
+            <Text variant="bodySmall">- 0đ</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: Colors.textSecond,
-              }}>
+          <View style={styles.container}>
+            <Text variant="bodySmall" style={globalStyles.textSecondColor}>
               Thuế VAT
             </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-              }}>
-              + 0đ
-            </Text>
+            <Text variant="bodySmall">+ 0đ</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-                color: Colors.textSecond,
-              }}>
+          <View style={styles.container}>
+            <Text variant="bodySmall" style={globalStyles.textSecondColor}>
               Phí vận chuyển
             </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 400,
-              }}>
-              + 0đ
-            </Text>
+            <Text variant="bodySmall">+ 0đ</Text>
           </View>
         </View>
 
-        <View
-          style={{
-            borderTopWidth: 1,
-            borderColor: Colors.line,
-            paddingVertical: 4,
-          }}></View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: 500,
-              color: Colors.primary,
-            }}>
+        <View style={styles.container}>
+          <Text variant="labelLarge" style={globalStyles.primaryColor}>
             Tổng thanh toán
           </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: 500,
-              color: Colors.error,
-            }}>
+          <Text variant="labelLarge" style={globalStyles.errorColor}>
             {formatPrice(totalPrice)}
           </Text>
         </View>
