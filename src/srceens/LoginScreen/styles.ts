@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   titleBody: {
     fontSize: 18,
     marginBottom: 24,
+    lineHeight: 24,
   },
   form: {
     gap: 12,
