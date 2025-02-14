@@ -1,11 +1,14 @@
 import {StyleSheet, Text, TextInput} from 'react-native';
 import {Colors, Fonts, FontSizes} from '../config/const';
+import {customTheme} from '../theme/customTheme';
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 
 TextInput.defaultProps = TextInput.defaultProps || {};
 TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
+
+const {colors} = customTheme;
 
 const globalStyles = StyleSheet.create({
   // Spacing
@@ -30,7 +33,7 @@ const globalStyles = StyleSheet.create({
 
   // Background color
   bgPrimary: {
-    backgroundColor: Colors.primary,
+    backgroundColor: colors.primary,
   },
   bgError: {
     backgroundColor: Colors.bgError,
@@ -53,7 +56,7 @@ const globalStyles = StyleSheet.create({
     color: 'white',
   },
   primaryColor: {
-    color: Colors.primary,
+    color: colors.primary,
   },
   thirdColor: {
     color: Colors.third,

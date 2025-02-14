@@ -11,6 +11,8 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import AppNavigation from './src/navigation';
+import {PaperProvider} from 'react-native-paper';
+import {customTheme} from './src/theme/customTheme';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,10 +23,12 @@ const styles = StyleSheet.create({
 function App(): React.JSX.Element {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor={'black'} />
-        <AppNavigation />
-      </SafeAreaView>
+      <PaperProvider theme={customTheme}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar backgroundColor={'black'} />
+          <AppNavigation />
+        </SafeAreaView>
+      </PaperProvider>
     </Provider>
   );
 }
