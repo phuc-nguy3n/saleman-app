@@ -28,6 +28,12 @@ export const customTheme = {
     divider: 'rgb(229, 229, 229)', // màu phân cách
     text: '#2A2A2A', // màu nội dung
     textSecond: 'rgb(85, 85 ,85)', // màu nội dung bậc 2
+    ThemeTextInput: {
+      colors: {
+        primary: DefaultTheme.colors.outline,
+        background: 'rgb(255, 255, 255)',
+      },
+    },
   },
   roundness: 8, // Bo tròn góc
 };

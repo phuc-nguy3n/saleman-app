@@ -1,5 +1,5 @@
 import styles from './styles';
-import {Colors, MsgError, ThemeTextInput} from '../../config/const';
+import {Colors, MsgError} from '../../config/const';
 import {eye, eyeOff, logo} from '../../assets/images';
 import React, {useEffect, useState} from 'react';
 import {
@@ -19,6 +19,9 @@ import {
 import data from '../../db/mockData.json';
 import {useLogin} from '../../hooks/useLogin';
 import globalStyles from '../../styles/globalStyles';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const userList = data.user;
@@ -182,7 +185,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <View style={[styles.container, globalStyles.bgWhite]}>
         {/* Header */}
         <View style={styles.header}>
           <Image source={logo} style={styles.logo} />
@@ -207,7 +210,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
                 label="Mã công ty"
                 placeholder="Nhập mã..."
                 right={<TextInput.Affix />}
-                theme={ThemeTextInput}
+                theme={colors.ThemeTextInput}
                 keyboardType="default"
                 onChangeText={setCode}
                 value={code}
@@ -223,7 +226,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
                 label="Số điện thoại"
                 placeholder="Nhập sđt..."
                 right={<TextInput.Affix />}
-                theme={ThemeTextInput}
+                theme={colors.ThemeTextInput}
                 keyboardType="number-pad"
                 onChangeText={setPhoneNumber}
                 value={phoneNumber}
@@ -245,7 +248,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
                     onPress={toggleSecureTextEntry}
                   />
                 }
-                theme={ThemeTextInput}
+                theme={colors.ThemeTextInput}
                 onChangeText={setPassword}
                 value={password}
                 error={errorFileds.password}
