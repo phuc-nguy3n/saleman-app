@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   categories: {
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: colors.gray,
     borderRadius: 10,
     paddingHorizontal: 10,
     height: 40,
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 14,
-    color: '#000',
+    color: 'black',
     paddingVertical: 0,
     paddingLeft: 10,
     paddingRight: 30,
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     height: 86,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: Colors.line,
+    borderColor: colors.divider,
   },
   orderItemTextArea: {
     gap: 4,

@@ -11,6 +11,10 @@ TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 const {colors} = customTheme;
 
 const globalStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   // Padding
   pv4: {
     paddingVertical: 4,
@@ -88,12 +92,12 @@ const globalStyles = StyleSheet.create({
     color: Colors.outline,
   },
   linkColor: {
-    color: Colors.link,
+    color: colors.link,
   },
   errorColor: {
     color: Colors.error,
   },
-  textSecondColor: {color: Colors.textSecond},
+  textSecondColor: {color: colors.textSecond},
   greenColor: {color: Colors.green},
 
   //   Font size

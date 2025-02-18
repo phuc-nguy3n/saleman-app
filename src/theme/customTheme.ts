@@ -36,6 +36,13 @@ export const customTheme = {
     },
     gray: 'rgb(244,243,244)',
     darkGray: 'rgb(118,117,119)',
+    status: {
+      new: 'rgb(255,215,0)',
+      shipping: 'rgb(30,144,255)',
+      shipped: 'rgb(50,205,50)',
+      return: 'rgb(255,69,0)',
+    },
+    link: 'rgb(0,122,255)',
   },
   roundness: 8, // Bo tròn góc
 };
