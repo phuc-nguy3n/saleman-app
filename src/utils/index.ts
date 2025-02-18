@@ -1,4 +1,6 @@
-import {Colors} from '../config/const';
+import {customTheme} from '../theme/customTheme';
+
+const {colors} = customTheme;
 
 export const formatTimestamp = (
   timestamp: string,
@@ -51,13 +53,13 @@ export const generateOrderStatus = (
 ): {label: string; color: string} => {
   switch (status) {
     case 'new':
-      return {label: 'Đơn mới', color: Colors.status.new};
+      return {label: 'Đơn mới', color: colors.status.new};
     case 'shipping':
-      return {label: 'Đang giao', color: Colors.status.shipping};
+      return {label: 'Đang giao', color: colors.status.shipping};
     case 'shipped':
-      return {label: 'Hoàn thành', color: Colors.status.shipped};
+      return {label: 'Hoàn thành', color: colors.status.shipped};
     case 'return':
-      return {label: 'Trả hàng', color: Colors.status.return};
+      return {label: 'Trả hàng', color: colors.status.return};
     default:
       return {label: 'Trạng thái không xác định', color: '#A9A9A9'};
   }

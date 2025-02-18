@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   bgScreen: {
     flex: 1,
-    backgroundColor: 'white',
   },
   bgImg: {
     height: 174,
@@ -13,7 +12,6 @@ const styles = StyleSheet.create({
   headerBox: {
     flexDirection: 'row',
     width: '100%',
-    paddingHorizontal: 16,
     alignItems: 'center',
     gap: 12,
   },
@@ -23,7 +21,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   img: {width: 70, height: 70},
-  text: {fontSize: 14, fontWeight: 400},
   button: {
     flexDirection: 'row',
     justifyContent: 'space-between',

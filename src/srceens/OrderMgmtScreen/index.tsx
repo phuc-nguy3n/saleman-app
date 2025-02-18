@@ -2,7 +2,6 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {ScrollView, TextInput, TouchableOpacity, View} from 'react-native';
 import {Category, Colors} from '../../config/const';
-import {Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Image} from 'react-native';
 
@@ -20,6 +19,10 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
+import {Text} from 'react-native-paper';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const CateItem = ({text, active}: {text: string; active: boolean}) => {
   const cateActiveStyle = {
@@ -91,7 +94,9 @@ const renderOrderStatus = (status: string) => {
   const order = generateOrderStatus(status);
   return (
     <View>
-      <Text style={{color: order.color}}>{order.label}</Text>
+      <Text variant="bodySmall" style={{color: order.color}}>
+        {order.label}
+      </Text>
     </View>
   );
 };
@@ -99,7 +104,7 @@ const renderOrderStatus = (status: string) => {
 const renderOrderDate = (timestamp: string) => {
   return (
     <View>
-      <Text style={globalStyles.textSecondColor}>
+      <Text variant="bodySmall" style={globalStyles.textSecondColor}>
         {formatTimestamp(timestamp, 'date')} -{' '}
         {formatTimestamp(timestamp, 'time')}
       </Text>
@@ -159,9 +164,9 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
   }, [searchvValue, orderList]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={globalStyles.container}>
       {/* Header */}
-      <View style={{backgroundColor: 'white'}}>
+      <View style={globalStyles.bgWhite}>
         {/* Categories */}
         <View style={styles.categories}>
           <OrderCates
@@ -194,11 +199,11 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
           <View key={index} style={styles.orderItemWrapped}>
             {/* Header   */}
             <View style={[globalStyles.lineColor, styles.orderItemHeader]}>
-              <View style={{flexDirection: 'row'}}>
+              <Text>
                 {renderOrderStatus(item.status)}
                 <Text> | </Text>
                 {renderOrderDate(item.timestamp)}
-              </View>
+              </Text>
 
               <TouchableOpacity
                 style={styles.orderNavigationBox}
@@ -207,17 +212,12 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
                     order: item,
                   })
                 }>
-                <Text
-                  style={[
-                    globalStyles.linkColor,
-                    globalStyles.fontSmall,
-                    {lineHeight: 12},
-                  ]}>
+                <Text style={[globalStyles.linkColor, globalStyles.fontSmall]}>
                   Xem đơn hàng
                 </Text>
                 <FontAwesome
                   size={10}
-                  color={Colors.link}
+                  color={colors.link}
                   name={'chevron-right'}
                 />
               </TouchableOpacity>
@@ -234,25 +234,23 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
               </View>
 
               <View style={styles.orderItemTextArea}>
-                <Text style={globalStyles.textSecondColor}>{item.code}</Text>
-                <Text style={globalStyles.fontWeightMedium}>
+                <Text variant="bodySmall" style={globalStyles.textSecondColor}>
+                  {item.code}
+                </Text>
+                <Text variant="labelMedium">
                   {item.orderer} - {item.phoneNumber}
                 </Text>
                 {renderProductNames(item.products)}
 
-                <View style={{flexDirection: 'row'}}>
+                <Text>
                   <Text style={globalStyles.textSecondColor}>
                     {item.products.length} sản phẩm
                   </Text>
                   <Text> | </Text>
-                  <Text
-                    style={[
-                      globalStyles.primaryColor,
-                      globalStyles.fontWeightMedium,
-                    ]}>
+                  <Text variant="labelLarge" style={globalStyles.primaryColor}>
                     {formatPrice(item.totalPrice)}
                   </Text>
-                </View>
+                </Text>
               </View>
             </View>
           </View>

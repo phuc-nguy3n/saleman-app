@@ -10,10 +10,12 @@ import {
   user,
 } from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Colors} from '../../config/const';
 import styles from './styles';
 import data from '../../db/mockData.json';
 import {AgencyType, WorkScheduleProps} from '../../types';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const AgencyItem = ({
   agencyData,
@@ -30,23 +32,13 @@ const AgencyItem = ({
       <View style={[globalStyles.bgYellowLight, styles.agencyItemHeader]}>
         <View style={styles.agencyNameArea}>
           <Image style={{width: 16, height: 16}} source={store} />
-          <Text
-            style={[
-              globalStyles.textSecondColor,
-              globalStyles.fontWeightMedium,
-              {fontSize: 14},
-            ]}>
+          <Text variant="labelLarge" style={globalStyles.textSecondColor}>
             {agencyData.name}
           </Text>
         </View>
 
         <View style={[globalStyles.bgGreenLight, styles.quantityOrdersBox]}>
-          <Text
-            style={[
-              globalStyles.fontSmall,
-              globalStyles.fontWeightMedium,
-              globalStyles.greenColor,
-            ]}>
+          <Text variant="labelMedium" style={globalStyles.greenColor}>
             Có {agencyData.quantityOrders} đơn hàng
           </Text>
         </View>
@@ -65,30 +57,21 @@ const AgencyItem = ({
           <View style={styles.agencyInfoArea}>
             <View style={styles.agencyInfoContent}>
               <Image style={{width: 16, height: 16}} source={user} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={2}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={2} ellipsizeMode="tail">
                 {agencyData.owner.name}
               </Text>
             </View>
 
             <View style={styles.agencyInfoContent}>
               <Ionicons size={16} name={'location-outline'} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={2}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={2} ellipsizeMode="tail">
                 {agencyData.owner.address}
               </Text>
             </View>
 
             <View style={styles.agencyInfoContent}>
               <Ionicons size={16} name={'call-outline'} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={1}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={1} ellipsizeMode="tail">
                 {agencyData.owner.phoneNumber}
               </Text>
             </View>
@@ -106,7 +89,7 @@ const AgencyItem = ({
               style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
               <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 
-              <Text style={[globalStyles.whiteColor, globalStyles.fontSmall]}>
+              <Text variant="bodySmall" style={globalStyles.whiteColor}>
                 Mua hàng
               </Text>
             </TouchableOpacity>
@@ -120,7 +103,7 @@ const AgencyItem = ({
               onPress={navigateAgencyInfo}
               style={[
                 styles.agencyActionBtn,
-                {borderColor: Colors.primary, borderWidth: 1},
+                {borderColor: colors.primary, borderWidth: 1},
               ]}>
               <Image style={styles.agencyActionBtnIcon} source={markerPin} />
             </TouchableOpacity>
@@ -143,7 +126,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={globalStyles.container}>
       <View style={styles.agencyWrapped}>
         <FlatList
           data={agencyData}

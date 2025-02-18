@@ -11,7 +11,11 @@ TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 const {colors} = customTheme;
 
 const globalStyles = StyleSheet.create({
-  // Spacing
+  container: {
+    flex: 1,
+  },
+
+  // Padding
   pv4: {
     paddingVertical: 4,
   },
@@ -31,12 +35,32 @@ const globalStyles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 
+  // Margin
+  mv4: {
+    marginVertical: 4,
+  },
+  mv8: {
+    marginVertical: 8,
+  },
+  mv16: {
+    marginVertical: 16,
+  },
+  mh4: {
+    marginHorizontal: 4,
+  },
+  mh8: {
+    marginHorizontal: 8,
+  },
+  mh16: {
+    marginHorizontal: 16,
+  },
+
   // Background color
   bgPrimary: {
     backgroundColor: colors.primary,
   },
   bgError: {
-    backgroundColor: Colors.bgError,
+    backgroundColor: colors.errorContainer,
   },
   bgThird: {
     backgroundColor: Colors.third,
@@ -68,12 +92,12 @@ const globalStyles = StyleSheet.create({
     color: Colors.outline,
   },
   linkColor: {
-    color: Colors.link,
+    color: colors.link,
   },
   errorColor: {
     color: Colors.error,
   },
-  textSecondColor: {color: Colors.textSecond},
+  textSecondColor: {color: colors.textSecond},
   greenColor: {color: Colors.green},
 
   //   Font size

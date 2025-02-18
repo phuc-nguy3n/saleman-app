@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +19,6 @@ const styles = StyleSheet.create({
   headerContentBox: {
     width: '100%',
     position: 'absolute',
-    paddingHorizontal: 16,
     marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -46,18 +47,16 @@ const styles = StyleSheet.create({
   },
   wrapped: {
     width: '100%',
-    backgroundColor: 'white',
+
     borderRadius: 8,
     overflow: 'hidden',
   },
   toDoHeader: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.line,
+    borderBottomColor: colors.divider,
   },
   toDoItemWrapped: {
     marginTop: 8,
@@ -112,9 +111,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   orderStatusWrapped: {
-    paddingVertical: 14,
-    paddingHorizontal: 8,
-    backgroundColor: 'white',
     flexDirection: 'row',
   },
   orderStatusBox: {
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
     minHeight: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.error,
+    backgroundColor: colors.error,
     borderRadius: 50,
     position: 'absolute',
     zIndex: 1,
@@ -149,6 +145,11 @@ const styles = StyleSheet.create({
   orderStatusImg: {
     width: 40,
     height: 40,
+  },
+  btnBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 });
 

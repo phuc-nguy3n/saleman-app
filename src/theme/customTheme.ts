@@ -25,9 +25,25 @@ export const customTheme = {
       level4: 'rgb(221, 234, 241)',
       level5: 'rgb(216, 231, 239)',
     },
-    divider: 'rgb(229, 229, 229)', // màu phân cách
+    divider: 'rgb(244, 244, 244)', // màu phân cách
+    dividerSecond: 'rgb(229,229,229)', // màu phân cách
     text: '#2A2A2A', // màu nội dung
     textSecond: 'rgb(85, 85 ,85)', // màu nội dung bậc 2
+    ThemeTextInput: {
+      colors: {
+        primary: DefaultTheme.colors.outline,
+        background: 'rgb(255, 255, 255)',
+      },
+    },
+    gray: 'rgb(244,243,244)',
+    darkGray: 'rgb(118,117,119)',
+    status: {
+      new: 'rgb(255,215,0)',
+      shipping: 'rgb(30,144,255)',
+      shipped: 'rgb(50,205,50)',
+      return: 'rgb(255,69,0)',
+    },
+    link: 'rgb(0,122,255)',
   },
   roundness: 8, // Bo tròn góc
 };

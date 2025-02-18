@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: Colors.lineSecond,
+    borderColor: colors.dividerSecond,
   },
   agencyNameArea: {
     flexDirection: 'row',
