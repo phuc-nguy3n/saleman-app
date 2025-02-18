@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +11,7 @@ const styles = StyleSheet.create({
   },
   orderStatusBox: {
     borderRadius: 10,
-    backgroundColor: '#e9e9e9',
+    backgroundColor: colors.gray,
   },
   orderStatusText: {
     fontSize: 10,
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
   orderInfoContentArea: {marginTop: 4, gap: 4},
   orderInfoContentBox: {flexDirection: 'row', gap: 8},
   orderInfoContent: {
-    color: Colors.textSecond,
+    color: colors.textSecond,
     lineHeight: 18,
   },
   orderDetailsBox: {flexDirection: 'row', alignItems: 'center', gap: 16},
@@ -26,13 +28,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: Colors.line,
+    borderColor: colors.divider,
   },
   productImg: {width: 70, height: 70, objectFit: 'cover'},
   provisional: {
     gap: 4,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.line,
+    borderBottomColor: colors.divider,
     paddingBottom: 8,
   },
 });

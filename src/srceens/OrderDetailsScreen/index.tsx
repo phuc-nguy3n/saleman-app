@@ -49,7 +49,7 @@ const OrderDetailsScreen: React.FC<OrderDetailsScreenProps> = ({route}) => {
   } = order;
 
   return (
-    <View style={{flex: 1, gap: 8}}>
+    <View style={[globalStyles.container, {gap: 8}]}>
       {/* Order info */}
       <View style={[globalStyles.ph16, globalStyles.pv8, globalStyles.bgWhite]}>
         <View style={[styles.container, {marginBottom: 4}]}>
