@@ -199,11 +199,11 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
           <View key={index} style={styles.orderItemWrapped}>
             {/* Header   */}
             <View style={[globalStyles.lineColor, styles.orderItemHeader]}>
-              <View style={{flexDirection: 'row'}}>
+              <Text>
                 {renderOrderStatus(item.status)}
                 <Text> | </Text>
                 {renderOrderDate(item.timestamp)}
-              </View>
+              </Text>
 
               <TouchableOpacity
                 style={styles.orderNavigationBox}
