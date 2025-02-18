@@ -11,7 +11,7 @@ TextInput.defaultProps.style = {fontFamily: Fonts.HelveticaRegular};
 const {colors} = customTheme;
 
 const globalStyles = StyleSheet.create({
-  // Spacing
+  // Padding
   pv4: {
     paddingVertical: 4,
   },
@@ -29,6 +29,26 @@ const globalStyles = StyleSheet.create({
   },
   ph16: {
     paddingHorizontal: 16,
+  },
+
+  // Margin
+  mv4: {
+    marginVertical: 4,
+  },
+  mv8: {
+    marginVertical: 8,
+  },
+  mv16: {
+    marginVertical: 16,
+  },
+  mh4: {
+    marginHorizontal: 4,
+  },
+  mh8: {
+    marginHorizontal: 8,
+  },
+  mh16: {
+    marginHorizontal: 16,
   },
 
   // Background color
