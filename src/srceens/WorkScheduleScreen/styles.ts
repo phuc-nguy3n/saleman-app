@@ -64,9 +64,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-  lineHeightText: {
-    lineHeight: 16,
-  },
   fixedButtonContainer: {
     position: 'absolute',
     bottom: 60,
