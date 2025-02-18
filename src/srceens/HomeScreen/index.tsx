@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {avatar, ellipse} from '../../assets/images';
-import {FontSizes, HomeConst, Colors} from '../../config/const';
+import {HomeConst} from '../../config/const';
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,6 +25,9 @@ import {
 import {generateOrderQuantity, generateSalesAmount} from '../../utils';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import globalStyles from '../../styles/globalStyles';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {toDo, store, order} = HomeConst;
@@ -92,7 +95,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
       {/* Header */}
       <View style={styles.headerBox}>
         <Image style={styles.headerBackground} source={ellipse} />
-        <View style={styles.headerContentBox}>
+        <View style={[styles.headerContentBox, globalStyles.ph16]}>
           <View>
             <Text style={[globalStyles.fontMedium, globalStyles.whiteColor]}>
               Xin chào,
@@ -115,14 +118,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
       <ScrollView
         style={styles.bodyScroll}
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-        }}>
+        contentContainerStyle={globalStyles.ph16}>
         <View style={{gap: 16}}>
           {/* Component 1 */}
-          <View style={styles.wrapped}>
+          <View style={[styles.wrapped, globalStyles.bgWhite]}>
             {/* Header */}
-            <View style={styles.toDoHeader}>
+            <View
+              style={[styles.toDoHeader, globalStyles.ph16, globalStyles.pv8]}>
               <View>
                 <Text style={styles.title}>
                   {isProcessWork
@@ -133,8 +135,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
               <View>
                 <Switch
-                  trackColor={{false: Colors.darkGray, true: Colors.second}}
-                  thumbColor={isProcessWork ? Colors.primary : Colors.gray}
+                  trackColor={{false: colors.darkGray, true: colors.secondary}}
+                  thumbColor={isProcessWork ? colors.primary : colors.gray}
                   ios_backgroundColor="#3e3e3e"
                   onValueChange={toggleSwitch}
                   value={isProcessWork}
@@ -244,7 +246,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             {/* Footer */}
             <View style={{padding: 8}}>
               <View style={[globalStyles.bgError, styles.toDoItemFooterBox]}>
-                <Icon name="alert-circle" size={20} color={Colors.error} />
+                <Icon name="alert-circle" size={20} color={colors.error} />
                 <Text
                   style={[
                     globalStyles.fontSmall,
@@ -277,28 +279,34 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           </View>
 
           {/* Component 3 */}
-          <View style={styles.wrapped}>
-            <View style={styles.toDoHeader}>
+          <View style={[styles.wrapped, globalStyles.bgWhite]}>
+            <View
+              style={[styles.toDoHeader, globalStyles.ph16, globalStyles.pv8]}>
               <Text style={styles.title}>Quản lý đơn hàng</Text>
 
               <TouchableOpacity>
                 <TouchableOpacity
-                  style={{flexDirection: 'row', alignItems: 'center', gap: 8}}
+                  style={styles.btnBox}
                   onPress={() => navigateOrderMgmt(OrderCateType.new)}>
                   <Text
-                    style={{color: Colors.primary, fontSize: FontSizes.small}}>
+                    style={[globalStyles.primaryColor, globalStyles.fontSmall]}>
                     Chi tiết
                   </Text>
                   <FontAwesome
                     size={10}
-                    color={Colors.primary}
+                    color={colors.primary}
                     name={'chevron-right'}
                   />
                 </TouchableOpacity>
               </TouchableOpacity>
             </View>
 
-            <View style={styles.orderStatusWrapped}>
+            <View
+              style={[
+                globalStyles.pv16,
+                globalStyles.bgWhite,
+                styles.orderStatusWrapped,
+              ]}>
               <TouchableOpacity
                 style={styles.orderStatusBox}
                 onPress={() => navigateOrderMgmt(OrderCateType.new)}>

@@ -25,7 +25,7 @@ export const customTheme = {
       level4: 'rgb(221, 234, 241)',
       level5: 'rgb(216, 231, 239)',
     },
-    divider: 'rgb(229, 229, 229)', // màu phân cách
+    divider: 'rgb(244, 244, 244)', // màu phân cách
     text: '#2A2A2A', // màu nội dung
     textSecond: 'rgb(85, 85 ,85)', // màu nội dung bậc 2
     ThemeTextInput: {
@@ -34,6 +34,8 @@ export const customTheme = {
         background: 'rgb(255, 255, 255)',
       },
     },
+    gray: 'rgb(244,243,244)',
+    darkGray: 'rgb(118,117,119)',
   },
   roundness: 8, // Bo tròn góc
 };

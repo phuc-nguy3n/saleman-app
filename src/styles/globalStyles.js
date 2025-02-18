@@ -36,7 +36,7 @@ const globalStyles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   bgError: {
-    backgroundColor: Colors.bgError,
+    backgroundColor: colors.errorContainer,
   },
   bgThird: {
     backgroundColor: Colors.third,
