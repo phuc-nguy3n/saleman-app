@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {AgencyType} from '../../types';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
@@ -13,7 +13,7 @@ import {
   user,
 } from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, Text, TextInput} from 'react-native-paper';
 import {ThemeTextInput} from '../../config/const';
 
 const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
@@ -23,12 +23,7 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
       <View style={[styles.agencyItemHeader]}>
         <View style={styles.agencyNameArea}>
           <Image style={{width: 16, height: 16}} source={store} />
-          <Text
-            style={[
-              globalStyles.primaryColor,
-              globalStyles.fontWeightMedium,
-              {fontSize: 14},
-            ]}>
+          <Text variant="labelLarge" style={globalStyles.primaryColor}>
             {agencyData.name}
           </Text>
         </View>
@@ -51,30 +46,21 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
           <View style={styles.agencyInfoArea}>
             <View style={styles.agencyInfoContent}>
               <Image style={{width: 16, height: 16}} source={user} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={2}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={2} ellipsizeMode="tail">
                 {agencyData.owner.name}
               </Text>
             </View>
 
             <View style={styles.agencyInfoContent}>
               <Ionicons size={16} name={'location-outline'} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={2}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={2} ellipsizeMode="tail">
                 {agencyData.owner.address}
               </Text>
             </View>
 
             <View style={styles.agencyInfoContent}>
               <Ionicons size={16} name={'call-outline'} />
-              <Text
-                style={[globalStyles.fontWeightRegular, styles.lineHeightText]}
-                numberOfLines={1}
-                ellipsizeMode="tail">
+              <Text variant="bodySmall" numberOfLines={1} ellipsizeMode="tail">
                 {agencyData.owner.phoneNumber}
               </Text>
             </View>
@@ -87,7 +73,7 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
             style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
             <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 
-            <Text style={[globalStyles.whiteColor, globalStyles.fontSmall]}>
+            <Text variant="bodySmall" style={globalStyles.whiteColor}>
               Mua hàng
             </Text>
           </TouchableOpacity>
@@ -100,9 +86,7 @@ const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
 const NoteItem = () => {
   return (
     <View style={[styles.noteWrapped, styles.agencyWrapped]}>
-      <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-        Ghi chú
-      </Text>
+      <Text variant="labelLarge">Ghi chú</Text>
 
       <TextInput
         mode="outlined"
@@ -116,9 +100,7 @@ const NoteItem = () => {
 const ImageCheckinItem = () => {
   return (
     <View style={[styles.agencyWrapped, styles.imageCheckInWrapped]}>
-      <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-        Hình ảnh check - in
-      </Text>
+      <Text variant="labelLarge">Hình ảnh check - in</Text>
 
       <View style={styles.imageCheckInBox}>
         <Image
