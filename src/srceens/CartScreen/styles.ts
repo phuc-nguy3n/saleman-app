@@ -1,4 +1,7 @@
 import {StyleSheet} from 'react-native';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   searhBar: {
@@ -18,7 +21,7 @@ const styles = StyleSheet.create({
 
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#9AA7AA',
+    borderColor: colors.outline,
   },
   searchIcon: {position: 'absolute', left: 10},
   searchInput: {
@@ -26,7 +29,29 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 40,
   },
-
+  itemBox: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    gap: 16,
+    alignContent: 'center',
+  },
+  itemImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    borderColor: colors.divider,
+    borderWidth: 1,
+  },
+  itemInfoBox: {
+    flexShrink: 1,
+    width: '100%',
+  },
+  actionBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -35,7 +60,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 15,
-    backgroundColor: '#fafafa',
+    backgroundColor: colors.lightGray,
+  },
+  noteBox: {
+    borderColor: colors.outline,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
   },
   button: {
     paddingHorizontal: 10,

@@ -36,6 +36,7 @@ export const customTheme = {
       },
     },
     gray: 'rgb(244,243,244)',
+    lightGray: 'rgb(250,250,250)',
     darkGray: 'rgb(118,117,119)',
     status: {
       new: 'rgb(255,215,0)',
