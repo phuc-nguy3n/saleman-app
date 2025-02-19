@@ -15,7 +15,7 @@ export const customTheme = {
     outline: 'rgb(154, 167, 170)', // màu viền (vd: Input)
     scrim: 'rgb(0, 0, 0)', // Dialog và Modal nhỏ
     backdrop: 'rgba(43, 49, 54, 0.4)', // BottomSheet hoặc Modal toàn màn hình
-    shadow: 'rgb(0, 0, 0)', // hiệu ứng đổ bóng
+    shadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px', // hiệu ứng đổ bóng
     elevation: {
       // tạo chiều sâu cho shadow
       level0: 'transparent',

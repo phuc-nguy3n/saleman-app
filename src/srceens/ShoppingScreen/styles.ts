@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   cateItem: {alignItems: 'center', gap: 4},
   cateItemIconBox: {
-    boxShadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px',
+    boxShadow: colors.shadow,
     backgroundColor: 'white',
     borderColor: colors.tertiary,
     borderWidth: 1,
