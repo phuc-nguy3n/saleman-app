@@ -8,8 +8,9 @@ import {Product, RootStackParamList, ScreenType} from '../../types';
 import {Image} from 'react-native';
 import {shoppingBlackBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
-import {Text} from 'react-native';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Text} from 'react-native-paper';
 
 const ProductItem = ({product}: {product: Product}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -27,18 +28,11 @@ const ProductItem = ({product}: {product: Product}) => {
           style={styles.productItemImage}
         />
       </TouchableOpacity>
-      <Text
-        style={[
-          globalStyles.fontWeightRegular,
-          globalStyles.fontSmall,
-          {marginBottom: 4},
-        ]}>
+      <Text variant="bodySmall" style={{marginBottom: 4}}>
         {product.name}
       </Text>
       <View style={styles.productContentArea}>
-        <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-          {product.price}đ
-        </Text>
+        <Text variant="labelLarge">{product.price}đ</Text>
 
         <TouchableOpacity
           style={styles.addIconBox}
@@ -129,14 +123,7 @@ const ProducDetailsScreen = () => {
         style={styles.carouselBg}>
         {/* Header */}
 
-        <View
-          style={{
-            marginTop: 18,
-            marginHorizontal: 8,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
+        <View style={styles.headerBox}>
           <View style={{width: '70%'}}>
             <Breadcrumbs items={itemsbreadcrumbs} />
           </View>
@@ -147,48 +134,31 @@ const ProducDetailsScreen = () => {
         </View>
       </ImageBackground>
 
-      <View style={{paddingHorizontal: 16}}>
+      <View style={globalStyles.ph16}>
         {/* Product name */}
-        <View style={{marginVertical: 8}}>
+        <View style={globalStyles.mv8}>
           <View style={{marginBottom: 4}}>
-            <Text
-              style={[
-                globalStyles.fontWeightRegular,
-                globalStyles.fontSmall,
-                globalStyles.textSecondColor,
-              ]}>
+            <Text variant="bodySmall" style={globalStyles.textSecondColor}>
               Ngành hàng cấp 1
             </Text>
           </View>
 
           <View>
             <Text
-              style={[
-                globalStyles.fontWeightMedium,
-                globalStyles.fontExtraLarge,
-              ]}>
+              variant="headlineSmall"
+              style={[globalStyles.fontWeightMedium]}>
               Jordan One Take II PF
             </Text>
           </View>
         </View>
 
         {/*Product  Description  */}
-        <View style={{paddingVertical: 8}}>
-          <Text
-            style={[
-              globalStyles.fontWeightMedium,
-              {fontSize: 14, marginBottom: 8},
-            ]}>
+        <View style={globalStyles.pv8}>
+          <Text variant="titleSmall" style={{marginBottom: 8}}>
             Thông tin sản phẩm
           </Text>
 
-          <Text
-            style={[
-              globalStyles.fontWeightLight,
-              globalStyles.fontSmall,
-              globalStyles.textSecondColor,
-              {lineHeight: 18},
-            ]}>
+          <Text variant="bodySmall" style={globalStyles.textSecondColor}>
             Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu
             suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn,
             chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một
@@ -198,11 +168,8 @@ const ProducDetailsScreen = () => {
         </View>
       </View>
 
-      <View
-        style={{paddingHorizontal: 16, paddingVertical: 8, marginBottom: 8}}>
-        <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-          Sản phẩm nổi bật
-        </Text>
+      <View style={[globalStyles.ph16, globalStyles.pv8, {marginBottom: 8}]}>
+        <Text variant="titleSmall">Sản phẩm nổi bật</Text>
       </View>
     </>
   );
@@ -216,10 +183,7 @@ const ProducDetailsScreen = () => {
         keyExtractor={item => item.code.toString()}
         numColumns={2}
         removeClippedSubviews={false}
-        columnWrapperStyle={{
-          flex: 1,
-          marginHorizontal: 8,
-        }}
+        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
       />
     </View>
   );
