@@ -81,6 +81,30 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginHorizontal: 15,
   },
+  billOrderFixed: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'white',
+  },
+  billOrderBox: {
+    width: '100%',
+    minHeight: 224,
+    paddingHorizontal: 16,
+    boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
+  },
+  tempPriceBox: {
+    paddingVertical: 8,
+    borderBottomColor: colors.divider,
+    borderBottomWidth: 1,
+    gap: 8,
+  },
+  tempPriceitem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });
 
 export default styles;
