@@ -4,7 +4,6 @@ import {
   Image,
   ImageBackground,
   ScrollView,
-  Text,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -13,11 +12,15 @@ import {bannerOne} from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {shoppingBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
-import {Colors, ShoppingConst} from '../../config/const';
+import {ShoppingConst} from '../../config/const';
 import {Product} from '../../types';
 import styles from './styles';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../types'; // Adjust the import path as necessary
+import {Text} from 'react-native-paper';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const ProductItem = ({product}: {product: Product}) => {
   return (
@@ -123,15 +126,13 @@ const ShoppingScreen = () => {
       {/* Product categories */}
       <View style={styles.cateContainer}>
         <View style={styles.cateTitleBox}>
-          <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-            Danh mục sản phẩm
-          </Text>
+          <Text variant="labelLarge">Danh mục sản phẩm</Text>
         </View>
 
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{paddingHorizontal: 16}}>
+          style={globalStyles.ph16}>
           <View style={styles.cateBox}>
             {cate.map((item, index) => (
               <View key={index} style={styles.cateItem}>
@@ -144,17 +145,12 @@ const ShoppingScreen = () => {
                     <Ionicons
                       name="grid-outline"
                       size={24}
-                      color={Colors.textSecond}
+                      color={colors.textSecond}
                     />
                   )}
                 </TouchableOpacity>
 
-                <Text
-                  style={[
-                    globalStyles.textSecondColor,
-                    globalStyles.fontSmall,
-                    globalStyles.fontWeightRegular,
-                  ]}>
+                <Text variant="bodySmall" style={globalStyles.textSecondColor}>
                   {item.text}
                 </Text>
               </View>
@@ -164,19 +160,12 @@ const ShoppingScreen = () => {
       </View>
 
       {/* Best selling products */}
-      <View style={{paddingHorizontal: 16}}>
+      <View style={globalStyles.ph16}>
         <View style={[styles.productTitleBox, {marginBottom: 12}]}>
-          <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-            Sản phẩm bán chạy
-          </Text>
+          <Text variant="labelLarge">Sản phẩm bán chạy</Text>
 
           <TouchableOpacity>
-            <Text
-              style={[
-                globalStyles.primaryColor,
-                globalStyles.fontSmall,
-                globalStyles.fontWeightRegular,
-              ]}>
+            <Text variant="bodySmall" style={globalStyles.primaryColor}>
               Xem thêm
             </Text>
           </TouchableOpacity>
@@ -198,10 +187,7 @@ const ShoppingScreen = () => {
         keyExtractor={item => item.code.toString()}
         numColumns={2}
         removeClippedSubviews={false}
-        columnWrapperStyle={{
-          flex: 1,
-          marginHorizontal: 8,
-        }}
+        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
       />
     </View>
   );

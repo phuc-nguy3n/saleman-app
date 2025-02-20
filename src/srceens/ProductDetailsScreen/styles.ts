@@ -1,16 +1,24 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   carouselBg: {
     width: '100%',
     height: 375,
     borderBottomWidth: 1,
-    borderColor: Colors.outline,
+    borderColor: colors.outline,
   },
   cartIcon: {
     width: 30,
     height: 30,
+  },
+  headerBox: {
+    marginTop: 18,
+    marginHorizontal: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   productsItem: {
     width: '50%',
@@ -29,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addIconBox: {
-    backgroundColor: Colors.primary,
+    backgroundColor: colors.primary,
     borderRadius: 50,
     width: 32,
     height: 32,

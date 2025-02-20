@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const styles = StyleSheet.create({
   carouselBg: {width: '100%', height: 232, marginBottom: 12},
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#9AA7AA',
+    borderColor: colors.outline,
   },
   searchIcon: {position: 'absolute', left: 10},
   searchInput: {
@@ -45,9 +47,9 @@ const styles = StyleSheet.create({
   },
   cateItem: {alignItems: 'center', gap: 4},
   cateItemIconBox: {
-    boxShadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px',
+    boxShadow: colors.shadow,
     backgroundColor: 'white',
-    borderColor: '#E6F3F8',
+    borderColor: colors.tertiary,
     borderWidth: 1,
     width: 56,
     height: 56,
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addIconBox: {
-    backgroundColor: Colors.primary,
+    backgroundColor: colors.primary,
     borderRadius: 50,
     width: 32,
     height: 32,

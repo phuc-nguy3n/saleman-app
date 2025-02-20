@@ -2,7 +2,6 @@ import React from 'react';
 import {
   FlatList,
   ScrollView,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -12,9 +11,13 @@ import {Product, RootStackParamList} from '../../types';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import {Colors, ShoppingConst} from '../../config/const';
+import {ShoppingConst} from '../../config/const';
 import {shoppingBlackBag} from '../../assets/images';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {Text} from 'react-native-paper';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const ProductItem = ({product}: {product: Product}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -32,18 +35,11 @@ const ProductItem = ({product}: {product: Product}) => {
           style={styles.productItemImage}
         />
       </TouchableOpacity>
-      <Text
-        style={[
-          globalStyles.fontWeightRegular,
-          globalStyles.fontSmall,
-          {marginBottom: 4},
-        ]}>
+      <Text variant="bodySmall" style={{marginBottom: 4}}>
         {product.name}
       </Text>
       <View style={styles.productContentArea}>
-        <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-          {product.price}đ
-        </Text>
+        <Text variant="labelLarge">{product.price}đ</Text>
 
         <TouchableOpacity
           style={styles.addIconBox}
@@ -102,7 +98,7 @@ const ProductScreen = () => {
             <Ionicons
               name="search-outline"
               size={24}
-              color="#8F8F8F"
+              color={colors.outline}
               style={styles.searchIcon}
             />
             <TextInput style={styles.searchInput} placeholder="Search" />
@@ -120,7 +116,7 @@ const ProductScreen = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{paddingHorizontal: 16}}>
+          style={globalStyles.ph16}>
           <View style={styles.cateBox}>
             {cate.map((item, index) => (
               <View key={index} style={styles.cateItem}>
@@ -137,11 +133,8 @@ const ProductScreen = () => {
                       />
                       <View style={{padding: 8, paddingRight: 12}}>
                         <Text
-                          style={[
-                            globalStyles.textSecondColor,
-                            globalStyles.fontSmall,
-                            globalStyles.fontWeightRegular,
-                          ]}>
+                          variant="bodySmall"
+                          style={globalStyles.textSecondColor}>
                           {item.text}
                         </Text>
                       </View>
@@ -158,7 +151,7 @@ const ProductScreen = () => {
                       <Ionicons
                         name="grid-outline"
                         size={24}
-                        color={Colors.textSecond}
+                        color={colors.textSecond}
                       />
                     </View>
                   )}
@@ -180,10 +173,7 @@ const ProductScreen = () => {
         keyExtractor={item => item.code.toString()}
         numColumns={2}
         removeClippedSubviews={false}
-        columnWrapperStyle={{
-          flex: 1,
-          marginHorizontal: 8,
-        }}
+        columnWrapperStyle={[{}, globalStyles.ph8, globalStyles.container]}
       />
     </View>
   );

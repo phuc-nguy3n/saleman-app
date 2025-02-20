@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {ScrollView, TextInput, TouchableOpacity, View} from 'react-native';
-import {Category, Colors} from '../../config/const';
+import {Category} from '../../config/const';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Image} from 'react-native';
 
@@ -27,11 +27,11 @@ const {colors} = customTheme;
 const CateItem = ({text, active}: {text: string; active: boolean}) => {
   const cateActiveStyle = {
     button: {
-      borderColor: active ? Colors.primary : Colors.outline,
-      backgroundColor: active ? Colors.third : 'white',
+      borderColor: active ? colors.primary : colors.outline,
+      backgroundColor: active ? colors.tertiary : 'white',
     },
     color: {
-      color: active ? Colors.primary : Colors.textSecond,
+      color: active ? colors.primary : colors.textSecond,
     },
   };
 
@@ -199,11 +199,11 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
           <View key={index} style={styles.orderItemWrapped}>
             {/* Header   */}
             <View style={[globalStyles.lineColor, styles.orderItemHeader]}>
-              <Text>
+              <View style={styles.orderItemStatus}>
                 {renderOrderStatus(item.status)}
                 <Text> | </Text>
                 {renderOrderDate(item.timestamp)}
-              </Text>
+              </View>
 
               <TouchableOpacity
                 style={styles.orderNavigationBox}
@@ -212,7 +212,7 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
                     order: item,
                   })
                 }>
-                <Text style={[globalStyles.linkColor, globalStyles.fontSmall]}>
+                <Text variant="bodySmall" style={globalStyles.linkColor}>
                   Xem đơn hàng
                 </Text>
                 <FontAwesome

@@ -15,7 +15,7 @@ export const customTheme = {
     outline: 'rgb(154, 167, 170)', // màu viền (vd: Input)
     scrim: 'rgb(0, 0, 0)', // Dialog và Modal nhỏ
     backdrop: 'rgba(43, 49, 54, 0.4)', // BottomSheet hoặc Modal toàn màn hình
-    shadow: 'rgb(0, 0, 0)', // hiệu ứng đổ bóng
+    shadow: 'rgba(230, 243, 248, 0.8) 0px 1px 4px', // hiệu ứng đổ bóng
     elevation: {
       // tạo chiều sâu cho shadow
       level0: 'transparent',
@@ -36,6 +36,7 @@ export const customTheme = {
       },
     },
     gray: 'rgb(244,243,244)',
+    lightGray: 'rgb(250,250,250)',
     darkGray: 'rgb(118,117,119)',
     status: {
       new: 'rgb(255,215,0)',
@@ -44,6 +45,9 @@ export const customTheme = {
       return: 'rgb(255,69,0)',
     },
     link: 'rgb(0,122,255)',
+    yellowLight: 'rgb(246,238,148)',
+    greenLight: 'rgb(229,248,235)',
+    green: 'rgb(0,188,60)',
   },
   roundness: 8, // Bo tròn góc
 };

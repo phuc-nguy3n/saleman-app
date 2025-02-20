@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TextInput} from 'react-native';
-import {Colors, Fonts, FontSizes} from '../config/const';
+import {Fonts} from '../config/const';
 import {customTheme} from '../theme/customTheme';
 
 Text.defaultProps = Text.defaultProps || {};
@@ -62,14 +62,14 @@ const globalStyles = StyleSheet.create({
   bgError: {
     backgroundColor: colors.errorContainer,
   },
-  bgThird: {
-    backgroundColor: Colors.third,
+  bgTertiary: {
+    backgroundColor: colors.tertiary,
   },
   bgYellowLight: {
-    backgroundColor: Colors.yellowLight,
+    backgroundColor: colors.yellowLight,
   },
   bgGreenLight: {
-    backgroundColor: Colors.greenLight,
+    backgroundColor: colors.greenLight,
   },
   bgWhite: {
     backgroundColor: 'white',
@@ -83,35 +83,35 @@ const globalStyles = StyleSheet.create({
     color: colors.primary,
   },
   thirdColor: {
-    color: Colors.third,
+    color: colors.tertiary,
   },
   lineColor: {
-    borderColor: Colors.line,
+    borderColor: colors.divider,
   },
   outlineColor: {
-    color: Colors.outline,
+    color: colors.outline,
   },
   linkColor: {
     color: colors.link,
   },
   errorColor: {
-    color: Colors.error,
+    color: colors.error,
   },
   textSecondColor: {color: colors.textSecond},
-  greenColor: {color: Colors.green},
+  greenColor: {color: colors.green},
 
   //   Font size
   fontSmall: {
-    fontSize: FontSizes.small,
+    fontSize: 12,
   },
   fontMedium: {
-    fontSize: FontSizes.medium,
+    fontSize: 16,
   },
   fontLarge: {
-    fontSize: FontSizes.large,
+    fontSize: 20,
   },
   fontExtraLarge: {
-    fontSize: FontSizes.extraLarge,
+    fontSize: 24,
   },
 
   //   Font weight
