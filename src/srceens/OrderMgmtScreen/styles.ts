@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     borderBottomWidth: 1,
   },
+  orderItemStatus: {flexDirection: 'row', alignItems: 'center'},
   orderNavigationBox: {
     flexDirection: 'row',
     alignItems: 'center',

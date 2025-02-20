@@ -45,6 +45,9 @@ export const customTheme = {
       return: 'rgb(255,69,0)',
     },
     link: 'rgb(0,122,255)',
+    yellowLight: 'rgb(246,238,148)',
+    greenLight: 'rgb(229,248,235)',
+    green: 'rgb(0,188,60)',
   },
   roundness: 8, // Bo tròn góc
 };

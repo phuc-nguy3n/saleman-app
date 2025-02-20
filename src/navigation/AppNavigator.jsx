@@ -17,7 +17,9 @@ import {
   user,
   userActive,
 } from '../assets/images';
-import {Colors} from '../config/const';
+import {customTheme} from '../theme/customTheme';
+
+const {colors} = customTheme;
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +54,7 @@ function AppNavigator() {
             </View>
           );
         },
-        tabBarActiveTintColor: Colors.primary,
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: {paddingBottom: 5, height: 60},
       })}>

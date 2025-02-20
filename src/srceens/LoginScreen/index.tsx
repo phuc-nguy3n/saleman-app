@@ -1,5 +1,5 @@
 import styles from './styles';
-import {Colors, MsgError} from '../../config/const';
+import {MsgError} from '../../config/const';
 import {eye, eyeOff, logo} from '../../assets/images';
 import React, {useEffect, useState} from 'react';
 import {
@@ -180,7 +180,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   };
 
   const buttonStatus = (): string => {
-    return disableLogin ? Colors.disable : Colors.primary;
+    return disableLogin ? colors.surfaceDisabled : colors.primary;
   };
 
   return (
