@@ -1,5 +1,11 @@
-import React from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import React, {useRef} from 'react';
+import {
+  FlatList,
+  Image,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
 import {
@@ -14,6 +20,12 @@ import styles from './styles';
 import data from '../../db/mockData.json';
 import {AgencyType, WorkScheduleProps} from '../../types';
 import {customTheme} from '../../theme/customTheme';
+import {Modalize} from 'react-native-modalize';
+import ShoppingScreen from '../ShoppingScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const screenHeight = Dimensions.get('window').height;
+const modalHeight = screenHeight * 0.7;
 
 const {colors} = customTheme;
 
@@ -117,12 +129,14 @@ const AgencyItem = ({
 const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
   const agencyData = data.agency;
 
+  const modalizeRef = useRef<Modalize>(null);
+
   const navigateAgencyInfo = () => {
     navigation.navigate('AgencyInfo');
   };
 
   const openShopping = () => {
-    navigation.navigate('Shopping');
+    modalizeRef.current?.open();
   };
 
   return (
@@ -152,6 +166,27 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           <Ionicons size={28} name={'map-outline'} color={'white'} />
         </TouchableOpacity>
       </View>
+
+      <Modalize
+        disableScrollIfPossible={false}
+        panGestureEnabled={false}
+        withHandle={false}
+        HeaderComponent={
+          <View style={styles.bottomSheetHeader}>
+            <Text variant="titleSmall">Mua hàng</Text>
+
+            <TouchableOpacity
+              onPress={() => {
+                modalizeRef.current?.close();
+              }}>
+              <Icon name="close-outline" size={20} />
+            </TouchableOpacity>
+          </View>
+        }
+        modalHeight={modalHeight}
+        ref={modalizeRef}>
+        <ShoppingScreen />
+      </Modalize>
     </View>
   );
 };

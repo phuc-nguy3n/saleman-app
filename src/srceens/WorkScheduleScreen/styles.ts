@@ -70,6 +70,12 @@ const styles = StyleSheet.create({
     right: 20,
     zIndex: 1,
   },
+  bottomSheetHeader: {
+    padding: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });
 
 export default styles;
