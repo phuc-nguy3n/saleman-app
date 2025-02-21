@@ -178,9 +178,8 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
               </TouchableOpacity>
             </View>
           }
-          // modalHeight={modalHeight}
           ref={modalizeRef}>
-          <ShoppingScreen />
+          <ShoppingScreen isBottomSheet={true} />
         </Modalize>
       </Portal>
     </View>

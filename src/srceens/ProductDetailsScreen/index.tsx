@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, ImageBackground, TouchableOpacity, View} from 'react-native';
 
 import styles from './styles';
@@ -11,6 +11,7 @@ import globalStyles from '../../styles/globalStyles';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Text} from 'react-native-paper';
+import CartScreen from '../CartScreen';
 
 const ProductItem = ({product}: {product: Product}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -46,8 +47,10 @@ const ProductItem = ({product}: {product: Product}) => {
   );
 };
 
-const ProducDetailsScreen = () => {
+const ProducDetailsScreen = (isBottomSheet: {isBottomSheet: boolean}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const [layout, setLayout] = useState(ScreenType.productDetails);
 
   const navigateToScreen = (screen: string) => {
     switch (screen) {
@@ -61,7 +64,11 @@ const ProducDetailsScreen = () => {
         navigation.navigate(ScreenType.productDetails);
         break;
       case ScreenType.cart:
-        navigation.navigate(ScreenType.cart);
+        if (isBottomSheet) {
+          setLayout(ScreenType.cart);
+        } else {
+          navigation.navigate(ScreenType.cart);
+        }
         break;
       default:
         navigation.navigate(ScreenType.shopping);
@@ -71,13 +78,13 @@ const ProducDetailsScreen = () => {
   const itemsbreadcrumbs = [
     {
       label: 'Danh mục',
-      navigation: () => navigateToScreen(ScreenType.shopping),
+      navigation: () => null,
     },
-    {label: 'Sale', navigation: () => navigateToScreen(ScreenType.product)},
+    {label: 'Sale', navigation: () => null},
     {label: 'Shoes', navigation: () => null},
     {
       label: 'Adidas',
-      navigation: () => navigateToScreen(ScreenType.productDetails),
+      navigation: () => null,
     },
   ];
 
@@ -175,17 +182,24 @@ const ProducDetailsScreen = () => {
   );
 
   return (
-    <View style={globalStyles.bgWhite}>
-      <FlatList
-        ListHeaderComponent={renderHeader}
-        data={products}
-        renderItem={({item}) => <ProductItem product={item} />}
-        keyExtractor={item => item.code.toString()}
-        numColumns={2}
-        removeClippedSubviews={false}
-        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
-      />
-    </View>
+    <>
+      {layout === ScreenType.productDetails && (
+        <View style={globalStyles.bgWhite}>
+          <FlatList
+            ListHeaderComponent={renderHeader}
+            data={products}
+            renderItem={({item}) => <ProductItem product={item} />}
+            keyExtractor={item => item.code.toString()}
+            numColumns={2}
+            removeClippedSubviews={false}
+            columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
+            style={{paddingBottom: 50}}
+          />
+        </View>
+      )}
+
+      {layout === ScreenType.cart && <CartScreen />}
+    </>
   );
 };
 

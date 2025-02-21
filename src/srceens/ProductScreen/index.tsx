@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   ScrollView,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import globalStyles from '../../styles/globalStyles';
-import {Product, RootStackParamList} from '../../types';
+import {Product, RootStackParamList, ScreenType} from '../../types';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
@@ -16,14 +16,27 @@ import {shoppingBlackBag} from '../../assets/images';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Text} from 'react-native-paper';
 import {customTheme} from '../../theme/customTheme';
+import ProducDetailsScreen from '../ProductDetailsScreen';
 
 const {colors} = customTheme;
 
-const ProductItem = ({product}: {product: Product}) => {
+const ProductItem = ({
+  product,
+  isBottomSheet,
+  setLayout,
+}: {
+  product: Product;
+  isBottomSheet: boolean;
+  setLayout: React.Dispatch<React.SetStateAction<ScreenType>>;
+}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const navigateToProductDetail = () => {
-    navigation.navigate('ProductDetails');
+    if (isBottomSheet) {
+      setLayout(ScreenType.productDetails);
+    } else {
+      navigation.navigate('ProductDetails');
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ const ProductItem = ({product}: {product: Product}) => {
   );
 };
 
-const ProductScreen = () => {
+const ProductScreen = ({isBottomSheet}: {isBottomSheet: boolean}) => {
   const products: Product[] = [
     {
       code: '0',
@@ -87,6 +100,8 @@ const ProductScreen = () => {
     },
   ];
   const {cate} = ShoppingConst;
+
+  const [layout, setLayout] = useState(ScreenType.product);
 
   const renderHeader = () => (
     <>
@@ -165,17 +180,32 @@ const ProductScreen = () => {
   );
 
   return (
-    <View style={[globalStyles.bgWhite]}>
-      <FlatList
-        ListHeaderComponent={renderHeader}
-        data={products}
-        renderItem={({item}) => <ProductItem product={item} />}
-        keyExtractor={item => item.code.toString()}
-        numColumns={2}
-        removeClippedSubviews={false}
-        columnWrapperStyle={[{}, globalStyles.ph8, globalStyles.container]}
-      />
-    </View>
+    <>
+      {layout === ScreenType.product && (
+        <View style={[globalStyles.bgWhite]}>
+          <FlatList
+            ListHeaderComponent={renderHeader}
+            data={products}
+            renderItem={({item}) => (
+              <ProductItem
+                product={item}
+                isBottomSheet={isBottomSheet}
+                setLayout={setLayout}
+              />
+            )}
+            keyExtractor={item => item.code.toString()}
+            numColumns={2}
+            removeClippedSubviews={false}
+            columnWrapperStyle={[{}, globalStyles.ph8, globalStyles.container]}
+            style={{paddingBottom: 50}}
+          />
+        </View>
+      )}
+
+      {layout === ScreenType.productDetails && (
+        <ProducDetailsScreen isBottomSheet={isBottomSheet} />
+      )}
+    </>
   );
 };
 
