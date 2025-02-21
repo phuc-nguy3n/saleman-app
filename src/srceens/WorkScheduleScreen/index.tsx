@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
@@ -14,6 +14,10 @@ import styles from './styles';
 import data from '../../db/mockData.json';
 import {AgencyType, WorkScheduleProps} from '../../types';
 import {customTheme} from '../../theme/customTheme';
+import {Modalize} from 'react-native-modalize';
+import ShoppingScreen from '../ShoppingScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {Portal} from 'react-native-portalize';
 
 const {colors} = customTheme;
 
@@ -117,12 +121,14 @@ const AgencyItem = ({
 const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
   const agencyData = data.agency;
 
+  const modalizeRef = useRef<Modalize>(null);
+
   const navigateAgencyInfo = () => {
     navigation.navigate('AgencyInfo');
   };
 
   const openShopping = () => {
-    navigation.navigate('Shopping');
+    modalizeRef.current?.open();
   };
 
   return (
@@ -152,6 +158,30 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           <Ionicons size={28} name={'map-outline'} color={'white'} />
         </TouchableOpacity>
       </View>
+
+      <Portal>
+        <Modalize
+          adjustToContentHeight={true}
+          keyboardAvoidingBehavior="position"
+          disableScrollIfPossible={false}
+          panGestureEnabled={false}
+          withHandle={false}
+          HeaderComponent={
+            <View style={styles.bottomSheetHeader}>
+              <Text variant="titleSmall">Mua hàng</Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  modalizeRef.current?.close();
+                }}>
+                <Icon name="close-outline" size={20} />
+              </TouchableOpacity>
+            </View>
+          }
+          ref={modalizeRef}>
+          <ShoppingScreen isBottomSheet={true} />
+        </Modalize>
+      </Portal>
     </View>
   );
 };

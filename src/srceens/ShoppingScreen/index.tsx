@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -13,12 +13,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {shoppingBag} from '../../assets/images';
 import globalStyles from '../../styles/globalStyles';
 import {ShoppingConst} from '../../config/const';
-import {Product} from '../../types';
+import {Product, ScreenType} from '../../types';
 import styles from './styles';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../types'; // Adjust the import path as necessary
 import {Text} from 'react-native-paper';
 import {customTheme} from '../../theme/customTheme';
+import ProductScreen from '../ProductScreen';
 
 const {colors} = customTheme;
 
@@ -59,10 +60,12 @@ const ProductItem = ({product}: {product: Product}) => {
     </View>
   );
 };
-const ShoppingScreen = () => {
+const ShoppingScreen = ({isBottomSheet}: {isBottomSheet: boolean}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const {cate} = ShoppingConst;
+
+  const [layout, setLayout] = useState(ScreenType.shopping);
 
   const products: Product[] = [
     {
@@ -175,21 +178,31 @@ const ShoppingScreen = () => {
   );
 
   const navigateProductScreen = () => {
-    navigation.navigate('Product');
+    if (isBottomSheet) {
+      setLayout(ScreenType.product);
+    } else {
+      navigation.navigate('Product');
+    }
   };
 
   return (
-    <View style={globalStyles.bgWhite}>
-      <FlatList
-        ListHeaderComponent={renderHeader}
-        data={products}
-        renderItem={({item}) => <ProductItem product={item} />}
-        keyExtractor={item => item.code.toString()}
-        numColumns={2}
-        removeClippedSubviews={false}
-        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
-      />
-    </View>
+    <>
+      {layout === ScreenType.shopping && (
+        <View style={globalStyles.bgWhite}>
+          <FlatList
+            ListHeaderComponent={renderHeader}
+            data={products}
+            renderItem={({item}) => <ProductItem product={item} />}
+            keyExtractor={item => item.code.toString()}
+            numColumns={2}
+            removeClippedSubviews={false}
+            columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
+          />
+        </View>
+      )}
+
+      {layout === ScreenType.product && <ProductScreen isBottomSheet={true} />}
+    </>
   );
 };
 

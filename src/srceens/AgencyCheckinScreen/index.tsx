@@ -14,7 +14,9 @@ import {
 } from '../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Button, Text, TextInput} from 'react-native-paper';
-import {ThemeTextInput} from '../../config/const';
+import {customTheme} from '../../theme/customTheme';
+
+const {colors} = customTheme;
 
 const AgencyItem = ({agencyData}: {agencyData: AgencyType}) => {
   return (
@@ -90,7 +92,7 @@ const NoteItem = () => {
 
       <TextInput
         mode="outlined"
-        theme={ThemeTextInput}
+        theme={colors.ThemeTextInput}
         placeholder="Nhập nộ dung ghi chú"
       />
     </View>
