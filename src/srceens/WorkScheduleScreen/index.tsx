@@ -1,11 +1,5 @@
 import React, {useRef} from 'react';
-import {
-  FlatList,
-  Image,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native';
+import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
 import {
@@ -24,9 +18,6 @@ import {Modalize} from 'react-native-modalize';
 import ShoppingScreen from '../ShoppingScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Portal} from 'react-native-portalize';
-
-const screenHeight = Dimensions.get('window').height;
-const modalHeight = screenHeight * 0.8;
 
 const {colors} = customTheme;
 
@@ -170,6 +161,8 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
 
       <Portal>
         <Modalize
+          adjustToContentHeight={true}
+          keyboardAvoidingBehavior="position"
           disableScrollIfPossible={false}
           panGestureEnabled={false}
           withHandle={false}
@@ -185,7 +178,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
               </TouchableOpacity>
             </View>
           }
-          modalHeight={modalHeight}
+          // modalHeight={modalHeight}
           ref={modalizeRef}>
           <ShoppingScreen />
         </Modalize>
