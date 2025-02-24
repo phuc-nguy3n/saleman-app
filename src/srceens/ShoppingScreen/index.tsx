@@ -197,6 +197,7 @@ const ShoppingScreen = ({isBottomSheet}: {isBottomSheet: boolean}) => {
             numColumns={2}
             removeClippedSubviews={false}
             columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
+            style={{paddingBottom: 50}}
           />
         </View>
       )}
