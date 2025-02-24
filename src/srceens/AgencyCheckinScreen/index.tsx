@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {AgencyType} from '../../types';
+import {AgencyInfoProps, AgencyType} from '../../types';
 import styles from './styles';
 import globalStyles from '../../styles/globalStyles';
 import {Image} from 'react-native';
@@ -121,23 +121,12 @@ const ImageCheckinItem = () => {
   );
 };
 
-const AgencyCheckinScreen = () => {
+const AgencyCheckinScreen: React.FC<AgencyInfoProps> = ({route}) => {
+  const agencyInfo = route.params;
   return (
     <View style={styles.container}>
       <View>
-        <AgencyItem
-          agencyData={{
-            id: 'agency-id',
-            name: 'Agency Name',
-            quantityOrders: 5,
-            owner: {
-              id: 'owner-id',
-              name: 'Owner Name',
-              address: 'Owner Address',
-              phoneNumber: '123456789',
-            },
-          }}
-        />
+        <AgencyItem agencyData={agencyInfo.info} />
 
         <NoteItem />
         <ImageCheckinItem />

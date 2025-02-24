@@ -10,7 +10,7 @@ export type RootStackParamList = {
   OrderManagement: {cateOrders: string | number; orders: OrderType[]};
   OrderDetails: {order: OrderType};
   WorkSchedule: undefined;
-  AgencyInfo: undefined;
+  AgencyInfo: {info: AgencyType};
   Shopping: undefined;
   Product: undefined;
   ProductDetails: undefined;
@@ -33,8 +33,11 @@ export type WorkScheduleProps = {
   navigation: AppNavigationProp<'WorkSchedule'>;
 };
 
+type AgencyInfoRouteProp = RouteProp<RootStackParamList, 'AgencyInfo'>;
+
 export type AgencyInfoProps = {
   navigation: AppNavigationProp<'AgencyInfo'>;
+  route: AgencyInfoRouteProp;
 };
 
 export type ShoppingProps = {

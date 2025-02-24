@@ -123,8 +123,10 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
 
   const modalizeRef = useRef<Modalize>(null);
 
-  const navigateAgencyInfo = () => {
-    navigation.navigate('AgencyInfo');
+  const navigateAgencyInfo = (info: AgencyType) => {
+    navigation.navigate('AgencyInfo', {
+      info: info,
+    });
   };
 
   const openShopping = () => {
@@ -139,7 +141,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           renderItem={({item}) => (
             <AgencyItem
               agencyData={item}
-              navigateAgencyInfo={navigateAgencyInfo}
+              navigateAgencyInfo={() => navigateAgencyInfo(item)}
               openShopping={openShopping}
             />
           )}
