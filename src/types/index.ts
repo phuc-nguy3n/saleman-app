@@ -153,6 +153,7 @@ export enum ScreenType {
   orderManagement = 'OrderManagement',
   orderDetails = 'OrderDetails',
   workSchedule = 'WorkSchedule',
+  newSignUp = 'NewSignUp',
   agencyInfo = 'AgencyInfo',
   shopping = 'Shopping',
   product = 'Product',

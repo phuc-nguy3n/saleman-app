@@ -72,10 +72,12 @@ export const HomeConst = {
       {
         img: storeLocation,
         text: 'Ghé thăm - Đặt hàng',
+        screen: 'WorkSchedule',
       },
       {
         img: storeAdd,
         text: 'Đăng ký đại lý mới',
+        screen: 'NewSignUp',
       },
     ],
   },

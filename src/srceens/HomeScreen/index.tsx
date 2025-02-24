@@ -19,6 +19,7 @@ import {
   HomeScreenProps,
   OrderCateType,
   OrderStatusItemProps,
+  ScreenType,
   TodoType,
   UserType,
 } from '../../types';
@@ -57,8 +58,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     });
   };
 
-  const navigateWorkSchedule = () => {
-    navigation.navigate('WorkSchedule');
+  const navigateToScreen = (screen: string) => {
+    switch (screen) {
+      case ScreenType.workSchedule:
+        navigation.navigate(ScreenType.workSchedule);
+        break;
+      case ScreenType.newSignUp:
+        console.log('New Sign Up Screen');
+        break;
+    }
   };
 
   const generateProcessWork = (todo: string): string | undefined => {
@@ -262,7 +270,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           <View style={styles.actionWrapped}>
             {itemsStore.map((item, index) => (
               <TouchableOpacity
-                onPress={navigateWorkSchedule}
+                onPress={() => navigateToScreen(item.screen)}
                 key={index}
                 style={styles.actionBox}>
                 <Image style={styles.actionImg} source={item.img} />
