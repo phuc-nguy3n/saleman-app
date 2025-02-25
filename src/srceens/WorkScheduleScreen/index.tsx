@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import globalStyles from '../../styles/globalStyles';
@@ -12,24 +12,21 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import data from '../../db/mockData.json';
-import {AgencyType, WorkScheduleProps} from '../../types';
+import {AgencyType, WorkScheduleScreenProps} from '../../types';
 import {customTheme} from '../../theme/customTheme';
-import {Modalize} from 'react-native-modalize';
-import ShoppingScreen from '../ShoppingScreen';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Portal} from 'react-native-portalize';
+import {useBottomSheet} from '../../provider/BottomSheetProvider';
+import ShoppingComponent from '../ShoppingScreen/components/ShoppingComponent';
 
 const {colors} = customTheme;
 
 const AgencyItem = ({
   agencyData,
   navigateAgencyInfo,
-  openShopping,
 }: {
   agencyData: AgencyType;
   navigateAgencyInfo: () => void;
-  openShopping: () => void;
 }) => {
+  const {openBottomSheet} = useBottomSheet();
   return (
     <View style={styles.agencyItem}>
       {/* Header */}
@@ -89,7 +86,7 @@ const AgencyItem = ({
               width: '65%',
             }}>
             <TouchableOpacity
-              onPress={openShopping}
+              onPress={() => openBottomSheet(<ShoppingComponent />, 'Mua hàng')}
               style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
               <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 
@@ -118,17 +115,15 @@ const AgencyItem = ({
   );
 };
 
-const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
+const WorkScheduleScreen: React.FC<WorkScheduleScreenProps> = ({
+  navigation,
+}) => {
   const agencyData = data.agency;
 
-  const modalizeRef = useRef<Modalize>(null);
-
-  const navigateAgencyInfo = () => {
-    navigation.navigate('AgencyInfo');
-  };
-
-  const openShopping = () => {
-    modalizeRef.current?.open();
+  const navigateAgencyInfo = (info: AgencyType) => {
+    navigation.navigate('AgencyInfo', {
+      info: info,
+    });
   };
 
   return (
@@ -139,8 +134,7 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           renderItem={({item}) => (
             <AgencyItem
               agencyData={item}
-              navigateAgencyInfo={navigateAgencyInfo}
-              openShopping={openShopping}
+              navigateAgencyInfo={() => navigateAgencyInfo(item)}
             />
           )}
           keyExtractor={item => item.id.toString()}
@@ -158,30 +152,6 @@ const WorkScheduleScreen: React.FC<WorkScheduleProps> = ({navigation}) => {
           <Ionicons size={28} name={'map-outline'} color={'white'} />
         </TouchableOpacity>
       </View>
-
-      <Portal>
-        <Modalize
-          adjustToContentHeight={true}
-          keyboardAvoidingBehavior="position"
-          disableScrollIfPossible={false}
-          panGestureEnabled={false}
-          withHandle={false}
-          HeaderComponent={
-            <View style={styles.bottomSheetHeader}>
-              <Text variant="titleSmall">Mua hàng</Text>
-
-              <TouchableOpacity
-                onPress={() => {
-                  modalizeRef.current?.close();
-                }}>
-                <Icon name="close-outline" size={20} />
-              </TouchableOpacity>
-            </View>
-          }
-          ref={modalizeRef}>
-          <ShoppingScreen isBottomSheet={true} />
-        </Modalize>
-      </Portal>
     </View>
   );
 };
