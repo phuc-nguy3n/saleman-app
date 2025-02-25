@@ -14,6 +14,7 @@ import AppNavigation from './src/navigation';
 import {PaperProvider} from 'react-native-paper';
 import {customTheme} from './src/theme/customTheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {BottomSheetProvider} from './src/provider/BottomSheetProvider';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,12 +26,14 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{flex: 1}}>
-        <PaperProvider theme={customTheme}>
-          <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor={'black'} />
-            <AppNavigation />
-          </SafeAreaView>
-        </PaperProvider>
+        <BottomSheetProvider>
+          <PaperProvider theme={customTheme}>
+            <SafeAreaView style={styles.container}>
+              <StatusBar backgroundColor={'black'} />
+              <AppNavigation />
+            </SafeAreaView>
+          </PaperProvider>
+        </BottomSheetProvider>
       </GestureHandlerRootView>
     </Provider>
   );

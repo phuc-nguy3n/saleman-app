@@ -12,7 +12,7 @@ export type RootStackParamList = {
   WorkSchedule: undefined;
   AgencyInfo: {info: AgencyType};
   Shopping: undefined;
-  Product: undefined;
+  Products: undefined;
   ProductDetails: undefined;
   Cart: undefined;
 };
@@ -29,30 +29,30 @@ export type HomeScreenProps = {
   navigation: AppNavigationProp<'Home'>;
 };
 
-export type WorkScheduleProps = {
+export type WorkScheduleScreenProps = {
   navigation: AppNavigationProp<'WorkSchedule'>;
 };
 
 type AgencyInfoRouteProp = RouteProp<RootStackParamList, 'AgencyInfo'>;
 
-export type AgencyInfoProps = {
+export type AgencyInfoScreenProps = {
   navigation: AppNavigationProp<'AgencyInfo'>;
   route: AgencyInfoRouteProp;
 };
 
-export type ShoppingProps = {
+export type ShoppingScreenProps = {
   navigation: AppNavigationProp<'Shopping'>;
 };
 
-export type ProductProps = {
-  navigation: AppNavigationProp<'Product'>;
+export type ProductsScreenProps = {
+  navigation: AppNavigationProp<'Products'>;
 };
 
-export type ProductDetailsProps = {
+export type ProductDetailsScreenProps = {
   navigation: AppNavigationProp<'ProductDetails'>;
 };
 
-export type CartProps = {
+export type CartScreenProps = {
   navigation: AppNavigationProp<'Cart'>;
 };
 
@@ -159,7 +159,7 @@ export enum ScreenType {
   newSignUp = 'NewSignUp',
   agencyInfo = 'AgencyInfo',
   shopping = 'Shopping',
-  product = 'Product',
+  products = 'Products',
   productDetails = 'ProductDetails',
   cart = 'Cart',
 }
