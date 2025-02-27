@@ -22,7 +22,7 @@ const {colors} = customTheme;
 
 const BillOrder = ({...props}) => {
   return (
-    <View {...props} style={styles.billOrderFixed}>
+    <View {...props}>
       <View style={styles.billOrderBox}>
         {/* Totals */}
         <View>
@@ -114,11 +114,11 @@ function CartComponent({
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={globalStyles.container}>
+      <View style={[globalStyles.container, {position: 'relative'}]}>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: billHeight + 16,
+            marginBottom: billHeight + 24,
           }}>
           <View style={[globalStyles.bgWhite, globalStyles.container]}>
             {/* Breadcrumbs */}
@@ -161,60 +161,65 @@ function CartComponent({
             </View>
 
             {/* Orders */}
-            <View style={{marginTop: 8}}>
-              {/* Item */}
+            {!isKeyboardVisible && (
+              <View style={{marginTop: 8}}>
+                {/* Item */}
 
-              {Array.from({length: 3}, (_, index) => (
-                <View key={index} style={styles.itemBox}>
-                  {/* Image product */}
-                  <Image
-                    source={{
-                      uri: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg',
-                    }}
-                    style={styles.itemImage}
-                  />
+                {Array.from({length: 3}, (_, index) => (
+                  <View key={index} style={styles.itemBox}>
+                    {/* Image product */}
+                    <Image
+                      source={{
+                        uri: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg',
+                      }}
+                      style={styles.itemImage}
+                    />
 
-                  {/* Info product */}
-                  <View style={styles.itemInfoBox}>
-                    <Text variant="labelMedium" style={{marginBottom: 4}}>
-                      Jordan Why Not? Zer0.4 'Family' PF
-                    </Text>
-                    <Text
-                      variant="bodyMedium"
-                      style={[globalStyles.textSecondColor, {marginBottom: 8}]}>
-                      4,000,000đ
-                    </Text>
+                    {/* Info product */}
+                    <View style={styles.itemInfoBox}>
+                      <Text variant="labelMedium" style={{marginBottom: 4}}>
+                        Jordan Why Not? Zer0.4 'Family' PF
+                      </Text>
+                      <Text
+                        variant="bodyMedium"
+                        style={[
+                          globalStyles.textSecondColor,
+                          {marginBottom: 8},
+                        ]}>
+                        4,000,000đ
+                      </Text>
 
-                    {/* Actions */}
-                    <View style={styles.actionBox}>
-                      <View style={styles.container}>
-                        <TouchableOpacity style={styles.button}>
-                          <Text style={styles.text}>−</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.count}>1</Text>
-                        <TouchableOpacity style={styles.button}>
-                          <Text style={styles.text}>+</Text>
-                        </TouchableOpacity>
+                      {/* Actions */}
+                      <View style={styles.actionBox}>
+                        <View style={styles.container}>
+                          <TouchableOpacity style={styles.button}>
+                            <Text style={styles.text}>−</Text>
+                          </TouchableOpacity>
+                          <Text style={styles.count}>1</Text>
+                          <TouchableOpacity style={styles.button}>
+                            <Text style={styles.text}>+</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <Button
+                          icon="trash-can-outline"
+                          mode="text"
+                          textColor={'black'}
+                          onPress={() => console.log('Xóa')}>
+                          <Text
+                            style={[
+                              globalStyles.fontWeightLight,
+                              {fontSize: 10},
+                            ]}>
+                            Xóa
+                          </Text>
+                        </Button>
                       </View>
-
-                      <Button
-                        icon="trash-can-outline"
-                        mode="text"
-                        textColor={'black'}
-                        onPress={() => console.log('Xóa')}>
-                        <Text
-                          style={[
-                            globalStyles.fontWeightLight,
-                            {fontSize: 10},
-                          ]}>
-                          Xóa
-                        </Text>
-                      </Button>
                     </View>
                   </View>
-                </View>
-              ))}
-            </View>
+                ))}
+              </View>
+            )}
 
             {/* Note */}
             <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
@@ -235,8 +240,11 @@ function CartComponent({
           </View>
         </ScrollView>
 
+        {/* <View style={{paddingBottom: billHeight + 16 + 300}}></View> */}
+
         {!isKeyboardVisible && (
           <BillOrder
+            style={styles.billOrderFixed}
             ref={billRef}
             onLayout={(event: LayoutChangeEvent) => {
               const {height} = event.nativeEvent.layout;

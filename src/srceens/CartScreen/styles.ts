@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     backgroundColor: 'white',
-    zIndex: 1,
   },
   billOrderBox: {
     width: '100%',
