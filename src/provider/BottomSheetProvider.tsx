@@ -11,6 +11,9 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {customTheme} from '../theme/customTheme';
+
+const {colors} = customTheme;
 
 type BottomSheetContextType = {
   openBottomSheet: (component: ReactNode, title?: string) => void;
@@ -96,6 +99,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: colors.divider,
   },
   contentContainer: {
     flex: 1,
