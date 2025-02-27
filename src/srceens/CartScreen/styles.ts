@@ -4,7 +4,7 @@ import {customTheme} from '../../theme/customTheme';
 const {colors} = customTheme;
 
 const styles = StyleSheet.create({
-  searhBar: {
+  searchBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 16,
   },
-  searhBar: {
+  searchBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     backgroundColor: 'white',
-    width: '90%',
+    width: '80%',
     height: 40,
     borderWidth: 1,
     borderRadius: 5,

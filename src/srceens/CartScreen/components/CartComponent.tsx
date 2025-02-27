@@ -120,34 +120,40 @@ function CartComponent({
       {layout === ScreenType.cart && (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={globalStyles.container}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                width: '100%',
-              }}>
-              <TouchableOpacity
-                onPress={navigateToScreen}
-                style={{width: 24, height: 24}}>
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={24}
-                  color={colors.outline}
-                  style={styles.searchIcon}
-                />
-              </TouchableOpacity>
-
-              <Text style={{marginLeft: 28}} variant="titleSmall">
-                Giỏ hàng của bạn
-              </Text>
-            </View>
             <ScrollView
-              contentContainerStyle={{flexGrow: 1, paddingBottom: billHeight}}>
+              contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: billHeight + 16,
+              }}>
               <View style={[globalStyles.bgWhite, globalStyles.container]}>
+                {/* Breadcrumbs */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
+                    width: '100%',
+                  }}>
+                  <TouchableOpacity
+                    onPress={navigateToScreen}
+                    style={{width: 24, height: 24, marginLeft: -12}}>
+                    <Ionicons
+                      name="arrow-back-outline"
+                      size={24}
+                      color={colors.textSecond}
+                      style={styles.searchIcon}
+                    />
+                  </TouchableOpacity>
+
+                  <Text style={{marginLeft: 28}} variant="titleSmall">
+                    Giỏ hàng của bạn
+                  </Text>
+                </View>
+                {/* Breadcrumbs */}
+
                 {/* Search */}
-                <View style={styles.searhBar}>
+                <View style={styles.searchBar}>
                   <View style={styles.searchBox}>
                     <Ionicons
                       name="search-outline"

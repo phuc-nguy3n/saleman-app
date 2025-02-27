@@ -18,6 +18,7 @@ import globalStyles from '../../../styles/globalStyles';
 import {Text} from 'react-native-paper';
 import {NavigationProp} from '@react-navigation/native';
 import ProductDetailsComponents from '../../ProductDetailsScreen/components/ProductDetailsComponents';
+import ShoppingComponent from '../../ShoppingScreen/components/ShoppingComponent';
 
 const {colors} = customTheme;
 
@@ -102,8 +103,22 @@ function ProductsComponents({
     <>
       {/* Header */}
       <View style={styles.header}>
+        {/* Breadcrumbs */}
+
+        <TouchableOpacity
+          onPress={navigateToShopping}
+          style={[globalStyles.ph4]}>
+          <Ionicons
+            name="arrow-back-outline"
+            size={24}
+            color={colors.textSecond}
+          />
+        </TouchableOpacity>
+
+        {/* Breadcrumbs */}
+
         {/* Search */}
-        <View style={styles.searhBar}>
+        <View style={styles.searchBar}>
           <View style={styles.searchBox}>
             <Ionicons
               name="search-outline"
@@ -174,6 +189,14 @@ function ProductsComponents({
     </>
   );
 
+  const navigateToShopping = () => {
+    if (isOpen) {
+      setLayout(ScreenType.shopping);
+    } else {
+      navigation.navigate(ScreenType.shopping);
+    }
+  };
+
   const navigateProductDetails = () => {
     if (isOpen) {
       setLayout(ScreenType.productDetails);
@@ -202,6 +225,10 @@ function ProductsComponents({
             style={{paddingBottom: 50}}
           />
         </View>
+      )}
+
+      {layout === ScreenType.shopping && (
+        <ShoppingComponent navigation={navigation} />
       )}
 
       {layout === ScreenType.productDetails && (
