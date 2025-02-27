@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ShoppingConst} from '../../../config/const';
 import {Product, RootStackParamList, ScreenType} from '../../../types';
 import {
@@ -18,7 +18,6 @@ import globalStyles from '../../../styles/globalStyles';
 import {customTheme} from '../../../theme/customTheme';
 import {NavigationProp} from '@react-navigation/native';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
-import ProductsComponents from '../../ProductsScreen/components/ProductsComponents';
 
 const {colors} = customTheme;
 
@@ -65,11 +64,8 @@ function ShoppingComponent({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
-  const {isOpen} = useBottomSheet();
+  const {isOpen, setContent} = useBottomSheet();
   const {cate} = ShoppingConst;
-  // const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-  const [layout, setLayout] = useState(ScreenType.shopping);
 
   const products: Product[] = [
     {
@@ -183,32 +179,24 @@ function ShoppingComponent({
 
   const navigateProducts = () => {
     if (isOpen) {
-      setLayout(ScreenType.products);
+      setContent(ScreenType.products);
     } else {
       navigation.navigate(ScreenType.products);
     }
   };
   return (
-    <>
-      {layout === ScreenType.shopping && (
-        <View style={globalStyles.bgWhite}>
-          <FlatList
-            ListHeaderComponent={renderHeader}
-            data={products}
-            renderItem={({item}) => <ProductItem product={item} />}
-            keyExtractor={item => item.code.toString()}
-            numColumns={2}
-            removeClippedSubviews={false}
-            columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
-            style={{paddingBottom: 50}}
-          />
-        </View>
-      )}
-
-      {layout === ScreenType.products && (
-        <ProductsComponents navigation={navigation} />
-      )}
-    </>
+    <View style={globalStyles.bgWhite}>
+      <FlatList
+        ListHeaderComponent={renderHeader}
+        data={products}
+        renderItem={({item}) => <ProductItem product={item} />}
+        keyExtractor={item => item.code.toString()}
+        numColumns={2}
+        removeClippedSubviews={false}
+        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
+        style={{paddingBottom: 50}}
+      />
+    </View>
   );
 }
 

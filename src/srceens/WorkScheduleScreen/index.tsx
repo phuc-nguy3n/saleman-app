@@ -12,10 +12,9 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import data from '../../db/mockData.json';
-import {AgencyType, WorkScheduleScreenProps} from '../../types';
+import {AgencyType, ScreenType, WorkScheduleScreenProps} from '../../types';
 import {customTheme} from '../../theme/customTheme';
 import {useBottomSheet} from '../../provider/BottomSheetProvider';
-import ShoppingComponent from '../ShoppingScreen/components/ShoppingComponent';
 
 const {colors} = customTheme;
 
@@ -86,7 +85,7 @@ const AgencyItem = ({
               width: '65%',
             }}>
             <TouchableOpacity
-              onPress={() => openBottomSheet(<ShoppingComponent />, 'Mua hàng')}
+              onPress={() => openBottomSheet(ScreenType.shopping, 'Mua hàng')}
               style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
               <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 

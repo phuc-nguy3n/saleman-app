@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
 import {Product, RootStackParamList, ScreenType} from '../../../types';
 import {ShoppingConst} from '../../../config/const';
@@ -17,8 +17,6 @@ import {Image} from 'react-native';
 import globalStyles from '../../../styles/globalStyles';
 import {Text} from 'react-native-paper';
 import {NavigationProp} from '@react-navigation/native';
-import ProductDetailsComponents from '../../ProductDetailsScreen/components/ProductDetailsComponents';
-import ShoppingComponent from '../../ShoppingScreen/components/ShoppingComponent';
 
 const {colors} = customTheme;
 
@@ -62,7 +60,7 @@ function ProductsComponents({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
-  const {isOpen} = useBottomSheet();
+  const {isOpen, setContent} = useBottomSheet();
   const products: Product[] = [
     {
       code: '0',
@@ -96,8 +94,6 @@ function ProductsComponents({
     },
   ];
   const {cate} = ShoppingConst;
-
-  const [layout, setLayout] = useState(ScreenType.products);
 
   const renderHeader = () => (
     <>
@@ -191,7 +187,7 @@ function ProductsComponents({
 
   const navigateToShopping = () => {
     if (isOpen) {
-      setLayout(ScreenType.shopping);
+      setContent(ScreenType.shopping);
     } else {
       navigation.navigate(ScreenType.shopping);
     }
@@ -199,42 +195,30 @@ function ProductsComponents({
 
   const navigateProductDetails = () => {
     if (isOpen) {
-      setLayout(ScreenType.productDetails);
+      setContent(ScreenType.productDetails);
     } else {
       navigation.navigate(ScreenType.productDetails);
     }
   };
   return (
-    <>
-      {layout === ScreenType.products && (
-        <View style={[globalStyles.bgWhite]}>
-          <FlatList
-            ListHeaderComponent={renderHeader}
-            data={products}
-            renderItem={({item}) => (
-              <ProductItem
-                product={item}
-                isBottomSheet={isOpen}
-                navigateProductDetails={navigateProductDetails}
-              />
-            )}
-            keyExtractor={item => item.code.toString()}
-            numColumns={2}
-            removeClippedSubviews={false}
-            columnWrapperStyle={[{}, globalStyles.ph8, globalStyles.container]}
-            style={{paddingBottom: 50}}
+    <View style={[globalStyles.bgWhite]}>
+      <FlatList
+        ListHeaderComponent={renderHeader}
+        data={products}
+        renderItem={({item}) => (
+          <ProductItem
+            product={item}
+            isBottomSheet={isOpen}
+            navigateProductDetails={navigateProductDetails}
           />
-        </View>
-      )}
-
-      {layout === ScreenType.shopping && (
-        <ShoppingComponent navigation={navigation} />
-      )}
-
-      {layout === ScreenType.productDetails && (
-        <ProductDetailsComponents navigation={navigation} />
-      )}
-    </>
+        )}
+        keyExtractor={item => item.code.toString()}
+        numColumns={2}
+        removeClippedSubviews={false}
+        columnWrapperStyle={[{}, globalStyles.ph8, globalStyles.container]}
+        style={{paddingBottom: 50}}
+      />
+    </View>
   );
 }
 
