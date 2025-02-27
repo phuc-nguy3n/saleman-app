@@ -11,10 +11,20 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {customTheme} from '../theme/customTheme';
+import {RootStackParamList, ScreenType} from '../types';
+import ShoppingComponent from '../srceens/ShoppingScreen/components/ShoppingComponent';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import ProductsComponents from '../srceens/ProductsScreen/components/ProductsComponents';
+import CartComponent from '../srceens/CartScreen/components/CartComponent';
+import ProductDetailsComponents from '../srceens/ProductDetailsScreen/components/ProductDetailsComponents';
+
+const {colors} = customTheme;
 
 type BottomSheetContextType = {
-  openBottomSheet: (component: ReactNode, title?: string) => void;
+  openBottomSheet: (componentType: string, title?: string) => void;
   closeBottomSheet: () => void;
+  setContent: (componentType: string) => void;
   isOpen: boolean;
 };
 
@@ -32,14 +42,15 @@ export const useBottomSheet = () => {
 
 export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const modalizeRef = useRef<Modalize>(null);
-  const [content, setContent] = useState<ReactNode>(null);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [content, setContent] = useState<string>('');
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
-    (component: ReactNode, title: string = 'Mua hàng') => {
-      setContent(component);
+    (componentType: string, title: string = 'Header title') => {
+      setContent(componentType);
       setHeaderTitle(title);
       setIsOpen(true); // Đánh dấu sheet đang mở
     },
@@ -63,9 +74,28 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
     setIsOpen(false); // Đánh dấu sheet đã đóng
   };
 
+  const generateLayout = (screenType: string) => {
+    switch (screenType) {
+      case ScreenType.shopping:
+        return <ShoppingComponent navigation={navigation} />;
+
+      case ScreenType.products:
+        return <ProductsComponents navigation={navigation} />;
+
+      case ScreenType.productDetails:
+        return <ProductDetailsComponents navigation={navigation} />;
+
+      case ScreenType.cart:
+        return <CartComponent navigation={navigation} />;
+
+      default:
+        return <ShoppingComponent navigation={navigation} />;
+    }
+  };
+
   return (
     <BottomSheetContext.Provider
-      value={{openBottomSheet, closeBottomSheet, isOpen}}>
+      value={{openBottomSheet, closeBottomSheet, setContent, isOpen}}>
       {children}
 
       <Modalize
@@ -84,7 +114,7 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
             </TouchableOpacity>
           </View>
         }>
-        <View style={styles.contentContainer}>{content}</View>
+        <View style={styles.contentContainer}>{generateLayout(content)}</View>
       </Modalize>
     </BottomSheetContext.Provider>
   );
@@ -96,6 +126,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: colors.divider,
   },
   contentContainer: {
     flex: 1,

@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Product, RootStackParamList, ScreenType} from '../../../types';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
 import {FlatList, ImageBackground, TouchableOpacity, View} from 'react-native';
@@ -10,7 +10,6 @@ import {shoppingBlackBag} from '../../../assets/images';
 import globalStyles from '../../../styles/globalStyles';
 import {Text} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CartComponent from '../../CartScreen/components/CartComponent';
 
 const ProductItem = ({
   product,
@@ -51,37 +50,50 @@ function ProductDetailsComponents({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
-  const {isOpen} = useBottomSheet();
-
-  const [layout, setLayout] = useState(ScreenType.productDetails);
+  const {isOpen, setContent} = useBottomSheet();
 
   const navigateToScreen = (screen: string) => {
-    switch (screen) {
-      case ScreenType.shopping:
-        navigation.navigate(ScreenType.shopping);
-        break;
-      case ScreenType.products:
-        navigation.navigate(ScreenType.products);
-        break;
-      case ScreenType.productDetails:
-        navigation.navigate(ScreenType.productDetails);
-        break;
-      case ScreenType.cart:
-        if (isOpen) {
-          setLayout(ScreenType.cart);
-        } else {
+    if (isOpen) {
+      switch (screen) {
+        case ScreenType.shopping:
+          setContent(ScreenType.shopping);
+          break;
+        case ScreenType.products:
+          setContent(ScreenType.products);
+          break;
+        case ScreenType.productDetails:
+          setContent(ScreenType.productDetails);
+          break;
+        case ScreenType.cart:
+          setContent(ScreenType.cart);
+          break;
+        default:
+          setContent(ScreenType.shopping);
+      }
+    } else {
+      switch (screen) {
+        case ScreenType.shopping:
+          navigation.navigate(ScreenType.shopping);
+          break;
+        case ScreenType.products:
+          navigation.navigate(ScreenType.products);
+          break;
+        case ScreenType.productDetails:
+          navigation.navigate(ScreenType.productDetails);
+          break;
+        case ScreenType.cart:
           navigation.navigate(ScreenType.cart);
-        }
-        break;
-      default:
-        navigation.navigate(ScreenType.shopping);
+          break;
+        default:
+          navigation.navigate(ScreenType.shopping);
+      }
     }
   };
 
   const itemsbreadcrumbs = [
     {
       label: 'Danh mục',
-      navigation: () => null,
+      navigation: () => navigateToScreen(ScreenType.products),
     },
     {label: 'Sale', navigation: () => null},
     {label: 'Shoes', navigation: () => null},
@@ -185,29 +197,23 @@ function ProductDetailsComponents({
   );
 
   return (
-    <>
-      {layout === ScreenType.productDetails && (
-        <View style={globalStyles.bgWhite}>
-          <FlatList
-            ListHeaderComponent={renderHeader}
-            data={products}
-            renderItem={({item}) => (
-              <ProductItem
-                product={item}
-                navigateToScreen={() => navigateToScreen(ScreenType.cart)}
-              />
-            )}
-            keyExtractor={item => item.code.toString()}
-            numColumns={2}
-            removeClippedSubviews={false}
-            columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
-            style={{paddingBottom: 50}}
+    <View style={globalStyles.bgWhite}>
+      <FlatList
+        ListHeaderComponent={renderHeader}
+        data={products}
+        renderItem={({item}) => (
+          <ProductItem
+            product={item}
+            navigateToScreen={() => navigateToScreen(ScreenType.cart)}
           />
-        </View>
-      )}
-
-      {layout === ScreenType.cart && <CartComponent navigation={navigation} />}
-    </>
+        )}
+        keyExtractor={item => item.code.toString()}
+        numColumns={2}
+        removeClippedSubviews={false}
+        columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
+        style={{paddingBottom: 50}}
+      />
+    </View>
   );
 }
 
