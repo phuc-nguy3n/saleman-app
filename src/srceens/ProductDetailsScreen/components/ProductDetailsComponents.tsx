@@ -50,7 +50,7 @@ function ProductDetailsComponents({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
-  const {isOpen, setContent} = useBottomSheet();
+  const {isOpen, setContent, bottomBarHeight} = useBottomSheet();
 
   const navigateToScreen = (screen: string) => {
     if (isOpen) {
@@ -211,7 +211,7 @@ function ProductDetailsComponents({
         numColumns={2}
         removeClippedSubviews={false}
         columnWrapperStyle={[globalStyles.mh8, globalStyles.container]}
-        style={{paddingBottom: 50}}
+        style={{paddingBottom: bottomBarHeight * 2}}
       />
     </View>
   );

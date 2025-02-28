@@ -15,6 +15,7 @@ import data from '../../db/mockData.json';
 import {AgencyType, ScreenType, WorkScheduleScreenProps} from '../../types';
 import {customTheme} from '../../theme/customTheme';
 import {useBottomSheet} from '../../provider/BottomSheetProvider';
+import {useBottomBarFixed} from '../../provider/BottomBarFixed';
 
 const {colors} = customTheme;
 
@@ -26,6 +27,12 @@ const AgencyItem = ({
   navigateAgencyInfo: () => void;
 }) => {
   const {openBottomSheet} = useBottomSheet();
+  const {showBottomBarFixed} = useBottomBarFixed();
+
+  const openBottomSheetCustom = () => {
+    openBottomSheet(ScreenType.shopping, 'Mua hàng');
+    showBottomBarFixed();
+  };
   return (
     <View style={styles.agencyItem}>
       {/* Header */}
@@ -85,7 +92,7 @@ const AgencyItem = ({
               width: '65%',
             }}>
             <TouchableOpacity
-              onPress={() => openBottomSheet(ScreenType.shopping, 'Mua hàng')}
+              onPress={openBottomSheetCustom}
               style={[globalStyles.bgPrimary, styles.agencyActionBtn]}>
               <Image style={styles.agencyActionBtnIcon} source={shoppingBag} />
 
