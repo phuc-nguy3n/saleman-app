@@ -28,6 +28,7 @@ function App(): React.JSX.Element {
         <PaperProvider theme={customTheme}>
           <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={'black'} />
+
             <AppNavigation />
           </SafeAreaView>
         </PaperProvider>

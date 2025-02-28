@@ -6,7 +6,13 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import {View, StyleSheet, TouchableOpacity, Animated} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  LayoutChangeEvent,
+} from 'react-native';
 import {Portal} from 'react-native-portalize';
 import {useBottomSheet} from './BottomSheetProvider';
 import {ScreenType} from '../types';
@@ -27,7 +33,9 @@ const BottomBarFixedContext = createContext<
 
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
-  const {content, isOpen} = useBottomSheet();
+  const {content, isOpen, setBottomBarHeight} = useBottomSheet();
+
+  const [bottomBarFixedHeight, setBottomBarFixedHeight] = useState(0);
 
   const [isVisibleBottomBarFixed, setIsVisibleBottomBarFixed] =
     useState(isOpen);
@@ -47,13 +55,26 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
     }
   }, [isOpen, hideBottomBarFixed]);
 
+  useEffect(() => {
+    setBottomBarHeight(bottomBarFixedHeight);
+  }, [bottomBarFixedHeight, setBottomBarHeight]);
+
   return (
     <BottomBarFixedContext.Provider
-      value={{isVisibleBottomBarFixed, showBottomBarFixed, hideBottomBarFixed}}>
+      value={{
+        isVisibleBottomBarFixed,
+        showBottomBarFixed,
+        hideBottomBarFixed,
+      }}>
       {children}
       <Portal>
         {isVisibleBottomBarFixed && content === ScreenType.productDetails && (
-          <Animated.View style={styles.container}>
+          <Animated.View
+            style={styles.container}
+            onLayout={(event: LayoutChangeEvent) => {
+              const {height} = event.nativeEvent.layout;
+              setBottomBarFixedHeight(height);
+            }}>
             <View style={styles.content}>
               <View style={{width: '50%'}}>
                 <View style={{justifyContent: 'center'}}>
