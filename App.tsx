@@ -14,8 +14,6 @@ import AppNavigation from './src/navigation';
 import {PaperProvider} from 'react-native-paper';
 import {customTheme} from './src/theme/customTheme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {BottomBarFixedProvider} from './src/provider/BottomBarFixed';
-import {Host} from 'react-native-portalize';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,11 +28,7 @@ function App(): React.JSX.Element {
         <PaperProvider theme={customTheme}>
           <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor={'black'} />
-            <Host>
-              <BottomBarFixedProvider>
-                <AppNavigation />
-              </BottomBarFixedProvider>
-            </Host>
+            <AppNavigation />
           </SafeAreaView>
         </PaperProvider>
       </GestureHandlerRootView>

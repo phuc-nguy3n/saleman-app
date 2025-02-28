@@ -24,6 +24,7 @@ const {colors} = customTheme;
 type BottomSheetContextType = {
   openBottomSheet: (componentType: string, title?: string) => void;
   closeBottomSheet: () => void;
+  content: string;
   setContent: (componentType: string) => void;
   isOpen: boolean;
 };
@@ -95,7 +96,7 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
 
   return (
     <BottomSheetContext.Provider
-      value={{openBottomSheet, closeBottomSheet, setContent, isOpen}}>
+      value={{openBottomSheet, closeBottomSheet, content, setContent, isOpen}}>
       {children}
 
       <Modalize

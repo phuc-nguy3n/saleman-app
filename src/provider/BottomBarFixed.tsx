@@ -4,9 +4,12 @@ import React, {
   useState,
   ReactNode,
   useCallback,
+  useEffect,
 } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Animated} from 'react-native';
 import {Portal} from 'react-native-portalize';
+import {useBottomSheet} from './BottomSheetProvider';
+import {ScreenType} from '../types';
 
 // Định nghĩa kiểu dữ liệu của Context
 interface BottomBarFixedContextType {
@@ -22,7 +25,10 @@ const BottomBarFixedContext = createContext<
 
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
-  const [isVisibleBottomBarFixed, setIsVisibleBottomBarFixed] = useState(true);
+  const {content, isOpen} = useBottomSheet();
+
+  const [isVisibleBottomBarFixed, setIsVisibleBottomBarFixed] =
+    useState(isOpen);
 
   const showBottomBarFixed = useCallback(
     () => setIsVisibleBottomBarFixed(true),
@@ -33,12 +39,18 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
     [],
   );
 
+  useEffect(() => {
+    if (!isOpen) {
+      hideBottomBarFixed();
+    }
+  }, [isOpen, hideBottomBarFixed]);
+
   return (
     <BottomBarFixedContext.Provider
       value={{isVisibleBottomBarFixed, showBottomBarFixed, hideBottomBarFixed}}>
       {children}
       <Portal>
-        {isVisibleBottomBarFixed && (
+        {isVisibleBottomBarFixed && content === ScreenType.productDetails && (
           <Animated.View style={styles.container}>
             <View style={styles.content}>
               <Text style={styles.text}>This is Bottom Layout</Text>
