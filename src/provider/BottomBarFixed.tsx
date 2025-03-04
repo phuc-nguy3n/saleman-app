@@ -18,6 +18,8 @@ import {useBottomSheet} from './BottomSheetProvider';
 import {ScreenType} from '../types';
 import globalStyles from '../styles/globalStyles';
 import {Text} from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import {toastConfig} from '../config/customToast';
 
 // Định nghĩa kiểu dữ liệu của Context
 interface BottomBarFixedContextType {
@@ -90,6 +92,13 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
               </View>
               <View style={{width: '50%'}}>
                 <TouchableOpacity
+                  onPress={() => {
+                    Toast.show({
+                      type: 'customToast',
+                      text1: 'Sản phẩm đã được thêm vào giỏ hàng',
+                      topOffset: 20,
+                    });
+                  }}
                   style={[styles.button, globalStyles.bgPrimary]}>
                   <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
                 </TouchableOpacity>
@@ -97,6 +106,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
             </View>
           </Animated.View>
         )}
+        <Toast config={toastConfig} />;
       </Portal>
     </BottomBarFixedContext.Provider>
   );
