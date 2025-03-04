@@ -17,6 +17,7 @@ import {Image} from 'react-native';
 import globalStyles from '../../../styles/globalStyles';
 import {Text} from 'react-native-paper';
 import {NavigationProp} from '@react-navigation/native';
+import {formatPrice} from '../../../utils';
 
 const {colors} = customTheme;
 
@@ -41,7 +42,7 @@ const ProductItem = ({
         {product.name}
       </Text>
       <View style={styles.productContentArea}>
-        <Text variant="labelLarge">{product.price}đ</Text>
+        <Text variant="labelLarge">{formatPrice(product.price)}</Text>
 
         <TouchableOpacity
           style={styles.addIconBox}
@@ -63,34 +64,34 @@ function ProductsComponents({
   const {isOpen, setContent} = useBottomSheet();
   const products: Product[] = [
     {
-      code: '0',
+      code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6a',
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
-      price: '100.000',
+      price: 100000,
     },
     {
-      code: '1',
+      code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6b',
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
-      price: '100.000',
+      price: 100000,
     },
     {
-      code: '2',
+      code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6c',
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
-      price: '100.000',
+      price: 100000,
     },
     {
-      code: '3',
+      code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
-      price: '100.000',
+      price: 100000,
     },
     {
-      code: '4',
+      code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e',
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
-      price: '100.000',
+      price: 100000,
     },
   ];
   const {cate} = ShoppingConst;
