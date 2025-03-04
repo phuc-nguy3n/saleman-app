@@ -21,6 +21,8 @@ import {Text} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../config/customToast';
 import {formatPrice} from '../utils';
+import {useDispatch} from 'react-redux';
+import {addProductCart} from '../redux/slices/productsCartSlice';
 
 // Định nghĩa kiểu dữ liệu của Context
 interface BottomBarFixedContextType {
@@ -36,7 +38,9 @@ const BottomBarFixedContext = createContext<
 
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
-  const {content, isOpen, setBottomBarHeight, price} = useBottomSheet();
+  const dispatch = useDispatch();
+
+  const {content, isOpen, setBottomBarHeight, product} = useBottomSheet();
 
   const [bottomBarFixedHeight, setBottomBarFixedHeight] = useState(0);
 
@@ -62,6 +66,23 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
     setBottomBarHeight(bottomBarFixedHeight);
   }, [bottomBarFixedHeight, setBottomBarHeight]);
 
+  const handleAddProduct = () => {
+    if (product) {
+      dispatch(addProductCart(product));
+      Toast.show({
+        type: 'customToast',
+        text1: 'Sản phẩm đã được thêm vào giỏ hàng',
+        topOffset: 20,
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Sản phẩm không tồn tại',
+        topOffset: 20,
+      });
+    }
+  };
+
   return (
     <BottomBarFixedContext.Provider
       value={{
@@ -86,20 +107,14 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
                   </View>
                   <View>
                     <Text style={globalStyles.errorColor} variant="titleMedium">
-                      {formatPrice(price)}
+                      {formatPrice(product?.price ?? 0)}
                     </Text>
                   </View>
                 </View>
               </View>
               <View style={{width: '50%'}}>
                 <TouchableOpacity
-                  onPress={() => {
-                    Toast.show({
-                      type: 'customToast',
-                      text1: 'Sản phẩm đã được thêm vào giỏ hàng',
-                      topOffset: 20,
-                    });
-                  }}
+                  onPress={handleAddProduct}
                   style={[styles.button, globalStyles.bgPrimary]}>
                   <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
                 </TouchableOpacity>

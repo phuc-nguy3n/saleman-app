@@ -29,13 +29,13 @@ const ProductItem = ({
   isBottomSheet: boolean;
   navigateProductDetails: () => void;
 }) => {
-  const {setPrice} = useBottomSheet();
+  const {setProduct} = useBottomSheet();
   return (
     <View style={styles.productsItem}>
       <TouchableOpacity
         onPress={() => {
           navigateProductDetails();
-          setPrice(product.price);
+          setProduct(product);
         }}>
         <Image
           resizeMode="cover"

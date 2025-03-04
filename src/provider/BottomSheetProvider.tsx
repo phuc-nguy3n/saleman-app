@@ -12,7 +12,7 @@ import {Modalize} from 'react-native-modalize';
 import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {customTheme} from '../theme/customTheme';
-import {RootStackParamList, ScreenType} from '../types';
+import {Product, RootStackParamList, ScreenType} from '../types';
 import ShoppingComponent from '../srceens/ShoppingScreen/components/ShoppingComponent';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ProductsComponents from '../srceens/ProductsScreen/components/ProductsComponents';
@@ -29,8 +29,8 @@ type BottomSheetContextType = {
   isOpen: boolean;
   bottomBarHeight: number;
   setBottomBarHeight: (height: number) => void;
-  price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  product: Product | undefined;
+  setProduct: React.Dispatch<React.SetStateAction<Product | undefined>>;
 };
 
 const BottomSheetContext = createContext<BottomSheetContextType | undefined>(
@@ -52,7 +52,7 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bottomBarHeight, setBottomBarHeight] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
+  const [product, setProduct] = useState<Product | undefined>();
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
@@ -110,8 +110,8 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
         isOpen,
         bottomBarHeight,
         setBottomBarHeight,
-        price,
-        setPrice,
+        product,
+        setProduct,
       }}>
       {children}
 
