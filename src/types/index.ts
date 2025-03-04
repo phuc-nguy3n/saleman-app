@@ -101,7 +101,7 @@ export type Product = {
   code: string;
   name: string;
   img: string;
-  price: string;
+  price: number;
 };
 
 export type OrderType = {

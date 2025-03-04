@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {RootStackParamList, ScreenType} from '../../../types';
+import {Product, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
   Keyboard,
@@ -17,6 +17,8 @@ import {Button, Text} from 'react-native-paper';
 import globalStyles from '../../../styles/globalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
+import {useSelector} from 'react-redux';
+import {formatPrice} from '../../../utils';
 
 const {colors} = customTheme;
 
@@ -78,6 +80,8 @@ function CartComponent({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
+  const products = useSelector((state: any) => state.productsCart.products);
+
   const {isOpen, setContent} = useBottomSheet();
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -165,12 +169,12 @@ function CartComponent({
               <View style={{marginTop: 8}}>
                 {/* Item */}
 
-                {Array.from({length: 3}, (_, index) => (
+                {products.map((item: Product, index: string) => (
                   <View key={index} style={styles.itemBox}>
                     {/* Image product */}
                     <Image
                       source={{
-                        uri: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg',
+                        uri: item.img,
                       }}
                       style={styles.itemImage}
                     />
@@ -178,7 +182,7 @@ function CartComponent({
                     {/* Info product */}
                     <View style={styles.itemInfoBox}>
                       <Text variant="labelMedium" style={{marginBottom: 4}}>
-                        Jordan Why Not? Zer0.4 'Family' PF
+                        {item.name}
                       </Text>
                       <Text
                         variant="bodyMedium"
@@ -186,7 +190,7 @@ function CartComponent({
                           globalStyles.textSecondColor,
                           {marginBottom: 8},
                         ]}>
-                        4,000,000đ
+                        {formatPrice(item.price)}
                       </Text>
 
                       {/* Actions */}
