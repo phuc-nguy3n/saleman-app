@@ -20,6 +20,7 @@ import globalStyles from '../styles/globalStyles';
 import {Text} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../config/customToast';
+import {formatPrice} from '../utils';
 
 // Định nghĩa kiểu dữ liệu của Context
 interface BottomBarFixedContextType {
@@ -35,7 +36,7 @@ const BottomBarFixedContext = createContext<
 
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
-  const {content, isOpen, setBottomBarHeight} = useBottomSheet();
+  const {content, isOpen, setBottomBarHeight, price} = useBottomSheet();
 
   const [bottomBarFixedHeight, setBottomBarFixedHeight] = useState(0);
 
@@ -85,7 +86,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
                   </View>
                   <View>
                     <Text style={globalStyles.errorColor} variant="titleMedium">
-                      3,000,000đ
+                      {formatPrice(price)}
                     </Text>
                   </View>
                 </View>

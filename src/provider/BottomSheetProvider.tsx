@@ -29,6 +29,8 @@ type BottomSheetContextType = {
   isOpen: boolean;
   bottomBarHeight: number;
   setBottomBarHeight: (height: number) => void;
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const BottomSheetContext = createContext<BottomSheetContextType | undefined>(
@@ -50,6 +52,7 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bottomBarHeight, setBottomBarHeight] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
@@ -107,6 +110,8 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
         isOpen,
         bottomBarHeight,
         setBottomBarHeight,
+        price,
+        setPrice,
       }}>
       {children}
 

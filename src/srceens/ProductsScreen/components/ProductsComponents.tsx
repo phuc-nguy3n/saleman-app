@@ -29,9 +29,14 @@ const ProductItem = ({
   isBottomSheet: boolean;
   navigateProductDetails: () => void;
 }) => {
+  const {setPrice} = useBottomSheet();
   return (
     <View style={styles.productsItem}>
-      <TouchableOpacity onPress={navigateProductDetails}>
+      <TouchableOpacity
+        onPress={() => {
+          navigateProductDetails();
+          setPrice(product.price);
+        }}>
         <Image
           resizeMode="cover"
           source={{uri: product.img}}
@@ -62,6 +67,7 @@ function ProductsComponents({
   navigation: NavigationProp<RootStackParamList>;
 }) {
   const {isOpen, setContent} = useBottomSheet();
+
   const products: Product[] = [
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6a',
