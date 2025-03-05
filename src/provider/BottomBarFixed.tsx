@@ -68,7 +68,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
 
   const handleAddProduct = () => {
     if (product) {
-      dispatch(addProductCart(product));
+      dispatch(addProductCart({...product, quantity: 1}));
       Toast.show({
         type: 'customToast',
         text1: 'Sản phẩm đã được thêm vào giỏ hàng',

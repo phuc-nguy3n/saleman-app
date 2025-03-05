@@ -104,6 +104,10 @@ export type Product = {
   price: number;
 };
 
+export type ProductsCart = Product & {
+  quantity: number;
+};
+
 export type OrderType = {
   code: string;
   orderer: string;

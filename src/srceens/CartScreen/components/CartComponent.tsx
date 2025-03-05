@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Product, RootStackParamList, ScreenType} from '../../../types';
+import {ProductsCart, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
   Keyboard,
@@ -17,12 +17,21 @@ import {Button, Text} from 'react-native-paper';
 import globalStyles from '../../../styles/globalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {formatPrice} from '../../../utils';
+import {
+  removeProductCart,
+  updateProductQuantity,
+} from '../../../redux/slices/productsCartSlice';
 
 const {colors} = customTheme;
 
 const BillOrder = ({...props}) => {
+  const {totalQuantity, tempPrice} = props;
+
+  const VATValue = 10000;
+  let totalPrice = VATValue + tempPrice;
+
   return (
     <View {...props}>
       <View style={styles.billOrderBox}>
@@ -32,17 +41,17 @@ const BillOrder = ({...props}) => {
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
 
-              <Text variant="bodySmall">4</Text>
+              <Text variant="bodySmall">{totalQuantity}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Tạm tính</Text>
-              <Text variant="bodySmall">12.000.000đ</Text>
+              <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Thuế VAT</Text>
-              <Text variant="bodySmall">10.000đ</Text>
+              <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
@@ -56,7 +65,7 @@ const BillOrder = ({...props}) => {
               Tổng thanh toán
             </Text>
             <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              12.010.000đ
+              {formatPrice(totalPrice)}
             </Text>
           </View>
         </View>
@@ -80,7 +89,19 @@ function CartComponent({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
+  const dispatch = useDispatch();
   const products = useSelector((state: any) => state.productsCart.products);
+
+  const totalQuantity = products.reduce(
+    (sum: number, product: ProductsCart) => sum + product.quantity,
+    0,
+  );
+
+  const tempPrice = products.reduce(
+    (sum: number, product: ProductsCart) =>
+      sum + product.price * product.quantity,
+    0,
+  );
 
   const {isOpen, setContent} = useBottomSheet();
 
@@ -116,6 +137,21 @@ function CartComponent({
       navigation.navigate(ScreenType.productDetails);
     }
   };
+
+  const handleUpdateQuantity = (
+    type: 'increase' | 'decrease',
+    item: ProductsCart,
+  ) => {
+    const newQuantity =
+      type === 'increase' ? item.quantity + 1 : item.quantity - 1;
+
+    if (newQuantity <= 0) {
+      dispatch(removeProductCart(item.code));
+    } else {
+      dispatch(updateProductQuantity({code: item.code, quantity: newQuantity}));
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[globalStyles.container, {position: 'relative'}]}>
@@ -169,7 +205,7 @@ function CartComponent({
               <View style={{marginTop: 8}}>
                 {/* Item */}
 
-                {products.map((item: Product, index: string) => (
+                {products.map((item: ProductsCart, index: string) => (
                   <View key={index} style={styles.itemBox}>
                     {/* Image product */}
                     <Image
@@ -196,11 +232,19 @@ function CartComponent({
                       {/* Actions */}
                       <View style={styles.actionBox}>
                         <View style={styles.container}>
-                          <TouchableOpacity style={styles.button}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('decrease', item)
+                            }
+                            style={styles.button}>
                             <Text style={styles.text}>−</Text>
                           </TouchableOpacity>
-                          <Text style={styles.count}>1</Text>
-                          <TouchableOpacity style={styles.button}>
+                          <Text style={styles.count}>{item.quantity}</Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('increase', item)
+                            }
+                            style={styles.button}>
                             <Text style={styles.text}>+</Text>
                           </TouchableOpacity>
                         </View>
@@ -209,7 +253,9 @@ function CartComponent({
                           icon="trash-can-outline"
                           mode="text"
                           textColor={'black'}
-                          onPress={() => console.log('Xóa')}>
+                          onPress={() =>
+                            dispatch(removeProductCart(item.code))
+                          }>
                           <Text
                             style={[
                               globalStyles.fontWeightLight,
@@ -254,6 +300,8 @@ function CartComponent({
               const {height} = event.nativeEvent.layout;
               setBillHeight(height);
             }}
+            totalQuantity={totalQuantity}
+            tempPrice={tempPrice}
           />
         )}
       </View>
