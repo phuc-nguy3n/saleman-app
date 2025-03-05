@@ -1,9 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Product} from '../../types';
-
-type ProductsCart = Product & {
-  quantity: number;
-};
+import {ProductsCart} from '../../types';
 
 type ProductsCartState = {
   products: ProductsCart[];

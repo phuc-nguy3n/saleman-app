@@ -1,6 +1,6 @@
 import {NavigationProp} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Product, RootStackParamList, ScreenType} from '../../../types';
+import {ProductsCart, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
   Keyboard,
@@ -169,7 +169,7 @@ function CartComponent({
               <View style={{marginTop: 8}}>
                 {/* Item */}
 
-                {products.map((item: Product, index: string) => (
+                {products.map((item: ProductsCart, index: string) => (
                   <View key={index} style={styles.itemBox}>
                     {/* Image product */}
                     <Image
@@ -199,7 +199,7 @@ function CartComponent({
                           <TouchableOpacity style={styles.button}>
                             <Text style={styles.text}>−</Text>
                           </TouchableOpacity>
-                          <Text style={styles.count}>1</Text>
+                          <Text style={styles.count}>{item.quantity}</Text>
                           <TouchableOpacity style={styles.button}>
                             <Text style={styles.text}>+</Text>
                           </TouchableOpacity>
