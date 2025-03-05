@@ -27,6 +27,11 @@ import {
 const {colors} = customTheme;
 
 const BillOrder = ({...props}) => {
+  const {totalQuantity, tempPrice} = props;
+
+  const VATValue = 10000;
+  let totalPrice = VATValue + tempPrice;
+
   return (
     <View {...props}>
       <View style={styles.billOrderBox}>
@@ -36,17 +41,17 @@ const BillOrder = ({...props}) => {
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
 
-              <Text variant="bodySmall">4</Text>
+              <Text variant="bodySmall">{totalQuantity}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Tạm tính</Text>
-              <Text variant="bodySmall">12.000.000đ</Text>
+              <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
               <Text variant="bodySmall">Thuế VAT</Text>
-              <Text variant="bodySmall">10.000đ</Text>
+              <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
             </View>
 
             <View style={styles.tempPriceitem}>
@@ -60,7 +65,7 @@ const BillOrder = ({...props}) => {
               Tổng thanh toán
             </Text>
             <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              12.010.000đ
+              {formatPrice(totalPrice)}
             </Text>
           </View>
         </View>
@@ -86,6 +91,17 @@ function CartComponent({
 }) {
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.productsCart.products);
+
+  const totalQuantity = products.reduce(
+    (sum: number, product: ProductsCart) => sum + product.quantity,
+    0,
+  );
+
+  const tempPrice = products.reduce(
+    (sum: number, product: ProductsCart) =>
+      sum + product.price * product.quantity,
+    0,
+  );
 
   const {isOpen, setContent} = useBottomSheet();
 
@@ -284,6 +300,8 @@ function CartComponent({
               const {height} = event.nativeEvent.layout;
               setBillHeight(height);
             }}
+            totalQuantity={totalQuantity}
+            tempPrice={tempPrice}
           />
         )}
       </View>
