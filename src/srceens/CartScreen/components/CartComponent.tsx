@@ -17,8 +17,12 @@ import {Button, Text} from 'react-native-paper';
 import globalStyles from '../../../styles/globalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {formatPrice} from '../../../utils';
+import {
+  removeProductCart,
+  updateProductQuantity,
+} from '../../../redux/slices/productsCartSlice';
 
 const {colors} = customTheme;
 
@@ -80,6 +84,7 @@ function CartComponent({
 }: {
   navigation: NavigationProp<RootStackParamList>;
 }) {
+  const dispatch = useDispatch();
   const products = useSelector((state: any) => state.productsCart.products);
 
   const {isOpen, setContent} = useBottomSheet();
@@ -116,6 +121,21 @@ function CartComponent({
       navigation.navigate(ScreenType.productDetails);
     }
   };
+
+  const handleUpdateQuantity = (
+    type: 'increase' | 'decrease',
+    item: ProductsCart,
+  ) => {
+    const newQuantity =
+      type === 'increase' ? item.quantity + 1 : item.quantity - 1;
+
+    if (newQuantity <= 0) {
+      dispatch(removeProductCart(item.code));
+    } else {
+      dispatch(updateProductQuantity({code: item.code, quantity: newQuantity}));
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[globalStyles.container, {position: 'relative'}]}>
@@ -196,11 +216,19 @@ function CartComponent({
                       {/* Actions */}
                       <View style={styles.actionBox}>
                         <View style={styles.container}>
-                          <TouchableOpacity style={styles.button}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('decrease', item)
+                            }
+                            style={styles.button}>
                             <Text style={styles.text}>−</Text>
                           </TouchableOpacity>
                           <Text style={styles.count}>{item.quantity}</Text>
-                          <TouchableOpacity style={styles.button}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('increase', item)
+                            }
+                            style={styles.button}>
                             <Text style={styles.text}>+</Text>
                           </TouchableOpacity>
                         </View>
@@ -209,7 +237,9 @@ function CartComponent({
                           icon="trash-can-outline"
                           mode="text"
                           textColor={'black'}
-                          onPress={() => console.log('Xóa')}>
+                          onPress={() =>
+                            dispatch(removeProductCart(item.code))
+                          }>
                           <Text
                             style={[
                               globalStyles.fontWeightLight,

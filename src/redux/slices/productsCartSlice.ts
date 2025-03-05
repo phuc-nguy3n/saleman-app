@@ -39,12 +39,19 @@ const productsCartSlice = createSlice({
         product => product.code !== action.payload,
       );
     },
-    updateProductCart: (state, action: PayloadAction<ProductsCart>) => {
+    updateProductQuantity: (
+      state,
+      action: PayloadAction<{code: string; quantity: number}>,
+    ) => {
       const index = state.products.findIndex(
         p => p.code === action.payload.code,
       );
       if (index !== -1) {
-        state.products[index] = action.payload;
+        if (action.payload.quantity <= 0) {
+          state.products.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng nếu số lượng là 0
+        } else {
+          state.products[index].quantity = action.payload.quantity;
+        }
       }
     },
   },
@@ -54,6 +61,6 @@ export const {
   setProductsCart,
   addProductCart,
   removeProductCart,
-  updateProductCart,
+  updateProductQuantity,
 } = productsCartSlice.actions;
 export default productsCartSlice.reducer;
