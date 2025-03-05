@@ -1,8 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../types';
 
+type ProductsCart = Product & {
+  quantity: number;
+};
+
 type ProductsCartState = {
-  products: Product[];
+  products: ProductsCart[];
 };
 
 const initialState: ProductsCartState = {
@@ -12,12 +16,14 @@ const initialState: ProductsCartState = {
       name: "Jordan Why Not? Zer0.4 'Family' PF",
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg',
       price: 1000000,
+      quantity: 1,
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e',
       name: "Jordan Why Not? Zer0.4 'Family' PF",
       img: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/f546c01fff774735848196225649f7b7_9366/Giay_Chay_Bo_Supernova_Comfortglide_mau_xanh_la_IH0897_01_00_standard.jpg',
       price: 1000000,
+      quantity: 2,
     },
   ],
 };
@@ -26,10 +32,10 @@ const productsCartSlice = createSlice({
   name: 'productsCart',
   initialState,
   reducers: {
-    setProductsCart: (state, action: PayloadAction<Product[]>) => {
+    setProductsCart: (state, action: PayloadAction<ProductsCart[]>) => {
       state.products = action.payload;
     },
-    addProductCart: (state, action: PayloadAction<Product>) => {
+    addProductCart: (state, action: PayloadAction<ProductsCart>) => {
       state.products.push(action.payload);
     },
     removeProductCart: (state, action: PayloadAction<string>) => {
@@ -37,7 +43,7 @@ const productsCartSlice = createSlice({
         product => product.code !== action.payload,
       );
     },
-    updateProductCart: (state, action: PayloadAction<Product>) => {
+    updateProductCart: (state, action: PayloadAction<ProductsCart>) => {
       const index = state.products.findIndex(
         p => p.code === action.payload.code,
       );
