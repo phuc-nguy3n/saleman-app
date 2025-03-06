@@ -1,10 +1,9 @@
 import {NavigationProp} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ProductsCart, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
   Keyboard,
-  LayoutChangeEvent,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -26,64 +25,6 @@ import {
 
 const {colors} = customTheme;
 
-const BillOrder = ({...props}) => {
-  const {totalQuantity, tempPrice} = props;
-
-  const VATValue = 10000;
-  let totalPrice = VATValue + tempPrice;
-
-  return (
-    <View {...props}>
-      <View style={styles.billOrderBox}>
-        {/* Totals */}
-        <View>
-          <View style={styles.tempPriceBox}>
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
-
-              <Text variant="bodySmall">{totalQuantity}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Tạm tính</Text>
-              <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Thuế VAT</Text>
-              <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Chiết khấu</Text>
-              <Text variant="bodySmall">0đ</Text>
-            </View>
-          </View>
-
-          <View style={[styles.tempPriceitem, globalStyles.pv8]}>
-            <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              Tổng thanh toán
-            </Text>
-            <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              {formatPrice(totalPrice)}
-            </Text>
-          </View>
-        </View>
-
-        {/* Action */}
-        <View style={globalStyles.mv8}>
-          <Button
-            style={[globalStyles.bgPrimary, {borderRadius: 8}]}
-            mode="contained"
-            onPress={() => console.log('Đặt hàng')}>
-            Đặt hàng
-          </Button>
-        </View>
-      </View>
-    </View>
-  );
-};
-
 function CartComponent({
   navigation,
 }: {
@@ -103,11 +44,12 @@ function CartComponent({
     0,
   );
 
-  const {isOpen, setContent} = useBottomSheet();
+  const VATValue = 10000;
 
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [billHeight, setBillHeight] = useState(0);
-  const billRef = useRef(null);
+  let totalPrice = VATValue + tempPrice;
+
+  const {isOpen, setContent, bottomBarHeight, setIsKeyboardVisible} =
+    useBottomSheet();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -128,7 +70,7 @@ function CartComponent({
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, []);
+  }, [setIsKeyboardVisible]);
 
   const navigateToScreen = () => {
     if (isOpen) {
@@ -158,7 +100,7 @@ function CartComponent({
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
-            marginBottom: billHeight + 24,
+            marginBottom: bottomBarHeight + 24,
           }}>
           <View style={[globalStyles.bgWhite, globalStyles.container]}>
             {/* Breadcrumbs */}
@@ -201,75 +143,66 @@ function CartComponent({
             </View>
 
             {/* Orders */}
-            {!isKeyboardVisible && (
-              <View style={{marginTop: 8}}>
-                {/* Item */}
+            {/* {!isKeyboardVisible && ( */}
+            <View style={{marginTop: 8}}>
+              {/* Item */}
 
-                {products.map((item: ProductsCart, index: string) => (
-                  <View key={index} style={styles.itemBox}>
-                    {/* Image product */}
-                    <Image
-                      source={{
-                        uri: item.img,
-                      }}
-                      style={styles.itemImage}
-                    />
+              {products.map((item: ProductsCart, index: string) => (
+                <View key={index} style={styles.itemBox}>
+                  {/* Image product */}
+                  <Image
+                    source={{
+                      uri: item.img,
+                    }}
+                    style={styles.itemImage}
+                  />
 
-                    {/* Info product */}
-                    <View style={styles.itemInfoBox}>
-                      <Text variant="labelMedium" style={{marginBottom: 4}}>
-                        {item.name}
-                      </Text>
-                      <Text
-                        variant="bodyMedium"
-                        style={[
-                          globalStyles.textSecondColor,
-                          {marginBottom: 8},
-                        ]}>
-                        {formatPrice(item.price)}
-                      </Text>
+                  {/* Info product */}
+                  <View style={styles.itemInfoBox}>
+                    <Text variant="labelMedium" style={{marginBottom: 4}}>
+                      {item.name}
+                    </Text>
+                    <Text
+                      variant="bodyMedium"
+                      style={[globalStyles.textSecondColor, {marginBottom: 8}]}>
+                      {formatPrice(item.price)}
+                    </Text>
 
-                      {/* Actions */}
-                      <View style={styles.actionBox}>
-                        <View style={styles.container}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              handleUpdateQuantity('decrease', item)
-                            }
-                            style={styles.button}>
-                            <Text style={styles.text}>−</Text>
-                          </TouchableOpacity>
-                          <Text style={styles.count}>{item.quantity}</Text>
-                          <TouchableOpacity
-                            onPress={() =>
-                              handleUpdateQuantity('increase', item)
-                            }
-                            style={styles.button}>
-                            <Text style={styles.text}>+</Text>
-                          </TouchableOpacity>
-                        </View>
-
-                        <Button
-                          icon="trash-can-outline"
-                          mode="text"
-                          textColor={'black'}
-                          onPress={() =>
-                            dispatch(removeProductCart(item.code))
-                          }>
-                          <Text
-                            style={[
-                              globalStyles.fontWeightLight,
-                              {fontSize: 10},
-                            ]}>
-                            Xóa
-                          </Text>
-                        </Button>
+                    {/* Actions */}
+                    <View style={styles.actionBox}>
+                      <View style={styles.container}>
+                        <TouchableOpacity
+                          onPress={() => handleUpdateQuantity('decrease', item)}
+                          style={styles.button}>
+                          <Text style={styles.text}>−</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.count}>{item.quantity}</Text>
+                        <TouchableOpacity
+                          onPress={() => handleUpdateQuantity('increase', item)}
+                          style={styles.button}>
+                          <Text style={styles.text}>+</Text>
+                        </TouchableOpacity>
                       </View>
+
+                      <Button
+                        icon="trash-can-outline"
+                        mode="text"
+                        textColor={'black'}
+                        onPress={() => dispatch(removeProductCart(item.code))}>
+                        <Text
+                          style={[
+                            globalStyles.fontWeightLight,
+                            {fontSize: 10},
+                          ]}>
+                          Xóa
+                        </Text>
+                      </Button>
                     </View>
                   </View>
-                ))}
-              </View>
-            )}
+                </View>
+              ))}
+            </View>
+            {/* )} */}
 
             {/* Note */}
             <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
@@ -289,21 +222,6 @@ function CartComponent({
             </View>
           </View>
         </ScrollView>
-
-        {/* <View style={{paddingBottom: billHeight + 16 + 300}}></View> */}
-
-        {!isKeyboardVisible && (
-          <BillOrder
-            style={styles.billOrderFixed}
-            ref={billRef}
-            onLayout={(event: LayoutChangeEvent) => {
-              const {height} = event.nativeEvent.layout;
-              setBillHeight(height);
-            }}
-            totalQuantity={totalQuantity}
-            tempPrice={tempPrice}
-          />
-        )}
       </View>
     </TouchableWithoutFeedback>
   );

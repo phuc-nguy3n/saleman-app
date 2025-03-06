@@ -17,12 +17,15 @@ import {Portal} from 'react-native-portalize';
 import {useBottomSheet} from './BottomSheetProvider';
 import {ScreenType} from '../types';
 import globalStyles from '../styles/globalStyles';
-import {Text} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../config/customToast';
 import {formatPrice} from '../utils';
 import {useDispatch} from 'react-redux';
 import {addProductCart} from '../redux/slices/productsCartSlice';
+import {customTheme} from '../theme/customTheme';
+
+const {colors} = customTheme;
 
 // Định nghĩa kiểu dữ liệu của Context
 interface BottomBarFixedContextType {
@@ -40,7 +43,17 @@ const BottomBarFixedContext = createContext<
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
   const dispatch = useDispatch();
 
-  const {content, isOpen, setBottomBarHeight, product} = useBottomSheet();
+  // Cart
+
+  const totalQuantity = 10;
+  const tempPrice = 10;
+  const VATValue = 10;
+  const totalPrice = 10;
+
+  // Cart
+
+  const {content, isOpen, setBottomBarHeight, product, isKeyboardVisible} =
+    useBottomSheet();
 
   const [bottomBarFixedHeight, setBottomBarFixedHeight] = useState(0);
 
@@ -122,6 +135,67 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
             </View>
           </Animated.View>
         )}
+        {isVisibleBottomBarFixed &&
+          content === ScreenType.cart &&
+          !isKeyboardVisible && (
+            <View
+              style={styles.billOrderFixed}
+              onLayout={(event: LayoutChangeEvent) => {
+                const {height} = event.nativeEvent.layout;
+                setBottomBarFixedHeight(height);
+              }}>
+              <View style={styles.billOrderBox}>
+                {/* Totals */}
+                <View>
+                  <View style={styles.tempPriceBox}>
+                    <View style={styles.tempPriceitem}>
+                      <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
+
+                      <Text variant="bodySmall">{totalQuantity}</Text>
+                    </View>
+
+                    <View style={styles.tempPriceitem}>
+                      <Text variant="bodySmall">Tạm tính</Text>
+                      <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
+                    </View>
+
+                    <View style={styles.tempPriceitem}>
+                      <Text variant="bodySmall">Thuế VAT</Text>
+                      <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
+                    </View>
+
+                    <View style={styles.tempPriceitem}>
+                      <Text variant="bodySmall">Chiết khấu</Text>
+                      <Text variant="bodySmall">0đ</Text>
+                    </View>
+                  </View>
+
+                  <View style={[styles.tempPriceitem, globalStyles.pv8]}>
+                    <Text
+                      variant="labelLarge"
+                      style={globalStyles.primaryColor}>
+                      Tổng thanh toán
+                    </Text>
+                    <Text
+                      variant="labelLarge"
+                      style={globalStyles.primaryColor}>
+                      {formatPrice(totalPrice)}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Action */}
+                <View style={globalStyles.mv8}>
+                  <Button
+                    style={[globalStyles.bgPrimary, {borderRadius: 8}]}
+                    mode="contained"
+                    onPress={() => console.log('Đặt hàng')}>
+                    Đặt hàng
+                  </Button>
+                </View>
+              </View>
+            </View>
+          )}
         <Toast config={toastConfig} />;
       </Portal>
     </BottomBarFixedContext.Provider>
@@ -169,5 +243,29 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  billOrderFixed: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'white',
+  },
+  billOrderBox: {
+    width: '100%',
+    minHeight: 224,
+    paddingHorizontal: 16,
+    boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
+  },
+  tempPriceBox: {
+    paddingVertical: 8,
+    borderBottomColor: colors.divider,
+    borderBottomWidth: 1,
+    gap: 8,
+  },
+  tempPriceitem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

@@ -31,6 +31,8 @@ type BottomSheetContextType = {
   setBottomBarHeight: (height: number) => void;
   product: Product | undefined;
   setProduct: React.Dispatch<React.SetStateAction<Product | undefined>>;
+  isKeyboardVisible: boolean;
+  setIsKeyboardVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const BottomSheetContext = createContext<BottomSheetContextType | undefined>(
@@ -53,6 +55,7 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bottomBarHeight, setBottomBarHeight] = useState<number>(0);
   const [product, setProduct] = useState<Product | undefined>();
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
@@ -112,6 +115,8 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
         setBottomBarHeight,
         product,
         setProduct,
+        isKeyboardVisible,
+        setIsKeyboardVisible,
       }}>
       {children}
 
