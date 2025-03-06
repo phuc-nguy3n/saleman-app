@@ -80,6 +80,7 @@ function CartComponent({
       'keyboardDidHide',
       () => {
         setIsKeyboardVisible(false);
+        setFocusedNoteInput(false);
       },
     );
 
