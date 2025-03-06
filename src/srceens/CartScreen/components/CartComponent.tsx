@@ -48,10 +48,25 @@ function CartComponent({
 
   let totalPrice = VATValue + tempPrice;
 
-  const {isOpen, setContent, bottomBarHeight, setIsKeyboardVisible} =
-    useBottomSheet();
+  const {
+    isOpen,
+    setContent,
+    bottomBarHeight,
+    setIsKeyboardVisible,
+    setOverviewPrice,
+  } = useBottomSheet();
 
   const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
+
+  useEffect(() => {
+    const overviewPrice = {
+      totalQuantity,
+      tempPrice,
+      VATValue,
+      totalPrice,
+    };
+    setOverviewPrice(overviewPrice);
+  }, [setOverviewPrice, tempPrice, totalPrice, totalQuantity]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

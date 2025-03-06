@@ -43,17 +43,14 @@ const BottomBarFixedContext = createContext<
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
   const dispatch = useDispatch();
 
-  // Cart
-
-  const totalQuantity = 10;
-  const tempPrice = 10;
-  const VATValue = 10;
-  const totalPrice = 10;
-
-  // Cart
-
-  const {content, isOpen, setBottomBarHeight, product, isKeyboardVisible} =
-    useBottomSheet();
+  const {
+    content,
+    isOpen,
+    setBottomBarHeight,
+    product,
+    isKeyboardVisible,
+    overviewPrice,
+  } = useBottomSheet();
 
   const [bottomBarFixedHeight, setBottomBarFixedHeight] = useState(0);
 
@@ -151,17 +148,23 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
                     <View style={styles.tempPriceitem}>
                       <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
 
-                      <Text variant="bodySmall">{totalQuantity}</Text>
+                      <Text variant="bodySmall">
+                        {overviewPrice?.totalQuantity}
+                      </Text>
                     </View>
 
                     <View style={styles.tempPriceitem}>
                       <Text variant="bodySmall">Tạm tính</Text>
-                      <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
+                      <Text variant="bodySmall">
+                        {formatPrice(overviewPrice?.tempPrice ?? 0)}
+                      </Text>
                     </View>
 
                     <View style={styles.tempPriceitem}>
                       <Text variant="bodySmall">Thuế VAT</Text>
-                      <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
+                      <Text variant="bodySmall">
+                        {formatPrice(overviewPrice?.VATValue ?? 0)}
+                      </Text>
                     </View>
 
                     <View style={styles.tempPriceitem}>
@@ -179,7 +182,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
                     <Text
                       variant="labelLarge"
                       style={globalStyles.primaryColor}>
-                      {formatPrice(totalPrice)}
+                      {formatPrice(overviewPrice?.totalPrice ?? 0)}
                     </Text>
                   </View>
                 </View>

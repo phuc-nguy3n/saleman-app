@@ -108,6 +108,13 @@ export type ProductsCart = Product & {
   quantity: number;
 };
 
+export type OverviewPrice = {
+  totalQuantity: number;
+  tempPrice: number;
+  VATValue: number;
+  totalPrice: number;
+};
+
 export type OrderType = {
   code: string;
   orderer: string;
