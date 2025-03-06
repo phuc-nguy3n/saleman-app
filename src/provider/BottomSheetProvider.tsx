@@ -12,7 +12,7 @@ import {Modalize} from 'react-native-modalize';
 import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {customTheme} from '../theme/customTheme';
-import {Product, RootStackParamList, ScreenType} from '../types';
+import {OverviewPrice, Product, RootStackParamList, ScreenType} from '../types';
 import ShoppingComponent from '../srceens/ShoppingScreen/components/ShoppingComponent';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import ProductsComponents from '../srceens/ProductsScreen/components/ProductsComponents';
@@ -31,6 +31,12 @@ type BottomSheetContextType = {
   setBottomBarHeight: (height: number) => void;
   product: Product | undefined;
   setProduct: React.Dispatch<React.SetStateAction<Product | undefined>>;
+  isKeyboardVisible: boolean;
+  setIsKeyboardVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  overviewPrice: OverviewPrice | undefined;
+  setOverviewPrice: React.Dispatch<
+    React.SetStateAction<OverviewPrice | undefined>
+  >;
 };
 
 const BottomSheetContext = createContext<BottomSheetContextType | undefined>(
@@ -53,6 +59,10 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bottomBarHeight, setBottomBarHeight] = useState<number>(0);
   const [product, setProduct] = useState<Product | undefined>();
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
+  const [overviewPrice, setOverviewPrice] = useState<
+    OverviewPrice | undefined
+  >();
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
@@ -112,6 +122,10 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
         setBottomBarHeight,
         product,
         setProduct,
+        isKeyboardVisible,
+        setIsKeyboardVisible,
+        overviewPrice,
+        setOverviewPrice,
       }}>
       {children}
 

@@ -32,7 +32,17 @@ const productsCartSlice = createSlice({
       state.products = action.payload;
     },
     addProductCart: (state, action: PayloadAction<ProductsCart>) => {
-      state.products.push(action.payload);
+      const existingProduct = state.products.find(
+        product => product.code === action.payload.code,
+      );
+
+      if (existingProduct) {
+        // Nếu sản phẩm đã tồn tại, tăng quantity lên 1
+        existingProduct.quantity += 1;
+      } else {
+        // Nếu sản phẩm chưa có, thêm mới vào giỏ hàng
+        state.products.push(action.payload);
+      }
     },
     removeProductCart: (state, action: PayloadAction<string>) => {
       state.products = state.products.filter(

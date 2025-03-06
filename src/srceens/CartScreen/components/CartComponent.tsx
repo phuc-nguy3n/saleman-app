@@ -1,15 +1,15 @@
 import {NavigationProp} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ProductsCart, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
   Keyboard,
-  LayoutChangeEvent,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
   TextInput,
+  LayoutChangeEvent,
 } from 'react-native';
 import {customTheme} from '../../../theme/customTheme';
 import styles from '../styles';
@@ -25,64 +25,6 @@ import {
 } from '../../../redux/slices/productsCartSlice';
 
 const {colors} = customTheme;
-
-const BillOrder = ({...props}) => {
-  const {totalQuantity, tempPrice} = props;
-
-  const VATValue = 10000;
-  let totalPrice = VATValue + tempPrice;
-
-  return (
-    <View {...props}>
-      <View style={styles.billOrderBox}>
-        {/* Totals */}
-        <View>
-          <View style={styles.tempPriceBox}>
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Tổng số lượng sản phẩm</Text>
-
-              <Text variant="bodySmall">{totalQuantity}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Tạm tính</Text>
-              <Text variant="bodySmall">{formatPrice(tempPrice)}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Thuế VAT</Text>
-              <Text variant="bodySmall">{formatPrice(VATValue)}</Text>
-            </View>
-
-            <View style={styles.tempPriceitem}>
-              <Text variant="bodySmall">Chiết khấu</Text>
-              <Text variant="bodySmall">0đ</Text>
-            </View>
-          </View>
-
-          <View style={[styles.tempPriceitem, globalStyles.pv8]}>
-            <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              Tổng thanh toán
-            </Text>
-            <Text variant="labelLarge" style={globalStyles.primaryColor}>
-              {formatPrice(totalPrice)}
-            </Text>
-          </View>
-        </View>
-
-        {/* Action */}
-        <View style={globalStyles.mv8}>
-          <Button
-            style={[globalStyles.bgPrimary, {borderRadius: 8}]}
-            mode="contained"
-            onPress={() => console.log('Đặt hàng')}>
-            Đặt hàng
-          </Button>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 function CartComponent({
   navigation,
@@ -103,11 +45,33 @@ function CartComponent({
     0,
   );
 
-  const {isOpen, setContent} = useBottomSheet();
+  const VATValue = 10000;
 
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [billHeight, setBillHeight] = useState(0);
-  const billRef = useRef(null);
+  let totalPrice = VATValue + tempPrice;
+
+  const {
+    isOpen,
+    setContent,
+    bottomBarHeight,
+    setIsKeyboardVisible,
+    setOverviewPrice,
+  } = useBottomSheet();
+
+  const [heightOrders, setHeightOrders] = useState<number>(0);
+
+  console.log('heightOrders: ', heightOrders);
+
+  const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
+
+  useEffect(() => {
+    const overviewPrice = {
+      totalQuantity,
+      tempPrice,
+      VATValue,
+      totalPrice,
+    };
+    setOverviewPrice(overviewPrice);
+  }, [setOverviewPrice, tempPrice, totalPrice, totalQuantity]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -121,6 +85,7 @@ function CartComponent({
       'keyboardDidHide',
       () => {
         setIsKeyboardVisible(false);
+        setFocusedNoteInput(false);
       },
     );
 
@@ -128,7 +93,7 @@ function CartComponent({
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
-  }, []);
+  }, [setIsKeyboardVisible]);
 
   const navigateToScreen = () => {
     if (isOpen) {
@@ -154,55 +119,71 @@ function CartComponent({
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={[globalStyles.container, {position: 'relative'}]}>
-        <ScrollView
-          contentContainerStyle={{
+      <View style={[globalStyles.container]}>
+        <View
+          style={{
             flexGrow: 1,
-            marginBottom: billHeight + 24,
+            paddingBottom: bottomBarHeight + 24,
           }}>
-          <View style={[globalStyles.bgWhite, globalStyles.container]}>
-            {/* Breadcrumbs */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                width: '100%',
-              }}>
-              <TouchableOpacity
-                onPress={navigateToScreen}
-                style={{width: 24, height: 24, marginLeft: -12}}>
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={24}
-                  color={colors.textSecond}
-                  style={styles.searchIcon}
-                />
-              </TouchableOpacity>
+          <View style={[globalStyles.bgWhite, globalStyles.container, {}]}>
+            {/* Back navigation */}
+            {!focusedNoteInput && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingHorizontal: 16,
+                  paddingVertical: 8,
+                  width: '100%',
+                }}>
+                <TouchableOpacity
+                  onPress={navigateToScreen}
+                  style={{width: 24, height: 24, marginLeft: -12}}>
+                  <Ionicons
+                    name="arrow-back-outline"
+                    size={24}
+                    color={colors.textSecond}
+                    style={styles.searchIcon}
+                  />
+                </TouchableOpacity>
 
-              <Text style={{marginLeft: 28}} variant="titleSmall">
-                Giỏ hàng của bạn
-              </Text>
-            </View>
-            {/* Breadcrumbs */}
+                <Text style={{marginLeft: 28}} variant="titleSmall">
+                  Giỏ hàng của bạn
+                </Text>
+              </View>
+            )}
 
             {/* Search */}
-            <View style={styles.searchBar}>
-              <View style={styles.searchBox}>
-                <Ionicons
-                  name="search-outline"
-                  size={24}
-                  color={colors.outline}
-                  style={styles.searchIcon}
-                />
-                <TextInput style={styles.searchInput} placeholder="Search" />
+            {!focusedNoteInput && (
+              <View style={styles.searchBar}>
+                <View style={styles.searchBox}>
+                  <Ionicons
+                    name="search-outline"
+                    size={24}
+                    color={colors.outline}
+                    style={styles.searchIcon}
+                  />
+                  <TextInput style={styles.searchInput} placeholder="Search" />
+                </View>
               </View>
-            </View>
+            )}
 
             {/* Orders */}
-            {!isKeyboardVisible && (
-              <View style={{marginTop: 8}}>
+            {!focusedNoteInput && (
+              <ScrollView
+                scrollEnabled
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={true}
+                showsHorizontalScrollIndicator={false}
+                persistentScrollbar={true}
+                style={{
+                  marginTop: 8,
+                  maxHeight: 346,
+                  minHeight: 346,
+                  width: '100%',
+                  position: 'relative',
+                  zIndex: 1000,
+                }}>
                 {/* Item */}
 
                 {products.map((item: ProductsCart, index: string) => (
@@ -268,11 +249,16 @@ function CartComponent({
                     </View>
                   </View>
                 ))}
-              </View>
+              </ScrollView>
             )}
 
             {/* Note */}
-            <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
+            <View
+              onLayout={(event: LayoutChangeEvent) => {
+                const {height} = event.nativeEvent.layout;
+                setHeightOrders(height);
+              }}
+              style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
               <Text variant="labelLarge">Ghi chú</Text>
 
               <TextInput
@@ -282,28 +268,15 @@ function CartComponent({
                   styles.noteBox,
                 ]}
                 placeholder="Nhập nội dung ghi chú"
+                onFocus={() => setFocusedNoteInput(true)}
+                onBlur={() => setFocusedNoteInput(false)}
               />
               <Text variant="bodySmall">
                 Vui lòng gọi điện trước khi giao hàng
               </Text>
             </View>
           </View>
-        </ScrollView>
-
-        {/* <View style={{paddingBottom: billHeight + 16 + 300}}></View> */}
-
-        {!isKeyboardVisible && (
-          <BillOrder
-            style={styles.billOrderFixed}
-            ref={billRef}
-            onLayout={(event: LayoutChangeEvent) => {
-              const {height} = event.nativeEvent.layout;
-              setBillHeight(height);
-            }}
-            totalQuantity={totalQuantity}
-            tempPrice={tempPrice}
-          />
-        )}
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
