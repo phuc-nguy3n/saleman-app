@@ -51,6 +51,8 @@ function CartComponent({
   const {isOpen, setContent, bottomBarHeight, setIsKeyboardVisible} =
     useBottomSheet();
 
+  const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -103,106 +105,118 @@ function CartComponent({
             marginBottom: bottomBarHeight + 24,
           }}>
           <View style={[globalStyles.bgWhite, globalStyles.container]}>
-            {/* Breadcrumbs */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                width: '100%',
-              }}>
-              <TouchableOpacity
-                onPress={navigateToScreen}
-                style={{width: 24, height: 24, marginLeft: -12}}>
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={24}
-                  color={colors.textSecond}
-                  style={styles.searchIcon}
-                />
-              </TouchableOpacity>
+            {/* Back navigation */}
+            {!focusedNoteInput && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingHorizontal: 16,
+                  paddingVertical: 8,
+                  width: '100%',
+                }}>
+                <TouchableOpacity
+                  onPress={navigateToScreen}
+                  style={{width: 24, height: 24, marginLeft: -12}}>
+                  <Ionicons
+                    name="arrow-back-outline"
+                    size={24}
+                    color={colors.textSecond}
+                    style={styles.searchIcon}
+                  />
+                </TouchableOpacity>
 
-              <Text style={{marginLeft: 28}} variant="titleSmall">
-                Giỏ hàng của bạn
-              </Text>
-            </View>
-            {/* Breadcrumbs */}
+                <Text style={{marginLeft: 28}} variant="titleSmall">
+                  Giỏ hàng của bạn
+                </Text>
+              </View>
+            )}
 
             {/* Search */}
-            <View style={styles.searchBar}>
-              <View style={styles.searchBox}>
-                <Ionicons
-                  name="search-outline"
-                  size={24}
-                  color={colors.outline}
-                  style={styles.searchIcon}
-                />
-                <TextInput style={styles.searchInput} placeholder="Search" />
+            {!focusedNoteInput && (
+              <View style={styles.searchBar}>
+                <View style={styles.searchBox}>
+                  <Ionicons
+                    name="search-outline"
+                    size={24}
+                    color={colors.outline}
+                    style={styles.searchIcon}
+                  />
+                  <TextInput style={styles.searchInput} placeholder="Search" />
+                </View>
               </View>
-            </View>
+            )}
 
             {/* Orders */}
-            {/* {!isKeyboardVisible && ( */}
-            <View style={{marginTop: 8}}>
-              {/* Item */}
+            {!focusedNoteInput && (
+              <View style={{marginTop: 8}}>
+                {/* Item */}
 
-              {products.map((item: ProductsCart, index: string) => (
-                <View key={index} style={styles.itemBox}>
-                  {/* Image product */}
-                  <Image
-                    source={{
-                      uri: item.img,
-                    }}
-                    style={styles.itemImage}
-                  />
+                {products.map((item: ProductsCart, index: string) => (
+                  <View key={index} style={styles.itemBox}>
+                    {/* Image product */}
+                    <Image
+                      source={{
+                        uri: item.img,
+                      }}
+                      style={styles.itemImage}
+                    />
 
-                  {/* Info product */}
-                  <View style={styles.itemInfoBox}>
-                    <Text variant="labelMedium" style={{marginBottom: 4}}>
-                      {item.name}
-                    </Text>
-                    <Text
-                      variant="bodyMedium"
-                      style={[globalStyles.textSecondColor, {marginBottom: 8}]}>
-                      {formatPrice(item.price)}
-                    </Text>
+                    {/* Info product */}
+                    <View style={styles.itemInfoBox}>
+                      <Text variant="labelMedium" style={{marginBottom: 4}}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        variant="bodyMedium"
+                        style={[
+                          globalStyles.textSecondColor,
+                          {marginBottom: 8},
+                        ]}>
+                        {formatPrice(item.price)}
+                      </Text>
 
-                    {/* Actions */}
-                    <View style={styles.actionBox}>
-                      <View style={styles.container}>
-                        <TouchableOpacity
-                          onPress={() => handleUpdateQuantity('decrease', item)}
-                          style={styles.button}>
-                          <Text style={styles.text}>−</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.count}>{item.quantity}</Text>
-                        <TouchableOpacity
-                          onPress={() => handleUpdateQuantity('increase', item)}
-                          style={styles.button}>
-                          <Text style={styles.text}>+</Text>
-                        </TouchableOpacity>
+                      {/* Actions */}
+                      <View style={styles.actionBox}>
+                        <View style={styles.container}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('decrease', item)
+                            }
+                            style={styles.button}>
+                            <Text style={styles.text}>−</Text>
+                          </TouchableOpacity>
+                          <Text style={styles.count}>{item.quantity}</Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('increase', item)
+                            }
+                            style={styles.button}>
+                            <Text style={styles.text}>+</Text>
+                          </TouchableOpacity>
+                        </View>
+
+                        <Button
+                          icon="trash-can-outline"
+                          mode="text"
+                          textColor={'black'}
+                          onPress={() =>
+                            dispatch(removeProductCart(item.code))
+                          }>
+                          <Text
+                            style={[
+                              globalStyles.fontWeightLight,
+                              {fontSize: 10},
+                            ]}>
+                            Xóa
+                          </Text>
+                        </Button>
                       </View>
-
-                      <Button
-                        icon="trash-can-outline"
-                        mode="text"
-                        textColor={'black'}
-                        onPress={() => dispatch(removeProductCart(item.code))}>
-                        <Text
-                          style={[
-                            globalStyles.fontWeightLight,
-                            {fontSize: 10},
-                          ]}>
-                          Xóa
-                        </Text>
-                      </Button>
                     </View>
                   </View>
-                </View>
-              ))}
-            </View>
-            {/* )} */}
+                ))}
+              </View>
+            )}
 
             {/* Note */}
             <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
@@ -215,6 +229,8 @@ function CartComponent({
                   styles.noteBox,
                 ]}
                 placeholder="Nhập nội dung ghi chú"
+                onFocus={() => setFocusedNoteInput(true)}
+                onBlur={() => setFocusedNoteInput(false)}
               />
               <Text variant="bodySmall">
                 Vui lòng gọi điện trước khi giao hàng
