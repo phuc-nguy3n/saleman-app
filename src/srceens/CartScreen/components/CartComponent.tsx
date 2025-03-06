@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
   TextInput,
+  LayoutChangeEvent,
 } from 'react-native';
 import {customTheme} from '../../../theme/customTheme';
 import styles from '../styles';
@@ -55,6 +56,10 @@ function CartComponent({
     setIsKeyboardVisible,
     setOverviewPrice,
   } = useBottomSheet();
+
+  const [heightOrders, setHeightOrders] = useState<number>(0);
+
+  console.log('heightOrders: ', heightOrders);
 
   const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
 
@@ -114,13 +119,13 @@ function CartComponent({
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={[globalStyles.container, {position: 'relative'}]}>
-        <ScrollView
-          contentContainerStyle={{
+      <View style={[globalStyles.container]}>
+        <View
+          style={{
             flexGrow: 1,
-            marginBottom: bottomBarHeight + 24,
+            paddingBottom: bottomBarHeight + 24,
           }}>
-          <View style={[globalStyles.bgWhite, globalStyles.container]}>
+          <View style={[globalStyles.bgWhite, globalStyles.container, {}]}>
             {/* Back navigation */}
             {!focusedNoteInput && (
               <View
@@ -165,7 +170,20 @@ function CartComponent({
 
             {/* Orders */}
             {!focusedNoteInput && (
-              <View style={{marginTop: 8}}>
+              <ScrollView
+                scrollEnabled
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={true}
+                showsHorizontalScrollIndicator={false}
+                persistentScrollbar={true}
+                style={{
+                  marginTop: 8,
+                  maxHeight: 346,
+                  minHeight: 346,
+                  width: '100%',
+                  position: 'relative',
+                  zIndex: 1000,
+                }}>
                 {/* Item */}
 
                 {products.map((item: ProductsCart, index: string) => (
@@ -231,11 +249,16 @@ function CartComponent({
                     </View>
                   </View>
                 ))}
-              </View>
+              </ScrollView>
             )}
 
             {/* Note */}
-            <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
+            <View
+              onLayout={(event: LayoutChangeEvent) => {
+                const {height} = event.nativeEvent.layout;
+                setHeightOrders(height);
+              }}
+              style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
               <Text variant="labelLarge">Ghi chú</Text>
 
               <TextInput
@@ -253,7 +276,7 @@ function CartComponent({
               </Text>
             </View>
           </View>
-        </ScrollView>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
