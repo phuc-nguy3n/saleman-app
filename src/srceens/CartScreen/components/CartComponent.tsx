@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   View,
   TextInput,
-  LayoutChangeEvent,
 } from 'react-native';
 import {customTheme} from '../../../theme/customTheme';
 import styles from '../styles';
@@ -56,10 +55,6 @@ function CartComponent({
     setIsKeyboardVisible,
     setOverviewPrice,
   } = useBottomSheet();
-
-  const [heightOrders, setHeightOrders] = useState<number>(0);
-
-  console.log('heightOrders: ', heightOrders);
 
   const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
 
@@ -178,14 +173,12 @@ function CartComponent({
                 persistentScrollbar={true}
                 style={{
                   marginTop: 8,
-                  maxHeight: 346,
-                  minHeight: 346,
+                  maxHeight: 234,
                   width: '100%',
                   position: 'relative',
                   zIndex: 1000,
                 }}>
                 {/* Item */}
-
                 {products.map((item: ProductsCart, index: string) => (
                   <View key={index} style={styles.itemBox}>
                     {/* Image product */}
@@ -253,12 +246,7 @@ function CartComponent({
             )}
 
             {/* Note */}
-            <View
-              onLayout={(event: LayoutChangeEvent) => {
-                const {height} = event.nativeEvent.layout;
-                setHeightOrders(height);
-              }}
-              style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
+            <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
               <Text variant="labelLarge">Ghi chú</Text>
 
               <TextInput
