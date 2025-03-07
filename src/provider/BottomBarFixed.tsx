@@ -21,7 +21,7 @@ import {Button, Text} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../config/customToast';
 import {formatPrice} from '../utils';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addProductCart} from '../redux/slices/productsCartSlice';
 import {customTheme} from '../theme/customTheme';
 
@@ -41,6 +41,7 @@ const BottomBarFixedContext = createContext<
 
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
+  const products = useSelector((state: any) => state.productsCart.products);
   const dispatch = useDispatch();
 
   const {
@@ -101,6 +102,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
         hideBottomBarFixed,
       }}>
       {children}
+
       <Portal>
         {isVisibleBottomBarFixed && content === ScreenType.productDetails && (
           <Animated.View
@@ -134,7 +136,8 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
         )}
         {isVisibleBottomBarFixed &&
           content === ScreenType.cart &&
-          !isKeyboardVisible && (
+          !isKeyboardVisible &&
+          products.length > 0 && (
             <View
               style={styles.billOrderFixed}
               onLayout={(event: LayoutChangeEvent) => {

@@ -17,6 +17,7 @@ export const saleCate = require('./sale-cate.png');
 export const womenCate = require('./women-cate.png');
 export const menCate = require('./men-cate.png');
 export const kidsCate = require('./kids-cate.png');
+export const cartEmpty = require('./cartempty.png');
 
 // Icons
 export const eye = require('./eye-enable.png');
