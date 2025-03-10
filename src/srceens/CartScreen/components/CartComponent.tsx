@@ -1,5 +1,5 @@
 import {NavigationProp} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ProductsCart, RootStackParamList, ScreenType} from '../../../types';
 import {
   Image,
@@ -57,8 +57,6 @@ function CartComponent({
     setOverviewPrice,
   } = useBottomSheet();
 
-  const [focusedNoteInput, setFocusedNoteInput] = useState<boolean>(false);
-
   useEffect(() => {
     const overviewPrice = {
       totalQuantity,
@@ -81,7 +79,6 @@ function CartComponent({
       'keyboardDidHide',
       () => {
         setIsKeyboardVisible(false);
-        setFocusedNoteInput(false);
       },
     );
 
@@ -121,33 +118,30 @@ function CartComponent({
             paddingBottom: bottomBarHeight + 24,
           }}>
           <View style={[globalStyles.bgWhite, globalStyles.container]}>
-            {/* Back navigation */}
-            {!focusedNoteInput && (
-              <View
-                style={[
-                  styles.backNavigation,
-                  globalStyles.ph16,
-                  globalStyles.pv8,
-                ]}>
-                <TouchableOpacity
-                  onPress={navigateToScreen}
-                  style={styles.backIconBack}>
-                  <Ionicons
-                    name="arrow-back-outline"
-                    size={24}
-                    color={colors.textSecond}
-                    style={styles.searchIcon}
-                  />
-                </TouchableOpacity>
+            {/* Back navigation */}(
+            <View
+              style={[
+                styles.backNavigation,
+                globalStyles.ph16,
+                globalStyles.pv8,
+              ]}>
+              <TouchableOpacity
+                onPress={navigateToScreen}
+                style={styles.backIconBack}>
+                <Ionicons
+                  name="arrow-back-outline"
+                  size={24}
+                  color={colors.textSecond}
+                  style={styles.searchIcon}
+                />
+              </TouchableOpacity>
 
-                <Text style={{marginLeft: 28}} variant="titleSmall">
-                  Giỏ hàng của bạn
-                </Text>
-              </View>
-            )}
-
-            {/* Search */}
-            {!focusedNoteInput && products.length > 0 && (
+              <Text style={{marginLeft: 28}} variant="titleSmall">
+                Giỏ hàng của bạn
+              </Text>
+            </View>
+            ){/* Search */}
+            {products.length > 0 && (
               <View style={styles.searchBar}>
                 <View style={styles.searchBox}>
                   <Ionicons
@@ -160,88 +154,84 @@ function CartComponent({
                 </View>
               </View>
             )}
+            {/* Orders */}(
+            <ScrollView
+              scrollEnabled
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={true}
+              showsHorizontalScrollIndicator={false}
+              persistentScrollbar={true}
+              style={styles.ordersBox}>
+              {/* Item */}
+              {products.length > 0 ? (
+                products.map((item: ProductsCart, index: string) => (
+                  <View key={index} style={styles.itemBox}>
+                    {/* Image product */}
+                    <Image
+                      source={{
+                        uri: item.img,
+                      }}
+                      style={styles.itemImage}
+                    />
 
-            {/* Orders */}
-            {!focusedNoteInput && (
-              <ScrollView
-                scrollEnabled
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={true}
-                showsHorizontalScrollIndicator={false}
-                persistentScrollbar={true}
-                style={styles.ordersBox}>
-                {/* Item */}
-                {products.length > 0 ? (
-                  products.map((item: ProductsCart, index: string) => (
-                    <View key={index} style={styles.itemBox}>
-                      {/* Image product */}
-                      <Image
-                        source={{
-                          uri: item.img,
-                        }}
-                        style={styles.itemImage}
-                      />
+                    {/* Info product */}
+                    <View style={styles.itemInfoBox}>
+                      <Text variant="labelMedium" style={{marginBottom: 4}}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        variant="bodyMedium"
+                        style={[
+                          globalStyles.textSecondColor,
+                          {marginBottom: 8},
+                        ]}>
+                        {formatPrice(item.price)}
+                      </Text>
 
-                      {/* Info product */}
-                      <View style={styles.itemInfoBox}>
-                        <Text variant="labelMedium" style={{marginBottom: 4}}>
-                          {item.name}
-                        </Text>
-                        <Text
-                          variant="bodyMedium"
-                          style={[
-                            globalStyles.textSecondColor,
-                            {marginBottom: 8},
-                          ]}>
-                          {formatPrice(item.price)}
-                        </Text>
-
-                        {/* Actions */}
-                        <View style={styles.actionBox}>
-                          <View style={styles.container}>
-                            <TouchableOpacity
-                              onPress={() =>
-                                handleUpdateQuantity('decrease', item)
-                              }
-                              style={styles.button}>
-                              <Text style={styles.text}>−</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.count}>{item.quantity}</Text>
-                            <TouchableOpacity
-                              onPress={() =>
-                                handleUpdateQuantity('increase', item)
-                              }
-                              style={styles.button}>
-                              <Text style={styles.text}>+</Text>
-                            </TouchableOpacity>
-                          </View>
-
-                          <Button
-                            icon="trash-can-outline"
-                            mode="text"
-                            textColor={'black'}
+                      {/* Actions */}
+                      <View style={styles.actionBox}>
+                        <View style={styles.container}>
+                          <TouchableOpacity
                             onPress={() =>
-                              dispatch(removeProductCart(item.code))
-                            }>
-                            <Text
-                              style={[
-                                globalStyles.fontWeightLight,
-                                {fontSize: 10},
-                              ]}>
-                              Xóa
-                            </Text>
-                          </Button>
+                              handleUpdateQuantity('decrease', item)
+                            }
+                            style={styles.button}>
+                            <Text style={styles.text}>−</Text>
+                          </TouchableOpacity>
+                          <Text style={styles.count}>{item.quantity}</Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleUpdateQuantity('increase', item)
+                            }
+                            style={styles.button}>
+                            <Text style={styles.text}>+</Text>
+                          </TouchableOpacity>
                         </View>
+
+                        <Button
+                          icon="trash-can-outline"
+                          mode="text"
+                          textColor={'black'}
+                          onPress={() =>
+                            dispatch(removeProductCart(item.code))
+                          }>
+                          <Text
+                            style={[
+                              globalStyles.fontWeightLight,
+                              {fontSize: 10},
+                            ]}>
+                            Xóa
+                          </Text>
+                        </Button>
                       </View>
                     </View>
-                  ))
-                ) : (
-                  <Image source={cartEmpty} style={styles.orderEmpty} />
-                )}
-              </ScrollView>
-            )}
-
-            {/* Note */}
+                  </View>
+                ))
+              ) : (
+                <Image source={cartEmpty} style={styles.orderEmpty} />
+              )}
+            </ScrollView>
+            ){/* Note */}
             {products.length > 0 && (
               <View style={[globalStyles.ph16, globalStyles.pv8, {gap: 8}]}>
                 <Text variant="labelLarge">Ghi chú</Text>
@@ -253,8 +243,6 @@ function CartComponent({
                     styles.noteBox,
                   ]}
                   placeholder="Nhập nội dung ghi chú"
-                  onFocus={() => setFocusedNoteInput(true)}
-                  onBlur={() => setFocusedNoteInput(false)}
                 />
                 <Text variant="bodySmall">
                   Vui lòng gọi điện trước khi giao hàng
