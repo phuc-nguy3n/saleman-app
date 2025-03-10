@@ -12,7 +12,7 @@ export type RootStackParamList = {
   WorkSchedule: undefined;
   AgencyInfo: {info: AgencyType};
   Shopping: undefined;
-  Products: undefined;
+  Products: {cateProduct: string};
   ProductDetails: undefined;
   Cart: undefined;
 };
@@ -44,8 +44,11 @@ export type ShoppingScreenProps = {
   navigation: AppNavigationProp<'Shopping'>;
 };
 
+type ProductsRouteProp = RouteProp<RootStackParamList, 'Products'>;
+
 export type ProductsScreenProps = {
   navigation: AppNavigationProp<'Products'>;
+  route: ProductsRouteProp;
 };
 
 export type ProductDetailsScreenProps = {
@@ -158,6 +161,14 @@ export enum OrderCateType {
   shipping = 'shipping',
   shipped = 'shipped',
   return = 'return',
+}
+
+export enum CateProductType {
+  all = 'All',
+  sale = 'Sale',
+  women = 'Women',
+  men = 'Men',
+  kids = 'Kids',
 }
 
 export enum ScreenType {
