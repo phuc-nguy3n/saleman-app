@@ -106,8 +106,8 @@ export const HomeConst = {
 export const ShoppingConst = {
   cate: [
     {
-      img: '',
-      text: 'Tất cả',
+      img: 'All',
+      text: 'All',
     },
     {
       img: saleCate,
