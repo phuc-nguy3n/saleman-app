@@ -46,11 +46,11 @@ const ProductItem = ({
   );
 };
 
-function ProductDetailsComponents({
-  navigation,
-}: {
-  readonly navigation: NavigationProp<RootStackParamList>;
-}) {
+type ProductDetailsComponentsProps = Readonly<{
+  navigation: NavigationProp<RootStackParamList>;
+}>;
+
+function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
   const {isOpen, setContent, bottomBarHeight} = useBottomSheet();
 
   const navigateToScreen = (screen: string) => {
