@@ -1,6 +1,11 @@
 import React from 'react';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
-import {Product, RootStackParamList, ScreenType} from '../../../types';
+import {
+  CateProductType,
+  Product,
+  RootStackParamList,
+  ScreenType,
+} from '../../../types';
 import {ShoppingConst} from '../../../config/const';
 import styles from '../styles';
 import {
@@ -65,7 +70,7 @@ function ProductsComponents({
 }: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
 }>) {
-  const {isOpen, setContent} = useBottomSheet();
+  const {isOpen, setContent, cateProduct, setCateProduct} = useBottomSheet();
 
   const products: Product[] = [
     {
@@ -148,8 +153,19 @@ function ProductsComponents({
             <View style={styles.cateBox}>
               {cate.map((item, index) => (
                 <View key={index} style={styles.cateItem}>
-                  <TouchableOpacity style={styles.cateItemIconBox}>
-                    {item.img !== '' ? (
+                  <TouchableOpacity
+                    onPress={() => setCateProduct(item.text)}
+                    style={[
+                      styles.cateItemIconBox,
+                      {
+                        borderColor:
+                          item.text === CateProductType.all ||
+                          item.text === cateProduct
+                            ? colors.primary
+                            : colors.tertiary,
+                      },
+                    ]}>
+                    {item.img !== CateProductType.all ? (
                       <>
                         <Image
                           style={{
@@ -175,11 +191,12 @@ function ProductsComponents({
                           flexDirection: 'row',
                           justifyContent: 'center',
                           alignItems: 'center',
+                          backgroundColor: colors.tertiary,
                         }}>
                         <Ionicons
                           name="grid-outline"
                           size={24}
-                          color={colors.textSecond}
+                          color={colors.link}
                         />
                       </View>
                     )}
