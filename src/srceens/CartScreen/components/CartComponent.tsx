@@ -28,9 +28,9 @@ const {colors} = customTheme;
 
 function CartComponent({
   navigation,
-}: {
+}: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
-}) {
+}>) {
   const dispatch = useDispatch();
   const products = useSelector((state: any) => state.productsCart.products);
 
@@ -118,23 +118,20 @@ function CartComponent({
       <View style={[globalStyles.container]}>
         <View
           style={{
-            flexGrow: 1,
             paddingBottom: bottomBarHeight + 24,
           }}>
-          <View style={[globalStyles.bgWhite, globalStyles.container, {}]}>
+          <View style={[globalStyles.bgWhite, globalStyles.container]}>
             {/* Back navigation */}
             {!focusedNoteInput && (
               <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingHorizontal: 16,
-                  paddingVertical: 8,
-                  width: '100%',
-                }}>
+                style={[
+                  styles.backNavigation,
+                  globalStyles.ph16,
+                  globalStyles.pv8,
+                ]}>
                 <TouchableOpacity
                   onPress={navigateToScreen}
-                  style={{width: 24, height: 24, marginLeft: -12}}>
+                  style={styles.backIconBack}>
                   <Ionicons
                     name="arrow-back-outline"
                     size={24}
@@ -172,13 +169,7 @@ function CartComponent({
                 showsVerticalScrollIndicator={true}
                 showsHorizontalScrollIndicator={false}
                 persistentScrollbar={true}
-                style={{
-                  marginTop: 8,
-                  maxHeight: 234,
-                  width: '100%',
-                  position: 'relative',
-                  zIndex: 1000,
-                }}>
+                style={styles.ordersBox}>
                 {/* Item */}
                 {products.length > 0 ? (
                   products.map((item: ProductsCart, index: string) => (
@@ -245,10 +236,7 @@ function CartComponent({
                     </View>
                   ))
                 ) : (
-                  <Image
-                    source={cartEmpty}
-                    style={{width: '100%', height: 234}}
-                  />
+                  <Image source={cartEmpty} style={styles.orderEmpty} />
                 )}
               </ScrollView>
             )}
