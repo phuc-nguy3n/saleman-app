@@ -21,14 +21,13 @@ import {formatPrice} from '../../../utils';
 
 const {colors} = customTheme;
 
-const ProductItem = ({
+function ProductItem({
   product,
   navigateProductDetails,
-}: {
+}: Readonly<{
   product: Product;
-  isBottomSheet: boolean;
   navigateProductDetails: () => void;
-}) => {
+}>) {
   const {setProduct} = useBottomSheet();
   return (
     <View style={styles.productsItem}>
@@ -59,13 +58,13 @@ const ProductItem = ({
       </View>
     </View>
   );
-};
+}
 
 function ProductsComponents({
   navigation,
-}: {
+}: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
-}) {
+}>) {
   const {isOpen, setContent} = useBottomSheet();
 
   const products: Product[] = [
@@ -102,95 +101,97 @@ function ProductsComponents({
   ];
   const {cate} = ShoppingConst;
 
-  const renderHeader = () => (
-    <>
-      {/* Header */}
-      <View style={styles.header}>
-        {/* Breadcrumbs */}
+  function renderHeader() {
+    return (
+      <>
+        {/* Header */}
+        <View style={styles.header}>
+          {/* Breadcrumbs */}
 
-        <TouchableOpacity
-          onPress={navigateToShopping}
-          style={[globalStyles.ph4]}>
-          <Ionicons
-            name="arrow-back-outline"
-            size={24}
-            color={colors.textSecond}
-          />
-        </TouchableOpacity>
-
-        {/* Breadcrumbs */}
-
-        {/* Search */}
-        <View style={styles.searchBar}>
-          <View style={styles.searchBox}>
+          <TouchableOpacity
+            onPress={navigateToShopping}
+            style={[globalStyles.ph4]}>
             <Ionicons
-              name="search-outline"
+              name="arrow-back-outline"
               size={24}
-              color={colors.outline}
-              style={styles.searchIcon}
+              color={colors.textSecond}
             />
-            <TextInput style={styles.searchInput} placeholder="Search" />
+          </TouchableOpacity>
+
+          {/* Breadcrumbs */}
+
+          {/* Search */}
+          <View style={styles.searchBar}>
+            <View style={styles.searchBox}>
+              <Ionicons
+                name="search-outline"
+                size={24}
+                color={colors.outline}
+                style={styles.searchIcon}
+              />
+              <TextInput style={styles.searchInput} placeholder="Search" />
+            </View>
           </View>
+
+          {/* Cart */}
+          <TouchableOpacity>
+            <Image source={shoppingBlackBag} style={styles.cartIcon} />
+          </TouchableOpacity>
         </View>
 
-        {/* Cart */}
-        <TouchableOpacity>
-          <Image source={shoppingBlackBag} style={styles.cartIcon} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Product categories */}
-      <View style={styles.cateContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={globalStyles.ph16}>
-          <View style={styles.cateBox}>
-            {cate.map((item, index) => (
-              <View key={index} style={styles.cateItem}>
-                <TouchableOpacity style={styles.cateItemIconBox}>
-                  {item.img !== '' ? (
-                    <>
-                      <Image
+        {/* Product categories */}
+        <View style={styles.cateContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={globalStyles.ph16}>
+            <View style={styles.cateBox}>
+              {cate.map((item, index) => (
+                <View key={index} style={styles.cateItem}>
+                  <TouchableOpacity style={styles.cateItemIconBox}>
+                    {item.img !== '' ? (
+                      <>
+                        <Image
+                          style={{
+                            width: 56,
+                            height: 56,
+                          }}
+                          source={item.img}
+                          resizeMode="cover"
+                        />
+                        <View style={{padding: 8, paddingRight: 12}}>
+                          <Text
+                            variant="bodySmall"
+                            style={globalStyles.textSecondColor}>
+                            {item.text}
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <View
                         style={{
                           width: 56,
                           height: 56,
-                        }}
-                        source={item.img}
-                        resizeMode="cover"
-                      />
-                      <View style={{padding: 8, paddingRight: 12}}>
-                        <Text
-                          variant="bodySmall"
-                          style={globalStyles.textSecondColor}>
-                          {item.text}
-                        </Text>
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Ionicons
+                          name="grid-outline"
+                          size={24}
+                          color={colors.textSecond}
+                        />
                       </View>
-                    </>
-                  ) : (
-                    <View
-                      style={{
-                        width: 56,
-                        height: 56,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Ionicons
-                        name="grid-outline"
-                        size={24}
-                        color={colors.textSecond}
-                      />
-                    </View>
-                  )}
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
-    </>
-  );
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </>
+    );
+  }
 
   const navigateToShopping = () => {
     if (isOpen) {
@@ -215,7 +216,6 @@ function ProductsComponents({
         renderItem={({item}) => (
           <ProductItem
             product={item}
-            isBottomSheet={isOpen}
             navigateProductDetails={navigateProductDetails}
           />
         )}
