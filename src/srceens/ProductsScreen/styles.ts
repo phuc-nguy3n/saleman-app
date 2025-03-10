@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 16,
     marginHorizontal: 4,
+    overflow: 'hidden',
   },
   productsItem: {
     width: '50%',

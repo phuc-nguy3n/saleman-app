@@ -37,6 +37,8 @@ type BottomSheetContextType = {
   setOverviewPrice: React.Dispatch<
     React.SetStateAction<OverviewPrice | undefined>
   >;
+  cateProduct: string;
+  setCateProduct: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const BottomSheetContext = createContext<BottomSheetContextType | undefined>(
@@ -63,6 +65,8 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
   const [overviewPrice, setOverviewPrice] = useState<
     OverviewPrice | undefined
   >();
+
+  const [cateProduct, setCateProduct] = useState<string>('');
 
   // Memo hóa hàm mở Bottom Sheet
   const openBottomSheet = useCallback(
@@ -126,6 +130,8 @@ export const BottomSheetProvider = ({children}: {children: ReactNode}) => {
         setIsKeyboardVisible,
         overviewPrice,
         setOverviewPrice,
+        cateProduct,
+        setCateProduct,
       }}>
       {children}
 

@@ -248,7 +248,7 @@ const OrderMgmtScreen: React.FC<OrderMgmtScreenProps> = ({
                   </Text>
                   <Text> | </Text>
                   <Text variant="labelLarge" style={globalStyles.primaryColor}>
-                    {formatPrice(item.totalPrice)}
+                    {formatPrice(Number(item.totalPrice))}
                   </Text>
                 </Text>
               </View>

@@ -1,6 +1,11 @@
 import React from 'react';
 import {ShoppingConst} from '../../../config/const';
-import {Product, RootStackParamList, ScreenType} from '../../../types';
+import {
+  CateProductType,
+  Product,
+  RootStackParamList,
+  ScreenType,
+} from '../../../types';
 import {
   FlatList,
   ImageBackground,
@@ -65,7 +70,7 @@ function ShoppingComponent({
 }: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
 }>) {
-  const {isOpen, setContent} = useBottomSheet();
+  const {isOpen, setContent, setCateProduct} = useBottomSheet();
   const {cate} = ShoppingConst;
 
   const products: Product[] = [
@@ -142,9 +147,9 @@ function ShoppingComponent({
               {cate.map((item, index) => (
                 <View key={index} style={styles.cateItem}>
                   <TouchableOpacity
-                    onPress={navigateProducts}
+                    onPress={() => navigateProducts(item.text)}
                     style={styles.cateItemIconBox}>
-                    {item.img !== '' ? (
+                    {item.img !== CateProductType.all ? (
                       <Image source={item.img} resizeMode="cover" />
                     ) : (
                       <Ionicons
@@ -182,11 +187,14 @@ function ShoppingComponent({
     );
   }
 
-  const navigateProducts = () => {
+  const navigateProducts = (cateProduct: string) => {
     if (isOpen) {
       setContent(ScreenType.products);
+      setCateProduct(cateProduct);
     } else {
-      navigation.navigate(ScreenType.products);
+      navigation.navigate(ScreenType.products, {
+        cateProduct: cateProduct,
+      });
     }
   };
   return (
