@@ -4,6 +4,16 @@ import {customTheme} from '../../theme/customTheme';
 const {colors} = customTheme;
 
 const styles = StyleSheet.create({
+  backNavigation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  backIconBack: {
+    width: 24,
+    height: 24,
+    marginLeft: -12,
+  },
   searchBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -28,6 +38,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flex: 1,
     paddingLeft: 40,
+  },
+  orderEmpty: {
+    width: '100%',
+    height: 234,
+  },
+  ordersBox: {
+    marginTop: 8,
+    maxHeight: 234,
+    width: '100%',
+    position: 'relative',
+    zIndex: 1000,
   },
   itemBox: {
     paddingVertical: 8,

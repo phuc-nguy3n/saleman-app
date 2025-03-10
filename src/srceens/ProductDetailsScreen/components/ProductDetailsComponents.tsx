@@ -49,7 +49,7 @@ const ProductItem = ({
 function ProductDetailsComponents({
   navigation,
 }: {
-  navigation: NavigationProp<RootStackParamList>;
+  readonly navigation: NavigationProp<RootStackParamList>;
 }) {
   const {isOpen, setContent, bottomBarHeight} = useBottomSheet();
 
@@ -137,65 +137,68 @@ function ProductDetailsComponents({
     },
   ];
 
-  const renderHeader = () => (
-    <>
-      <ImageBackground
-        source={{
-          uri: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
-        }}
-        style={styles.carouselBg}>
-        {/* Header */}
+  function renderHeader() {
+    return (
+      <>
+        <ImageBackground
+          source={{
+            uri: 'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/7a953806c287401884d6800a3f0d8340_9366/Giay_Adizero_Boston_12_trang_JQ2552_01_00_standard.jpg',
+          }}
+          style={styles.carouselBg}>
+          {/* Header */}
 
-        <View style={styles.headerBox}>
-          <View style={{width: '70%'}}>
-            <Breadcrumbs items={itemsbreadcrumbs} />
+          <View style={styles.headerBox}>
+            <View style={{width: '70%'}}>
+              <Breadcrumbs items={itemsbreadcrumbs} />
+            </View>
+
+            <TouchableOpacity onPress={() => navigateToScreen(ScreenType.cart)}>
+              <Image source={shoppingBlackBag} style={styles.cartIcon} />
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+
+        <View style={globalStyles.ph16}>
+          {/* Product name */}
+          <View style={globalStyles.mv8}>
+            <View style={{marginBottom: 4}}>
+              <Text variant="bodySmall" style={globalStyles.textSecondColor}>
+                Ngành hàng cấp 1
+              </Text>
+            </View>
+
+            <View>
+              <Text
+                variant="headlineSmall"
+                style={[globalStyles.fontWeightMedium]}>
+                Jordan One Take II PF
+              </Text>
+            </View>
           </View>
 
-          <TouchableOpacity onPress={() => navigateToScreen(ScreenType.cart)}>
-            <Image source={shoppingBlackBag} style={styles.cartIcon} />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+          {/*Product  Description  */}
+          <View style={globalStyles.pv8}>
+            <Text variant="titleSmall" style={{marginBottom: 8}}>
+              Thông tin sản phẩm
+            </Text>
 
-      <View style={globalStyles.ph16}>
-        {/* Product name */}
-        <View style={globalStyles.mv8}>
-          <View style={{marginBottom: 4}}>
             <Text variant="bodySmall" style={globalStyles.textSecondColor}>
-              Ngành hàng cấp 1
-            </Text>
-          </View>
-
-          <View>
-            <Text
-              variant="headlineSmall"
-              style={[globalStyles.fontWeightMedium]}>
-              Jordan One Take II PF
+              Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu
+              suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn,
+              chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng
+              một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày
+              đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng
+              thử.
             </Text>
           </View>
         </View>
 
-        {/*Product  Description  */}
-        <View style={globalStyles.pv8}>
-          <Text variant="titleSmall" style={{marginBottom: 8}}>
-            Thông tin sản phẩm
-          </Text>
-
-          <Text variant="bodySmall" style={globalStyles.textSecondColor}>
-            Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu
-            suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn,
-            chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một
-            số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì
-            vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.
-          </Text>
+        <View style={[globalStyles.ph16, globalStyles.pv8, {marginBottom: 8}]}>
+          <Text variant="titleSmall">Sản phẩm nổi bật</Text>
         </View>
-      </View>
-
-      <View style={[globalStyles.ph16, globalStyles.pv8, {marginBottom: 8}]}>
-        <Text variant="titleSmall">Sản phẩm nổi bật</Text>
-      </View>
-    </>
-  );
+      </>
+    );
+  }
 
   return (
     <View style={globalStyles.bgWhite}>
@@ -205,7 +208,7 @@ function ProductDetailsComponents({
         renderItem={({item}) => (
           <ProductItem
             product={item}
-            navigateToScreen={() => navigateToScreen(ScreenType.cart)}
+            navigateToScreen={() => navigateToScreen(ScreenType.productDetails)}
           />
         )}
         keyExtractor={item => item.code.toString()}

@@ -62,9 +62,9 @@ const ProductItem = ({product}: {product: Product}) => {
 
 function ShoppingComponent({
   navigation,
-}: {
+}: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
-}) {
+}>) {
   const {isOpen, setContent} = useBottomSheet();
   const {cate} = ShoppingConst;
 
@@ -101,82 +101,86 @@ function ShoppingComponent({
     },
   ];
 
-  const renderHeader = () => (
-    <>
-      {/* Carousel */}
-      <ImageBackground source={bannerOne} style={styles.carouselBg}>
-        {/* Header */}
-        <View style={styles.header}>
-          {/* Search */}
-          <View style={styles.searhBar}>
-            <View style={styles.searchBox}>
-              <Ionicons
-                name="search-outline"
-                size={24}
-                color="#8F8F8F"
-                style={styles.searchIcon}
-              />
-              <TextInput style={styles.searchInput} placeholder="Search" />
-            </View>
-          </View>
-
-          {/* Cart */}
-          <TouchableOpacity>
-            <Image source={shoppingBag} style={styles.cartIcon} />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-
-      {/* Product categories */}
-      <View style={styles.cateContainer}>
-        <View style={styles.cateTitleBox}>
-          <Text variant="labelLarge">Danh mục sản phẩm</Text>
-        </View>
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={globalStyles.ph16}>
-          <View style={styles.cateBox}>
-            {cate.map((item, index) => (
-              <View key={index} style={styles.cateItem}>
-                <TouchableOpacity
-                  onPress={navigateProducts}
-                  style={styles.cateItemIconBox}>
-                  {item.img !== '' ? (
-                    <Image source={item.img} resizeMode="cover" />
-                  ) : (
-                    <Ionicons
-                      name="grid-outline"
-                      size={24}
-                      color={colors.textSecond}
-                    />
-                  )}
-                </TouchableOpacity>
-
-                <Text variant="bodySmall" style={globalStyles.textSecondColor}>
-                  {item.text}
-                </Text>
+  function renderHeader() {
+    return (
+      <>
+        {/* Carousel */}
+        <ImageBackground source={bannerOne} style={styles.carouselBg}>
+          {/* Header */}
+          <View style={styles.header}>
+            {/* Search */}
+            <View style={styles.searhBar}>
+              <View style={styles.searchBox}>
+                <Ionicons
+                  name="search-outline"
+                  size={24}
+                  color="#8F8F8F"
+                  style={styles.searchIcon}
+                />
+                <TextInput style={styles.searchInput} placeholder="Search" />
               </View>
-            ))}
+            </View>
+
+            {/* Cart */}
+            <TouchableOpacity>
+              <Image source={shoppingBag} style={styles.cartIcon} />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </View>
+        </ImageBackground>
 
-      {/* Best selling products */}
-      <View style={globalStyles.ph16}>
-        <View style={[styles.productTitleBox, {marginBottom: 12}]}>
-          <Text variant="labelLarge">Sản phẩm bán chạy</Text>
+        {/* Product categories */}
+        <View style={styles.cateContainer}>
+          <View style={styles.cateTitleBox}>
+            <Text variant="labelLarge">Danh mục sản phẩm</Text>
+          </View>
 
-          <TouchableOpacity>
-            <Text variant="bodySmall" style={globalStyles.primaryColor}>
-              Xem thêm
-            </Text>
-          </TouchableOpacity>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={globalStyles.ph16}>
+            <View style={styles.cateBox}>
+              {cate.map((item, index) => (
+                <View key={index} style={styles.cateItem}>
+                  <TouchableOpacity
+                    onPress={navigateProducts}
+                    style={styles.cateItemIconBox}>
+                    {item.img !== '' ? (
+                      <Image source={item.img} resizeMode="cover" />
+                    ) : (
+                      <Ionicons
+                        name="grid-outline"
+                        size={24}
+                        color={colors.textSecond}
+                      />
+                    )}
+                  </TouchableOpacity>
+
+                  <Text
+                    variant="bodySmall"
+                    style={globalStyles.textSecondColor}>
+                    {item.text}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
         </View>
-      </View>
-    </>
-  );
+
+        {/* Best selling products */}
+        <View style={globalStyles.ph16}>
+          <View style={[styles.productTitleBox, {marginBottom: 12}]}>
+            <Text variant="labelLarge">Sản phẩm bán chạy</Text>
+
+            <TouchableOpacity>
+              <Text variant="bodySmall" style={globalStyles.primaryColor}>
+                Xem thêm
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </>
+    );
+  }
 
   const navigateProducts = () => {
     if (isOpen) {
