@@ -105,6 +105,7 @@ export type Product = {
   name: string;
   img: string;
   price: number;
+  categories: string[];
 };
 
 export type ProductsCart = Product & {
