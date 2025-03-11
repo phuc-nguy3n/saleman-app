@@ -55,6 +55,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     overflow: 'hidden',
   },
+  extensionCateBox: {
+    width: 56,
+    height: 56,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.tertiary,
+  },
   productsItem: {
     width: '50%',
     paddingHorizontal: 8,

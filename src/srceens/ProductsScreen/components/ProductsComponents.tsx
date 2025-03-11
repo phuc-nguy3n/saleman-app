@@ -157,7 +157,6 @@ function ProductsComponents({
       {/* Header */}
       <View style={styles.header}>
         {/* Breadcrumbs */}
-
         <TouchableOpacity
           onPress={navigateToShopping}
           style={[globalStyles.ph4]}>
@@ -167,8 +166,6 @@ function ProductsComponents({
             color={colors.textSecond}
           />
         </TouchableOpacity>
-
-        {/* Breadcrumbs */}
 
         {/* Search */}
         <View style={styles.searchBar}>
@@ -233,15 +230,7 @@ function ProductsComponents({
                       </View>
                     </>
                   ) : (
-                    <View
-                      style={{
-                        width: 56,
-                        height: 56,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: colors.tertiary,
-                      }}>
+                    <View style={styles.extensionCateBox}>
                       <Ionicons
                         name="grid-outline"
                         size={24}
