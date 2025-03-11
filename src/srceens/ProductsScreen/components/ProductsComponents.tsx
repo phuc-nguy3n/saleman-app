@@ -251,7 +251,11 @@ function ProductsComponents({
       </View>
 
       <FlatList
-        data={products}
+        data={products.filter(
+          (item: Product) =>
+            cateProduct === CateProductType.all ||
+            item.categories.includes(cateProduct),
+        )}
         renderItem={({item}) => (
           <ProductItem
             product={item}
