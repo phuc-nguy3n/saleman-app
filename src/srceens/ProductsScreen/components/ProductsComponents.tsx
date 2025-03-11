@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
 import {
   CateProductType,
@@ -71,6 +71,7 @@ function ProductsComponents({
   navigation: NavigationProp<RootStackParamList>;
 }>) {
   const {isOpen, setContent, cateProduct, setCateProduct} = useBottomSheet();
+  const [layoutReady, setLayoutReady] = useState(false);
 
   const products: Product[] = [
     {
@@ -104,111 +105,37 @@ function ProductsComponents({
       price: 100000,
     },
   ];
+
   const {cate} = ShoppingConst;
 
-  function renderHeader() {
-    return (
-      <>
-        {/* Header */}
-        <View style={styles.header}>
-          {/* Breadcrumbs */}
+  const scrollRef = useRef<ScrollView>(null);
+  const categoryRefs = useRef<any[]>([]);
 
-          <TouchableOpacity
-            onPress={navigateToShopping}
-            style={[globalStyles.ph4]}>
-            <Ionicons
-              name="arrow-back-outline"
-              size={24}
-              color={colors.textSecond}
-            />
-          </TouchableOpacity>
+  useEffect(() => {
+    if (layoutReady) {
+      const categories = cate.map(item => item.text);
+      const index = categories.indexOf(cateProduct);
+      if (index !== -1) {
+        setTimeout(() => {
+          categoryRefs.current[index]?.measureLayout(
+            scrollRef.current as any,
+            (x: number) => {
+              scrollRef.current?.scrollTo({x: x - 150, animated: true});
+            },
+            () => {},
+          );
+        }, 100);
+      }
+    }
+  }, [layoutReady, cateProduct, cate]);
 
-          {/* Breadcrumbs */}
+  const handleCategoryPress = (index: number) => {
+    setCateProduct(cate[index].text);
 
-          {/* Search */}
-          <View style={styles.searchBar}>
-            <View style={styles.searchBox}>
-              <Ionicons
-                name="search-outline"
-                size={24}
-                color={colors.outline}
-                style={styles.searchIcon}
-              />
-              <TextInput style={styles.searchInput} placeholder="Search" />
-            </View>
-          </View>
-
-          {/* Cart */}
-          <TouchableOpacity>
-            <Image source={shoppingBlackBag} style={styles.cartIcon} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Product categories */}
-        <View style={styles.cateContainer}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={globalStyles.ph16}>
-            <View style={styles.cateBox}>
-              {cate.map((item, index) => (
-                <View key={index} style={styles.cateItem}>
-                  <TouchableOpacity
-                    onPress={() => setCateProduct(item.text)}
-                    style={[
-                      styles.cateItemIconBox,
-                      {
-                        borderColor:
-                          item.text === CateProductType.all ||
-                          item.text === cateProduct
-                            ? colors.primary
-                            : colors.tertiary,
-                      },
-                    ]}>
-                    {item.img !== CateProductType.all ? (
-                      <>
-                        <Image
-                          style={{
-                            width: 56,
-                            height: 56,
-                          }}
-                          source={item.img}
-                          resizeMode="cover"
-                        />
-                        <View style={{padding: 8, paddingRight: 12}}>
-                          <Text
-                            variant="bodySmall"
-                            style={globalStyles.textSecondColor}>
-                            {item.text}
-                          </Text>
-                        </View>
-                      </>
-                    ) : (
-                      <View
-                        style={{
-                          width: 56,
-                          height: 56,
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: colors.tertiary,
-                        }}>
-                        <Ionicons
-                          name="grid-outline"
-                          size={24}
-                          color={colors.link}
-                        />
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-        </View>
-      </>
-    );
-  }
+    categoryRefs.current[index]?.measureLayout(scrollRef.current, (x: any) => {
+      scrollRef.current?.scrollTo({x: x - 150, animated: true}); // 150px để canh giữa
+    });
+  };
 
   const navigateToShopping = () => {
     if (isOpen) {
@@ -227,8 +154,98 @@ function ProductsComponents({
   };
   return (
     <View style={[globalStyles.bgWhite]}>
+      {/* Header */}
+      <View style={styles.header}>
+        {/* Breadcrumbs */}
+        <TouchableOpacity
+          onPress={navigateToShopping}
+          style={[globalStyles.ph4]}>
+          <Ionicons
+            name="arrow-back-outline"
+            size={24}
+            color={colors.textSecond}
+          />
+        </TouchableOpacity>
+
+        {/* Search */}
+        <View style={styles.searchBar}>
+          <View style={styles.searchBox}>
+            <Ionicons
+              name="search-outline"
+              size={24}
+              color={colors.outline}
+              style={styles.searchIcon}
+            />
+            <TextInput style={styles.searchInput} placeholder="Search" />
+          </View>
+        </View>
+
+        {/* Cart */}
+        <TouchableOpacity>
+          <Image source={shoppingBlackBag} style={styles.cartIcon} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Product categories */}
+      <View style={styles.cateContainer}>
+        <ScrollView
+          onLayout={() => setLayoutReady(true)}
+          horizontal
+          ref={scrollRef}
+          showsHorizontalScrollIndicator={false}
+          style={globalStyles.ph16}>
+          <View style={styles.cateBox}>
+            {cate.map((item, index) => (
+              <View key={index} style={styles.cateItem}>
+                <TouchableOpacity
+                  key={index}
+                  ref={el => (categoryRefs.current[index] = el)}
+                  onPress={() => handleCategoryPress(index)}
+                  style={[
+                    styles.cateItemIconBox,
+                    {
+                      borderColor:
+                        item.text === CateProductType.all ||
+                        item.text === cateProduct
+                          ? colors.primary
+                          : colors.tertiary,
+                    },
+                  ]}>
+                  {item.img !== CateProductType.all ? (
+                    <>
+                      <Image
+                        style={{
+                          width: 56,
+                          height: 56,
+                        }}
+                        source={item.img}
+                        resizeMode="cover"
+                      />
+                      <View style={{padding: 8, paddingRight: 12}}>
+                        <Text
+                          variant="bodySmall"
+                          style={globalStyles.textSecondColor}>
+                          {item.text}
+                        </Text>
+                      </View>
+                    </>
+                  ) : (
+                    <View style={styles.extensionCateBox}>
+                      <Ionicons
+                        name="grid-outline"
+                        size={24}
+                        color={colors.link}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+
       <FlatList
-        ListHeaderComponent={renderHeader}
         data={products}
         renderItem={({item}) => (
           <ProductItem
