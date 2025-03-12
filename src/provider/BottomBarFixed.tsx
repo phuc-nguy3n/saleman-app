@@ -21,9 +21,9 @@ import {Button, Text} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '../config/customToast';
 import {formatPrice} from '../utils';
-import {useDispatch, useSelector} from 'react-redux';
-import {addProductCart} from '../redux/slices/productsCartSlice';
+import {useSelector} from 'react-redux';
 import {customTheme} from '../theme/customTheme';
+import useCart from '../hooks/useCart';
 
 const {colors} = customTheme;
 
@@ -42,7 +42,7 @@ const BottomBarFixedContext = createContext<
 // Provider Component
 export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
   const products = useSelector((state: any) => state.productsCart.products);
-  const dispatch = useDispatch();
+  const {handleAddProductToCart} = useCart();
 
   const {
     content,
@@ -79,7 +79,7 @@ export const BottomBarFixedProvider = ({children}: {children: ReactNode}) => {
 
   const handleAddProduct = () => {
     if (product) {
-      dispatch(addProductCart({...product, quantity: 1}));
+      handleAddProductToCart(product);
       Toast.show({
         type: 'customToast',
         text1: 'Sản phẩm đã được thêm vào giỏ hàng',

@@ -23,47 +23,9 @@ import globalStyles from '../../../styles/globalStyles';
 import {customTheme} from '../../../theme/customTheme';
 import {NavigationProp} from '@react-navigation/native';
 import {useBottomSheet} from '../../../provider/BottomSheetProvider';
-import {formatPrice} from '../../../utils';
+import ProductItem from '../../../components/ProductItem';
 
 const {colors} = customTheme;
-
-const ProductItem = ({product}: {product: Product}) => {
-  return (
-    <View style={styles.productsItem}>
-      <TouchableOpacity
-        onPress={() => {
-          console.log('Product detail');
-        }}>
-        <Image
-          resizeMode="cover"
-          source={{uri: product.img}}
-          style={styles.productItemImage}
-        />
-      </TouchableOpacity>
-      <Text
-        style={[
-          globalStyles.fontWeightRegular,
-          globalStyles.fontSmall,
-          {marginBottom: 4},
-        ]}>
-        {product.name}
-      </Text>
-      <View style={styles.productContentArea}>
-        <Text style={[globalStyles.fontWeightMedium, {fontSize: 14}]}>
-          {formatPrice(product.price)}
-        </Text>
-
-        <TouchableOpacity
-          style={styles.addIconBox}
-          onPress={() => {
-            console.log('Add to cart');
-          }}>
-          <Ionicons name="add-outline" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
 
 function ShoppingComponent({
   navigation,
@@ -80,6 +42,8 @@ function ShoppingComponent({
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Sale', 'Women'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6b',
@@ -87,6 +51,8 @@ function ShoppingComponent({
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Women'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6c',
@@ -94,6 +60,8 @@ function ShoppingComponent({
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Men'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
@@ -101,6 +69,8 @@ function ShoppingComponent({
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Men'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e',
@@ -108,6 +78,8 @@ function ShoppingComponent({
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Kids'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
   ];
 
@@ -202,12 +174,25 @@ function ShoppingComponent({
       });
     }
   };
+
+  const navigateProductDetails = () => {
+    if (isOpen) {
+      setContent(ScreenType.productDetails);
+    } else {
+      navigation.navigate(ScreenType.productDetails);
+    }
+  };
   return (
     <View style={globalStyles.bgWhite}>
       <FlatList
         ListHeaderComponent={renderHeader}
         data={products}
-        renderItem={({item}) => <ProductItem product={item} />}
+        renderItem={({item}) => (
+          <ProductItem
+            product={item}
+            navigateToScreen={navigateProductDetails}
+          />
+        )}
         keyExtractor={item => item.code.toString()}
         numColumns={2}
         removeClippedSubviews={false}

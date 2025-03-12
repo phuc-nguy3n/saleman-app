@@ -106,6 +106,7 @@ export type Product = {
   img: string;
   price: number;
   categories: string[];
+  description: string;
 };
 
 export type ProductsCart = Product & {
