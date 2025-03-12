@@ -46,12 +46,13 @@ const ProductItem = ({
   );
 };
 
-type ProductDetailsComponentsProps = Readonly<{
+function ProductDetailsComponents({
+  navigation,
+}: Readonly<{
   navigation: NavigationProp<RootStackParamList>;
-}>;
-
-function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
-  const {isOpen, setContent, bottomBarHeight} = useBottomSheet();
+}>) {
+  const {isOpen, setContent, bottomBarHeight, cateProduct, setCateProduct} =
+    useBottomSheet();
 
   const navigateToScreen = (screen: string) => {
     if (isOpen) {
@@ -61,6 +62,7 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
           break;
         case ScreenType.products:
           setContent(ScreenType.products);
+          setCateProduct(cateProduct);
           break;
         case ScreenType.productDetails:
           setContent(ScreenType.productDetails);
@@ -77,7 +79,7 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
           navigation.navigate(ScreenType.shopping);
           break;
         case ScreenType.products:
-          navigation.navigate(ScreenType.products);
+          navigation.navigate(ScreenType.products, {cateProduct: cateProduct});
           break;
         case ScreenType.productDetails:
           navigation.navigate(ScreenType.productDetails);
@@ -111,6 +113,8 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Sale', 'Women'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6b',
@@ -118,6 +122,8 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Women'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6c',
@@ -125,6 +131,8 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Men'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
@@ -132,6 +140,8 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Men'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
     {
       code: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e',
@@ -139,10 +149,12 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
       name: 'Jordan Why Not? Zer0.4 "Family" PF',
       price: 100000,
       categories: ['Kids'],
+      description:
+        'Chúng tôi thiết kế giày và thiết bị của mình để giúp bạn đạt hiệu suất cao nhất, vì vậy nếu chúng không hoạt động chính xác với bạn, chúng tôi sẽ bảo hành cho bạn. bạn có thể trả lại hàng (áp dụng một số trường hợp ngoại lệ) vì bất kỳ lý do gì trong vòng 30 ngày đó. Vì vậy, hãy tiếp tục, tự tin mua sắm và tận hưởng 30 ngày dùng thử.',
     },
   ];
 
-  function renderHeader() {
+  const renderHeader = () => {
     return (
       <>
         <ImageBackground
@@ -203,7 +215,7 @@ function ProductDetailsComponents({navigation}: ProductDetailsComponentsProps) {
         </View>
       </>
     );
-  }
+  };
 
   return (
     <View style={globalStyles.bgWhite}>
